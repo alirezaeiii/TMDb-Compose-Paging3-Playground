@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cast">Actores</string>
+    <string name="crew">Equipo</string>
+    <string name="favorite">Favorito</string>
+    <string name="movie">Película</string>
+    <string name="tv_show">Serie</string>
+    <string name="setting">Configuración</string>
+</resources>

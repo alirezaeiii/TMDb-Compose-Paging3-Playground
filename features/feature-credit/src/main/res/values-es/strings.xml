@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="from">Desde %s</string>
+    <string name="born">Nacido en %s</string>
+    <string name="death">Fallecido en %s</string>
+    <string name="biography">Biografía</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="text_now_playing">En reproducción</string>
+    <string name="text_upcoming">Próximamente</string>
+    <string name="text_on_the_air">En emisión</string>
+    <string name="text_airing_today">Nuevo hoy</string>
+</resources>

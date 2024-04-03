@@ -67,6 +67,9 @@ object Deps {
     // Activity Compose
     const val composeActivity = "androidx.activity:activity-compose:${Versions.compose_activity}"
 
+    // Appcompat
+    const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+
     // UI
     const val material = "com.google.android.material:material:${Versions.material}"
     const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
