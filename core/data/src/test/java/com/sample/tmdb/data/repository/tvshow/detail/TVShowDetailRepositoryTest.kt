@@ -6,7 +6,7 @@ import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
 import com.sample.tmdb.data.response.TMDbWrapper
 import com.sample.tmdb.data.response.TvDetailResponse
-import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.model.TVShowDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -16,7 +16,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TvDetails>() {
+class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TVShowDetails>() {
     @Mock
     private lateinit var api: TVShowService
 

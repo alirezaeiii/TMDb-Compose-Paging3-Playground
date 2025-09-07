@@ -30,7 +30,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.Person
 import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.model.TVShowDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
@@ -72,7 +72,7 @@ abstract class RepositoryModule {
     @Binds
     internal abstract fun bindTVShowDetailRepository(
         tvShowDetailRepository: TVShowDetailRepository,
-    ): BaseDetailRepository<TvDetails>
+    ): BaseDetailRepository<TVShowDetails>
 
     @Singleton
     @Trending

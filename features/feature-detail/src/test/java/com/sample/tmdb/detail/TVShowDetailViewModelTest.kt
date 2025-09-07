@@ -1,9 +1,9 @@
 package com.sample.tmdb.detail
 
 import com.sample.tmdb.domain.model.TVShow
-import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.model.TVShowDetails
 
-class TVShowDetailViewModelTest : BaseDetailViewModelTest<TvDetails, TVShow>() {
+class TVShowDetailViewModelTest : BaseDetailViewModelTest<TVShowDetails, TVShow>() {
     override fun initViewModel() {
         super.viewModel = TVShowDetailViewModel(bookmarkRepository, repository, savedStateHandle)
     }

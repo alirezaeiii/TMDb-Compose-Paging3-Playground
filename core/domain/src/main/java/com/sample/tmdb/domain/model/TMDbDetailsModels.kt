@@ -38,7 +38,7 @@ data class MovieDetails(
     override val voteCount: Int,
 ) : TMDbItemDetails
 
-data class TvDetails(
+data class TVShowDetails(
     override val backdropPath: String?,
     override val genres: List<Genre>,
     override val homepage: String?,

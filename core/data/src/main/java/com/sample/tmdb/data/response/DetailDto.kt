@@ -15,7 +15,7 @@ import com.sample.tmdb.common.utils.Constants.VOTE_COUNT
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.SpokenLanguage
-import com.sample.tmdb.domain.model.TvDetails
+import com.sample.tmdb.domain.model.TVShowDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -113,7 +113,7 @@ fun MovieDetailResponse.asDomainModel(): MovieDetails = MovieDetails(
     voteCount,
 )
 
-fun TvDetailResponse.asDomainModel(): TvDetails = TvDetails(
+fun TvDetailResponse.asDomainModel(): TVShowDetails = TVShowDetails(
     backdropPath?.let {
         String.format(
             BASE_WIDTH_780_PATH,
