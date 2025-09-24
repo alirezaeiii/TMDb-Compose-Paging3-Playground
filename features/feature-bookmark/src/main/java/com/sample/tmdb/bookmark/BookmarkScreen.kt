@@ -6,10 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -26,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,11 +38,12 @@ import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
-import com.sample.tmdb.common.utils.toDp
+import com.sample.tmdb.common.utils.navigationBarPadding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -140,12 +138,7 @@ fun <T : TMDbItem> TabContent(items: List<T>, onClick: (TMDbItem) -> Unit) {
         PaddingValues(
             start = TMDb_8_dp,
             end = TMDb_8_dp,
-            bottom =
-            WindowInsets.navigationBars
-                .getBottom(LocalDensity.current)
-                .toDp()
-                .dp
-                .plus(56.dp),
+            bottom = navigationBarPadding().plus(TMDb_56_dp),
         ),
         horizontalArrangement =
         Arrangement.spacedBy(

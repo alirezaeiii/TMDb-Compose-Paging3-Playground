@@ -39,6 +39,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.theme.Teal200
@@ -74,7 +75,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             modifier =
             modifier
                 .padding(
-                    top = 56.dp + TMDb_16_dp,
+                    top = TMDb_56_dp + TMDb_16_dp,
                     start = TMDb_12_dp,
                     end = TMDb_12_dp,
                 ),

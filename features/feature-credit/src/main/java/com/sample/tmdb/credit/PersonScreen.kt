@@ -56,6 +56,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.Neutral8
@@ -68,7 +69,7 @@ import kotlin.math.min
 private val BottomBarHeight = 36.dp
 private val GradientScroll = 180.dp
 private val ImageOverlap = 115.dp
-private val MinTitleOffset = 56.dp
+private val MinTitleOffset = TMDb_56_dp
 private val MinImageOffset = 12.dp
 private val MediumTitleOffset = ImageOverlap + MinTitleOffset
 private val MaxTitleOffset = ImageOverlap + MinTitleOffset + GradientScroll

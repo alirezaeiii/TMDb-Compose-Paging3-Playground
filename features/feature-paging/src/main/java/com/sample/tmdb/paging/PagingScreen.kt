@@ -3,25 +3,16 @@ package com.sample.tmdb.paging
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -37,7 +28,9 @@ import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.LoadingRow
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
-import com.sample.tmdb.common.utils.toDp
+import com.sample.tmdb.common.utils.TMDbSpacer
+import com.sample.tmdb.common.utils.fullSpanGridItem
+import com.sample.tmdb.common.utils.navigationBarPadding
 
 @Composable
 fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>, onClick: (TMDbItem) -> Unit) {
@@ -79,10 +72,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
         PaddingValues(
             start = TMDb_8_dp,
             end = TMDb_8_dp,
-            bottom =
-            WindowInsets.navigationBars.getBottom(LocalDensity.current).toDp().dp.plus(
-                TMDb_8_dp,
-            ),
+            bottom = navigationBarPadding().plus(TMDb_8_dp),
         ),
         horizontalArrangement =
         Arrangement.spacedBy(
@@ -91,11 +81,7 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
         ),
         content = {
             fullSpanGridItem {
-                Spacer(
-                    Modifier.windowInsetsTopHeight(
-                        WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
-                    ),
-                )
+                TMDbSpacer()
             }
 
             items(lazyTMDbItems.itemCount) { index ->
@@ -136,12 +122,6 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             }
         },
     )
-}
-
-private fun LazyGridScope.fullSpanGridItem(content: @Composable () -> Unit) {
-    item(span = { GridItemSpan(maxLineSpan) }) {
-        content()
-    }
 }
 
 @Composable

@@ -83,7 +83,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -122,7 +121,7 @@ import com.sample.tmdb.common.ui.component.PersonCard
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.dpToPx
-import com.sample.tmdb.common.utils.toDp
+import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
@@ -824,11 +823,7 @@ fun ToggleBookmarkFab(isBookmark: Boolean, isVisible: MutableState<Boolean>, onC
         FloatingActionButton(
             modifier =
             Modifier.padding(
-                bottom =
-                WindowInsets.navigationBars
-                    .getBottom(LocalDensity.current)
-                    .toDp()
-                    .dp,
+                bottom = navigationBarPadding(),
             ),
             shape = CircleShape,
             onClick = onClick,

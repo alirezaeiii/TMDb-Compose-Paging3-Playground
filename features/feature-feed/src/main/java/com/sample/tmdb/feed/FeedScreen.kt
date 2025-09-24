@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -54,11 +52,13 @@ import com.sample.tmdb.common.ui.Dimens
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
+import com.sample.tmdb.common.utils.TMDbSpacer
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -114,11 +114,7 @@ private fun <T : TMDbItem> FeedScreen(
 fun FeedCollectionList(navController: NavController, collection: List<FeedWrapper>, onFeedClick: (TMDbItem) -> Unit) {
     LazyColumn {
         item {
-            Spacer(
-                Modifier.windowInsetsTopHeight(
-                    WindowInsets.statusBars.add(WindowInsets(top = 56.dp)),
-                ),
-            )
+            TMDbSpacer()
         }
         item {
             PagerTMDbItemContainer(
@@ -139,7 +135,7 @@ fun FeedCollectionList(navController: NavController, collection: List<FeedWrappe
             Spacer(
                 Modifier
                     .navigationBarsPadding()
-                    .windowInsetsTopHeight(WindowInsets(top = 56.dp)),
+                    .windowInsetsTopHeight(WindowInsets(top = TMDb_56_dp)),
             )
         }
     }
