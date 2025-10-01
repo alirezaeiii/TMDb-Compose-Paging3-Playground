@@ -2,8 +2,8 @@ package com.sample.tmdb.data.network
 
 import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
-import com.sample.tmdb.data.response.NetworkTVShow
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
+import com.sample.tmdb.data.response.NetworkTVShow
 import com.sample.tmdb.data.response.TvDetailResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -53,7 +53,10 @@ interface TVShowService {
     suspend fun fetchTVSeriesDetail(@Path("tvId") tvId: Int): TvDetailResponse
 
     @GET("3/search/tv")
-    suspend fun searchTVSeries(@Query("page") page: Int, @Query("query") query: String): NetworkTMDbWrapper<NetworkTVShow>
+    suspend fun searchTVSeries(
+        @Query("page") page: Int,
+        @Query("query") query: String,
+    ): NetworkTMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/images")
     suspend fun fetchImages(@Path("tvId") tvId: Int): ImagesResponse
@@ -62,5 +65,8 @@ interface TVShowService {
     suspend fun fetchSimilarTVSeries(@Path("tvId") tvId: Int): NetworkTMDbWrapper<NetworkTVShow>
 
     @GET("3/tv/{tvId}/similar")
-    suspend fun fetchSimilarTVSeries(@Path("tvId") tvId: Int, @Query("page") page: Int): NetworkTMDbWrapper<NetworkTVShow>
+    suspend fun fetchSimilarTVSeries(
+        @Path("tvId") tvId: Int,
+        @Query("page") page: Int,
+    ): NetworkTMDbWrapper<NetworkTVShow>
 }
