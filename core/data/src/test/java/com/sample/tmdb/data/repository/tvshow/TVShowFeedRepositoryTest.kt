@@ -2,7 +2,7 @@ package com.sample.tmdb.data.repository.tvshow
 
 import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
-import com.sample.tmdb.data.response.TMDbWrapper
+import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.domain.model.TVShow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -21,11 +21,11 @@ class TVShowFeedRepositoryTest : BaseFeedRepositoryTest<TVShow>() {
     }
 
     override fun mockApiResponse() = runTest {
-        `when`(api.trendingTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.popularTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.airingTodayTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.onTheAirTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.topRatedTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.discoverTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(api.trendingTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.popularTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.airingTodayTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.onTheAirTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.topRatedTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.discoverTVSeries()).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 }

@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.utils.Resource
 import com.sample.tmdb.data.network.PersonService
-import com.sample.tmdb.data.response.PersonDto
+import com.sample.tmdb.data.response.PersonDTO
 import com.sample.tmdb.data.response.asDomainModel
 import com.sample.tmdb.domain.model.Person
 import junit.framework.TestCase.assertEquals
@@ -26,7 +26,7 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     private lateinit var repository: BaseRepository<Person>
 
     private val personDto =
-        PersonDto(
+        PersonDTO(
             "birth",
             "death",
             1,

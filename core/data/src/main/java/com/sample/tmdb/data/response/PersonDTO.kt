@@ -8,7 +8,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class PersonDto(
+data class PersonDTO(
     @Json(name = "birthday")
     val birthDay: String?,
     @Json(name = "deathday")
@@ -25,7 +25,7 @@ data class PersonDto(
     val profilePath: String?,
 )
 
-fun PersonDto.asDomainModel(): Person = Person(
+fun PersonDTO.asDomainModel(): Person = Person(
     birthDay,
     deathDay,
     id,

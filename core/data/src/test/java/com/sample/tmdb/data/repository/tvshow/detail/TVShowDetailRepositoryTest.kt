@@ -4,7 +4,7 @@ import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.repository.BaseDetailRepositoryTest
 import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
-import com.sample.tmdb.data.response.TMDbWrapper
+import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.data.response.TvDetailResponse
 import com.sample.tmdb.domain.model.TVShowDetails
 import kotlinx.coroutines.Dispatchers
@@ -47,6 +47,6 @@ class TVShowDetailRepositoryTest : BaseDetailRepositoryTest<TVShowDetails>() {
         )
         `when`(api.fetchTVSeriesCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
         `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
-        `when`(api.fetchSimilarTVSeries(anyInt())).thenReturn(TMDbWrapper(emptyList()))
+        `when`(api.fetchSimilarTVSeries(anyInt())).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 }

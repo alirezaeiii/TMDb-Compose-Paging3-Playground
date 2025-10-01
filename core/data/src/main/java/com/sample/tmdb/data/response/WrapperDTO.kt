@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class TMDbWrapper<T : NetworkTMDbItem>(
+data class NetworkTMDbWrapper<T : NetworkTMDbItem>(
     @Json(name = "results")
     val items: List<T>,
 )

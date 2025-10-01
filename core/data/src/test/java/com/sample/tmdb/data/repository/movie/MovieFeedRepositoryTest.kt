@@ -2,7 +2,7 @@ package com.sample.tmdb.data.repository.movie
 
 import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.repository.BaseFeedRepositoryTest
-import com.sample.tmdb.data.response.TMDbWrapper
+import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.domain.model.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -21,11 +21,11 @@ class MovieFeedRepositoryTest : BaseFeedRepositoryTest<Movie>() {
     }
 
     override fun mockApiResponse() = runTest {
-        `when`(api.trendingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.popularMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.nowPlayingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.upcomingMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.topRatedMovies()).thenReturn(TMDbWrapper(emptyList()))
-        `when`(api.discoverMovies()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(api.trendingMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.popularMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.nowPlayingMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.upcomingMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.topRatedMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
+        `when`(api.discoverMovies()).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 }

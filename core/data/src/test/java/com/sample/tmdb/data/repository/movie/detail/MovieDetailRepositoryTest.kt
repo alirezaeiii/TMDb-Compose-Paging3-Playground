@@ -5,7 +5,7 @@ import com.sample.tmdb.data.repository.BaseDetailRepositoryTest
 import com.sample.tmdb.data.response.ImagesResponse
 import com.sample.tmdb.data.response.MovieDetailResponse
 import com.sample.tmdb.data.response.NetworkCreditWrapper
-import com.sample.tmdb.data.response.TMDbWrapper
+import com.sample.tmdb.data.response.NetworkTMDbWrapper
 import com.sample.tmdb.domain.model.MovieDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.runTest
@@ -47,6 +47,6 @@ class MovieDetailRepositoryTest : BaseDetailRepositoryTest<MovieDetails>() {
         )
         `when`(api.movieCredit(anyInt())).thenReturn(NetworkCreditWrapper(emptyList(), emptyList()))
         `when`(api.fetchImages(anyInt())).thenReturn(ImagesResponse(emptyList(), ID, emptyList()))
-        `when`(api.fetchSimilarMovies(anyInt())).thenReturn(TMDbWrapper(emptyList()))
+        `when`(api.fetchSimilarMovies(anyInt())).thenReturn(NetworkTMDbWrapper(emptyList()))
     }
 }
