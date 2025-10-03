@@ -17,7 +17,7 @@ import com.sample.tmdb.domain.model.TVShow
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-interface NetworkTMDbItem {
+interface TMDbItemResponse {
     val id: Int
     val overview: String
     val releaseDate: String?
@@ -29,7 +29,7 @@ interface NetworkTMDbItem {
 }
 
 @JsonClass(generateAdapter = true)
-data class NetworkMovie(
+data class MovieResponse(
     @Json(name = ID)
     override val id: Int,
     @Json(name = OVERVIEW)
@@ -46,10 +46,10 @@ data class NetworkMovie(
     override val voteAverage: Double,
     @Json(name = VOTE_COUNT)
     override val voteCount: Int,
-) : NetworkTMDbItem
+) : TMDbItemResponse
 
 @JsonClass(generateAdapter = true)
-data class NetworkTVShow(
+data class TVShowResponse(
     @Json(name = ID)
     override val id: Int,
     @Json(name = OVERVIEW)
@@ -66,13 +66,13 @@ data class NetworkTVShow(
     override val voteAverage: Double,
     @Json(name = VOTE_COUNT)
     override val voteCount: Int,
-) : NetworkTMDbItem
+) : TMDbItemResponse
 
-fun List<NetworkMovie>.asMovieDomainModel() = map(NetworkMovie::asMovieDomainModel)
+fun List<MovieResponse>.asMovieDomainModel() = map(MovieResponse::asMovieDomainModel)
 
-fun List<NetworkTVShow>.asTVShowDomainModel() = map(NetworkTVShow::asTVShowDomainModel)
+fun List<TVShowResponse>.asTVShowDomainModel() = map(TVShowResponse::asTVShowDomainModel)
 
-private fun NetworkMovie.asMovieDomainModel(): Movie = Movie(
+private fun MovieResponse.asMovieDomainModel(): Movie = Movie(
     id,
     overview,
     releaseDate,
@@ -93,7 +93,7 @@ private fun NetworkMovie.asMovieDomainModel(): Movie = Movie(
     voteCount,
 )
 
-private fun NetworkTVShow.asTVShowDomainModel(): TVShow = TVShow(
+private fun TVShowResponse.asTVShowDomainModel(): TVShow = TVShow(
     id,
     overview,
     releaseDate,
