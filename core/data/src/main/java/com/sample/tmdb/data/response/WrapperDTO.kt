@@ -12,7 +12,7 @@ data class NetworkTMDbWrapper<T : TMDbItemResponse>(
 @JsonClass(generateAdapter = true)
 data class NetworkCreditWrapper(
     @Json(name = "cast")
-    val cast: List<NetworkCast>,
+    val cast: List<CastResponse>,
     @Json(name = "crew")
-    val crew: List<NetworkCrew>,
+    val crew: List<CrewResponse>,
 )

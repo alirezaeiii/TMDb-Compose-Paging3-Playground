@@ -10,7 +10,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class NetworkCast(
+data class CastResponse(
     @Json(name = "character")
     val role: String,
     @Json(name = NAME)
@@ -24,7 +24,7 @@ data class NetworkCast(
 )
 
 @JsonClass(generateAdapter = true)
-data class NetworkCrew(
+data class CrewResponse(
     @Json(name = "job")
     val role: String,
     @Json(name = NAME)
@@ -37,11 +37,11 @@ data class NetworkCrew(
     val id: String,
 )
 
-fun List<NetworkCast>.asCastDomainModel() = map(NetworkCast::asCastDomainModel)
+fun List<CastResponse>.asCastDomainModel() = map(CastResponse::asCastDomainModel)
 
-fun List<NetworkCrew>.asCrewDomainModel() = map(NetworkCrew::asCrewDomainModel)
+fun List<CrewResponse>.asCrewDomainModel() = map(CrewResponse::asCrewDomainModel)
 
-private fun NetworkCast.asCastDomainModel(): Cast = Cast(
+private fun CastResponse.asCastDomainModel(): Cast = Cast(
     role,
     name,
     profilePath?.let { profilePath ->
@@ -54,7 +54,7 @@ private fun NetworkCast.asCastDomainModel(): Cast = Cast(
     id,
 )
 
-private fun NetworkCrew.asCrewDomainModel(): Crew = Crew(
+private fun CrewResponse.asCrewDomainModel(): Crew = Crew(
     role,
     name,
     profilePath?.let { profilePath ->
