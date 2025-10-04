@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,10 +23,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,64 +38,70 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.os.LocaleListCompat
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
-import com.sample.tmdb.common.ui.Dimens.TMDb_4_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.DestinationBar
+import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
 
 @Composable
 fun SettingsScreen(modifier: Modifier = Modifier) {
-    val aboutSettings =
-        listOf(
-            Settings.IntentAction(
-                iconResourceId = R.drawable.ic_github,
-                titleResourceId = R.string.source_code_github,
-                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL)),
-            ),
-            Settings.IntentAction(
-                iconResourceId = R.drawable.ic_shield,
-                titleResourceId = R.string.privacy_policy,
-                intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL)),
-            ),
-            Settings.Info(
-                iconResourceId = R.drawable.ic_info,
-                titleResourceId = R.string.version,
-                value = BuildConfig.VERSION_NAME,
-            ),
-        )
+    val settings = listOf(
+        Settings.SelectBox(
+            iconResourceId = R.drawable.ic_language,
+            titleResourceId = R.string.language,
+            options = listOf("es", "en"),
+            expanded = remember { mutableStateOf(false) },
+            selected = remember { mutableStateOf("es") },
+            fieldSize = remember { mutableStateOf(0) },
+        ),
+        Settings.IntentAction(
+            iconResourceId = R.drawable.ic_github,
+            titleResourceId = R.string.source_code_github,
+            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_REPO_URL)),
+        ),
+        Settings.IntentAction(
+            iconResourceId = R.drawable.ic_shield,
+            titleResourceId = R.string.privacy_policy,
+            intent = Intent(Intent.ACTION_VIEW, Uri.parse(TMDB_POLICY_URL)),
+        ),
+        Settings.Info(
+            iconResourceId = R.drawable.ic_info,
+            titleResourceId = R.string.version,
+            value = BuildConfig.VERSION_NAME,
+        ),
+    )
     Box(
-        modifier =
-        Modifier
+        modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding(),
     ) {
         SettingsGroupItem(
-            settings = aboutSettings,
-            modifier =
-            modifier
+            settings = settings,
+            modifier = modifier
                 .padding(
                     top = TMDb_56_dp + TMDb_16_dp,
                     start = TMDb_12_dp,
                     end = TMDb_12_dp,
                 ),
         )
-        DestinationBar(title = stringResource(R.string.about))
+        DestinationBar(title = stringResource(R.string.settings))
     }
 }
 
 @Composable
-fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
+private fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(TMDb_16_dp),
-        border =
-        BorderStroke(
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(
             width = 1.dp,
             color = MaterialTheme.colors.onSurface.copy(alpha = DIVIDER_ALPHA),
         ),
@@ -102,25 +113,26 @@ fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
                 if (index < settings.lastIndex) {
                     Divider()
                 } else {
-                    Spacer(modifier = Modifier.height(TMDb_4_dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     Row(
-        modifier =
-        modifier
+        modifier = modifier
             .then(
                 when (settings) {
                     is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
                     is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
-                    is Settings.Info -> Modifier
+                    is Settings.SelectBox<*>, is Settings.Info -> Modifier
                 },
-            ).padding(TMDb_12_dp)
+            )
+            .padding(TMDb_12_dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -129,8 +141,7 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
             contentDescription = stringResource(id = settings.titleResourceId),
         )
         TitleText(
-            modifier =
-            Modifier
+            modifier = Modifier
                 .padding(TMDb_8_dp)
                 .weight(1f),
             titleResourceId = settings.titleResourceId,
@@ -138,6 +149,15 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
         when (settings) {
             is Settings.Info -> TitleText(title = settings.value)
             is Settings.Action, is Settings.IntentAction -> ForwardButton()
+            is Settings.SelectBox<*> -> SimpleExposedDropDownMenu(
+                values = settings.options as List<String>,
+                label = { Text("") },
+                selectedIndex = settings.options.indexOf(Locale.current.language),
+                backgroundColor = Color.Transparent,
+                onChange = {
+                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(settings.options[it]))
+                },
+            )
         }
     }
 }
@@ -150,6 +170,7 @@ private fun IconBox(@DrawableRes iconResourceId: Int, contentDescription: String
             .size(TMDb_32_dp)
             .background(color = MaterialTheme.colors.background, shape = CircleShape),
         contentAlignment = Alignment.Center,
+
     ) {
         Icon(
             painter = painterResource(id = iconResourceId),
@@ -227,6 +248,15 @@ sealed interface Settings {
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
         val intent: Intent,
+    ) : Settings
+
+    data class SelectBox<E>(
+        @DrawableRes override val iconResourceId: Int,
+        @StringRes override val titleResourceId: Int,
+        val options: List<E>,
+        var expanded: MutableState<Boolean>,
+        var selected: MutableState<String>,
+        var fieldSize: MutableState<Int>,
     ) : Settings
 }
 

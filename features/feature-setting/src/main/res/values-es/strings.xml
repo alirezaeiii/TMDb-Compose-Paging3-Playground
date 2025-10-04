@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="source_code_github">Código fuente en Github</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="language">Idioma</string>
+    <string name="version">Version</string>
+    <string name="forward">Avanzar</string>
+    <string name="setting">Configuración</string>
+    <string name="settings">Configuración</string>
+</resources>

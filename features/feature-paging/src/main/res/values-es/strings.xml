@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trending">%s en tendencia</string>
+    <string name="popular">%s populares</string>
+    <string name="now_playing">%s en reproducción</string>
+    <string name="upcoming">Próximas %s</string>
+    <string name="airing_today">%s emitiendo hoy</string>
+    <string name="on_the_air">%s en emisión</string>
+    <string name="highest_rate">%s mejor valoradas</string>
+    <string name="discover">Descubrir %s</string>
+    <string name="similar_items">%s similares</string>
+    <string name="search_desc">Buscar</string>
+    <string name="clear">Limpiar</string>
+</resources>
