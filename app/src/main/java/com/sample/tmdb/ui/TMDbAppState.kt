@@ -23,7 +23,7 @@ class TMDbAppState(val navController: NavHostController) {
     // BottomBar state source of truth
     // ----------------------------------------------------------
 
-    val bottomBarTabs = HomeSections.values()
+    val bottomBarTabs = HomeSections.entries.toTypedArray()
     private val bottomBarRoutes = bottomBarTabs.map { it.route }
 
     // Reading this attribute will cause recompositions when the bottom bar needs shown, or not.
