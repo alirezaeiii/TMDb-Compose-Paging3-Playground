@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movies">Películas</string>
+    <string name="tv_series">Series</string>
+    <string name="failed_loading_msg">Algo fue mal...</string>
+    <string name="retry">Reintentar</string>
+    <string name="search">Buscar</string>
+    <string name="back">Volver</string>
+    <string name="person_content_description">Foto %1$s de %2$s</string>
+    <string name="poster_content_description">Póster</string>
+</resources>

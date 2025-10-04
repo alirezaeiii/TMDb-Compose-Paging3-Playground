@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.utils
 
+import androidx.compose.ui.text.intl.Locale
 import com.sample.tmdb.data.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -22,11 +23,10 @@ private fun httpClient(): OkHttpClient {
         val original = chain.request()
         val originalHttpUrl = original.url
 
-        val url =
-            originalHttpUrl
-                .newBuilder()
-                .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
-                .build()
+        val url = originalHttpUrl.newBuilder()
+            .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
+            .addQueryParameter("language", Locale.current.toLanguageTag())
+            .build()
 
         val request = original.newBuilder().url(url).build()
         chain.proceed(request)

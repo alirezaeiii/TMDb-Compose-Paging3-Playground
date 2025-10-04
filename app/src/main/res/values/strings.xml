@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TMDb</string>
+    <string name="app_name" translatable="false">TMDb</string>
     <string name="cast">Cast</string>
     <string name="crew">Crew</string>
     <string name="favorite">Favorite</string>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movie">Película</string>
+    <string name="tv_show">Serie</string>
+    <string name="empty_list">Sin %s que mostrar</string>
+</resources>

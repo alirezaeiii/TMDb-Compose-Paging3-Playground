@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="release_date">Estreno</string>
+    <string name="vote_average">Puntuación</string>
+    <string name="votes">Votos</string>
+    <string name="see_all_items">Ver todos</string>
+    <string name="see_all">Ver todos (%1$d)</string>
+    <string name="cast">Actores</string>
+    <string name="crew">Equipo</string>
+    <string name="open">Abrir</string>
+    <string name="favorite">Favorito</string>
+    <string name="un_favorite">Quitar</string>
+    <string name="images">Imágenes</string>
+    <string name="similar">Similares</string>
+</resources>
