@@ -307,7 +307,7 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
 private fun NavGraphBuilder.imagesScreen() {
     composable(
         route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}" +
-                "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
+            "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
         arguments =
         listOf(
             navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },

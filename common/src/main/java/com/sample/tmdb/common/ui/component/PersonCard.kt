@@ -45,7 +45,7 @@ fun PersonCard(
         modifier
             .padding(TMDb_4_dp)
             .clickable {
-               onPersonClicked.invoke(person)
+                onPersonClicked.invoke(person)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
