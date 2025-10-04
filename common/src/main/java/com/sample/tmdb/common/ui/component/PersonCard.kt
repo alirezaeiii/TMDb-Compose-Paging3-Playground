@@ -21,11 +21,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.placeholderIcon
@@ -39,7 +37,7 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 @Composable
 fun PersonCard(
     person: Credit,
-    navController: NavController,
+    onPersonClicked: (person: Credit) -> Unit,
     modifier: Modifier = Modifier,
     testPainter: Painter? = null,
 ) {
@@ -47,7 +45,7 @@ fun PersonCard(
         modifier
             .padding(TMDb_4_dp)
             .clickable {
-                navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}")
+               onPersonClicked.invoke(person)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

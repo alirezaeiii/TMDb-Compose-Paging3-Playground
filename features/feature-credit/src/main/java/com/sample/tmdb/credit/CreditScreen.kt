@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
@@ -19,10 +18,11 @@ import com.sample.tmdb.common.utils.fullSpanGridItem
 import com.sample.tmdb.common.utils.navigationBarPadding
 
 @Composable
-fun <T : Credit> CreditScreen(
+fun CreditScreen(
     @StringRes resourceId: Int,
-    navController: NavController,
-    items: List<T>,
+    upPress: () -> Unit,
+    onPersonClicked: (person: Credit) -> Unit,
+    items: List<Credit>,
     testPainter: Painter? = null,
 ) {
     LazyVerticalGrid(
@@ -42,11 +42,11 @@ fun <T : Credit> CreditScreen(
             items(items.size) { index ->
                 PersonCard(
                     person = items[index],
-                    navController = navController,
+                    onPersonClicked = onPersonClicked,
                     testPainter = testPainter,
                 )
             }
         },
     )
-    DestinationBar(title = stringResource(resourceId), upPress = { navController.navigateUp() })
+    DestinationBar(title = stringResource(resourceId), upPress = upPress::invoke)
 }

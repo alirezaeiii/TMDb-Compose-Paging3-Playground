@@ -108,7 +108,7 @@ import coil.request.SuccessResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
@@ -130,6 +130,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewModel = hiltViewModel()) {
@@ -195,6 +196,7 @@ private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
         },
         onTMDbItemSelected = onTMDbItemSelected,
         onAllSimilarSelected = onAllSimilarSelected,
+        navigateToPerson = { person -> navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}") },
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -217,6 +219,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
+    navigateToPerson: (person: Credit) -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, TMDbItemDetails) -> Unit,
 ) {
     // Visibility for FAB
@@ -289,7 +292,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     val posterWidth = 160.dp
                     AppBar(
                         homepage = it.details.homepage,
-                        upPress = { navController.navigateUp() },
+                        upPress = navController::navigateUp,
                         modifier =
                         Modifier
                             .requiredWidth(posterWidth * 2.2f)
@@ -418,7 +421,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         itemContent = { item, _ ->
                             PersonCard(
                                 item,
-                                navController,
+                                navigateToPerson,
                                 Modifier.width(140.dp),
                             )
                         },
@@ -444,7 +447,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         itemContent = { item, _ ->
                             PersonCard(
                                 item,
-                                navController,
+                                navigateToPerson,
                                 Modifier.width(140.dp),
                             )
                         },
@@ -563,7 +566,7 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
         IconButton(onClick = { upPress.invoke() }) {
             Icon(
                 Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = stringResource(id = R1.string.back),
+                contentDescription = stringResource(id = commonR.string.back),
                 tint = vibrantColor,
                 modifier = scaleModifier,
             )
@@ -691,6 +694,7 @@ private fun RateStars(voteAverage: Double, modifier: Modifier) {
                     voteStarCount >= starIndex + 1 -> Icons.Filled.Star
                     voteStarCount in starIndex.toDouble()..(starIndex + 1).toDouble() ->
                         Icons.AutoMirrored.Filled.StarHalf
+
                     else -> Icons.Filled.StarOutline
                 }
             Icon(
@@ -807,7 +811,7 @@ fun ImageSection(image: TMDbImage, onImageSelected: () -> Unit) {
         Image(
             painter = painter,
             colorFilter = colorFilter,
-            contentDescription = stringResource(id = R1.string.poster_content_description),
+            contentDescription = stringResource(id = commonR.string.poster_content_description),
             contentScale = contentScale,
         )
     }

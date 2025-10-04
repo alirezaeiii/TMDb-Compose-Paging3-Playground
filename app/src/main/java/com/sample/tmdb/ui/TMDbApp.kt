@@ -41,6 +41,7 @@ import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.R
 import com.sample.tmdb.bookmark.BookmarkScreen
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
@@ -253,6 +254,8 @@ private fun NavGraphBuilder.searchScreens(navController: NavController) {
 }
 
 private fun NavGraphBuilder.creditScreens(navController: NavController) {
+    val navigate: (person: Credit) -> Unit =
+        { person -> navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}") }
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments =
@@ -262,7 +265,8 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     ) { from ->
         CreditScreen(
             R.string.cast,
-            navController,
+            navController::navigateUp,
+            navigate,
             gson.fromJson<List<Cast>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Cast>>() {}.type,
@@ -278,7 +282,8 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     ) { from ->
         CreditScreen(
             R.string.crew,
-            navController,
+            navController::navigateUp,
+            navigate,
             gson.fromJson<List<Crew>>(
                 from.arguments?.getString(MainDestinations.TMDB_CREDIT_KEY),
                 object : TypeToken<List<Crew>>() {}.type,
@@ -302,7 +307,7 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
 private fun NavGraphBuilder.imagesScreen() {
     composable(
         route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}" +
-            "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
+                "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
         arguments =
         listOf(
             navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },

@@ -6,7 +6,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
 import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.placeholderIcon
@@ -25,7 +24,7 @@ class PersonCardTest {
             setContent {
                 PersonCard(
                     person = person,
-                    navController = rememberNavController(),
+                    {},
                     testPainter = rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }
