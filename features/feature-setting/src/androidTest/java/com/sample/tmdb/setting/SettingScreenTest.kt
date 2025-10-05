@@ -17,10 +17,11 @@ class SettingScreenTest {
             setContent {
                 SettingsScreen()
             }
+            onNodeWithText(activity.getString(R.string.language)).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.source_code_github)).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.privacy_policy)).assertIsDisplayed()
             onNodeWithText(activity.getString(R.string.version)).assertIsDisplayed()
-            onNodeWithText(activity.getString(R.string.about)).assertIsDisplayed()
+            onNodeWithText(activity.getString(R.string.settings)).assertIsDisplayed()
         }
     }
 

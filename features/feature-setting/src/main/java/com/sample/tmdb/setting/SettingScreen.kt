@@ -23,7 +23,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -97,7 +96,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
+fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
@@ -120,7 +119,6 @@ private fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Mod
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     Row(
