@@ -27,9 +27,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,9 +54,6 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             iconResourceId = R.drawable.ic_language,
             titleResourceId = R.string.language,
             options = listOf("es", "en"),
-            expanded = remember { mutableStateOf(false) },
-            selected = remember { mutableStateOf("es") },
-            fieldSize = remember { mutableStateOf(0) },
         ),
         Settings.IntentAction(
             iconResourceId = R.drawable.ic_github,
@@ -127,7 +121,7 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
                 when (settings) {
                     is Settings.Action -> Modifier.clickable(onClick = settings.onClick)
                     is Settings.IntentAction -> Modifier.clickable { context.startActivity(settings.intent) }
-                    is Settings.SelectBox<*>, is Settings.Info -> Modifier
+                    is Settings.SelectBox, is Settings.Info -> Modifier
                 },
             )
             .padding(TMDb_12_dp)
@@ -147,8 +141,8 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
         when (settings) {
             is Settings.Info -> TitleText(title = settings.value)
             is Settings.Action, is Settings.IntentAction -> ForwardButton()
-            is Settings.SelectBox<*> -> SimpleExposedDropDownMenu(
-                values = settings.options as List<String>,
+            is Settings.SelectBox -> SimpleExposedDropDownMenu(
+                values = settings.options,
                 label = { Text("") },
                 selectedIndex = settings.options.indexOf(Locale.current.language),
                 backgroundColor = Color.Transparent,
@@ -248,13 +242,10 @@ sealed interface Settings {
         val intent: Intent,
     ) : Settings
 
-    data class SelectBox<E>(
+    data class SelectBox(
         @DrawableRes override val iconResourceId: Int,
         @StringRes override val titleResourceId: Int,
-        val options: List<E>,
-        var expanded: MutableState<Boolean>,
-        var selected: MutableState<String>,
-        var fieldSize: MutableState<Int>,
+        val options: List<String>,
     ) : Settings
 }
 

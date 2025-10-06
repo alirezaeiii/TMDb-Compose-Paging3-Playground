@@ -2,7 +2,6 @@ package com.sample.tmdb.common.ui.component
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -80,35 +79,6 @@ fun SimpleExposedDropDownMenu(
                             strokeWidth,
                         )
                     },
-            ) {
-                content()
-            }
-        },
-    )
-}
-
-@Composable
-fun SimpleOutlinedExposedDropDownMenu(
-    values: List<String>,
-    selectedIndex: Int,
-    onChange: (Int) -> Unit,
-    label: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity),
-    shape: Shape = MaterialTheme.shapes.small,
-) {
-    SimpleExposedDropDownMenuImpl(
-        values = values,
-        selectedIndex = selectedIndex,
-        onChange = onChange,
-        label = label,
-        modifier = modifier,
-        backgroundColor = backgroundColor,
-        shape = shape,
-        decorator = { color, width, content ->
-            Box(
-                Modifier
-                    .border(width, color, shape),
             ) {
                 content()
             }
