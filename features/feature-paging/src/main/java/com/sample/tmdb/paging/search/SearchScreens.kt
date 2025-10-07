@@ -233,7 +233,7 @@ fun SearchHint(@StringRes resourceId: Int) {
         Icon(
             imageVector = Icons.Outlined.Search,
             tint = MaterialTheme.colors.primary,
-            contentDescription = stringResource(id = R.string.search_desc),
+            contentDescription = stringResource(id = commonR.string.search_desc),
         )
         Spacer(Modifier.width(TMDb_8_dp))
         Text(
