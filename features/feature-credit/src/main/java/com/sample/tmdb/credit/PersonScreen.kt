@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -129,7 +129,7 @@ fun Up(upPress: () -> Unit) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             tint = MaterialTheme.colors.onSurface,
-            contentDescription = stringResource(R1.string.back),
+            contentDescription = stringResource(commonR.string.back),
         )
     }
 }

@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -61,7 +61,7 @@ fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesView
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
         upPress = { navController.navigateUp() },
-        resourceId = R1.string.movies,
+        resourceId = commonR.string.movies,
     )
 }
 
@@ -71,7 +71,7 @@ fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeries
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
         upPress = { navController.navigateUp() },
-        resourceId = R1.string.tv_series,
+        resourceId = commonR.string.tv_series,
     )
 }
 
@@ -141,7 +141,7 @@ fun <T : TMDbItem> Search(
                 ) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(id = R1.string.back),
+                        contentDescription = stringResource(id = commonR.string.back),
                         tint = MaterialTheme.colors.primary,
                     )
                 }

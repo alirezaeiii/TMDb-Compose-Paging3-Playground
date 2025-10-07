@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -72,7 +72,7 @@ fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel 
         navController = navController,
         onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        R1.string.movies,
+        commonR.string.movies,
     )
 }
 
@@ -83,7 +83,7 @@ fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewMode
         navController = navController,
         onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        R1.string.tv_series,
+        commonR.string.tv_series,
     )
 }
 

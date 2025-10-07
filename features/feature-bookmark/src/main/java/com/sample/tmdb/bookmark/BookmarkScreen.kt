@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -101,7 +101,7 @@ private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMo
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        textResourceId = R1.string.movies,
+        textResourceId = commonR.string.movies,
     )
 }
 
@@ -110,7 +110,7 @@ private fun TVShowsTabContent(navController: NavController, viewModel: BookmarkT
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        textResourceId = R1.string.tv_series,
+        textResourceId = commonR.string.tv_series,
     )
 }
 

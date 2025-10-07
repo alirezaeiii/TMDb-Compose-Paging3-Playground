@@ -31,7 +31,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
-import com.sample.tmdb.common.R as R1
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
@@ -89,7 +89,7 @@ fun Poster(image: TMDbImage) {
 fun BlurImage(url: String) {
     AsyncImage(
         model = url,
-        contentDescription = stringResource(id = R1.string.poster_content_description),
+        contentDescription = stringResource(id = commonR.string.poster_content_description),
         contentScale = ContentScale.FillHeight,
         modifier =
         Modifier
