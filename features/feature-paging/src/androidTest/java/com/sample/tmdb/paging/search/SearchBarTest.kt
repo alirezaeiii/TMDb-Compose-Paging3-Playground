@@ -59,7 +59,7 @@ class SearchBarTest {
             setContent {
                 SearchHint(R.string.movies)
             }
-            onNodeWithContentDescription(activity.getString(pagingR.string.search_desc)).assertIsDisplayed()
+            onNodeWithContentDescription(activity.getString(R.string.search_desc)).assertIsDisplayed()
             onNodeWithText(
                 activity.getString(
                     pagingR.string.search,
