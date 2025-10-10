@@ -98,7 +98,7 @@ private fun <T : TMDbItem> FeedScreen(
 ) {
     Content(viewModel = viewModel) { feeds ->
         Box {
-            FeedCollectionList(navController, feeds, onClick)
+            FeedCollectionList(feeds, navController, onClick)
             DestinationBar(
                 title =
                 stringResource(
@@ -112,25 +112,23 @@ private fun <T : TMDbItem> FeedScreen(
 }
 
 @Composable
-fun FeedCollectionList(navController: NavController, collection: List<FeedWrapper>, onFeedClick: (TMDbItem) -> Unit) {
+fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
     LazyColumn {
         item {
             TMDbSpacer()
         }
         item {
             PagerTMDbItemContainer(
-                item = collection.first(),
+                feed = collection.first(),
                 navController = navController,
                 onFeedClick = onFeedClick,
             )
         }
         itemsIndexed(collection.drop(1)) { index, feedCollection ->
-            FeedCollection(
-                navController = navController,
-                feedCollection = feedCollection,
-                onFeedClick = onFeedClick,
-                index = index,
-            )
+            Column(modifier = Modifier.padding(top = TMDb_32_dp)) {
+                Header(feedCollection, navController)
+                Feeds(feedCollection.feeds, onFeedClick, index)
+            }
         }
         item {
             Spacer(
@@ -143,32 +141,15 @@ fun FeedCollectionList(navController: NavController, collection: List<FeedWrappe
 }
 
 @Composable
-fun PagerTMDbItemContainer(item: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
-    val pagerState = rememberPagerState(pageCount = { item.feeds.size })
+fun PagerTMDbItemContainer(feed: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
+    val pagerState = rememberPagerState(pageCount = { feed.feeds.size })
 
-    Header(titleId = item.sortTypeResourceId) {
-        when (item.feeds.first()) {
-            is Movie -> {
-                when (item.sortType) {
-                    SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
-                    else -> throw RuntimeException("Movie pager Sort type is not valid")
-                }
-            }
-
-            is TVShow -> {
-                when (item.sortType) {
-                    SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
-                    else -> throw RuntimeException("TV show pager item Sort type is not valid")
-                }
-            }
-        }
-    }
-
+    Header(feed, navController)
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp),
     ) { page ->
-        with(item.feeds[page]) {
+        with(feed.feeds[page]) {
             TrendingItem(
                 modifier =
                 Modifier.pagerTransition(
@@ -254,53 +235,7 @@ fun TrendingItem(
 }
 
 @Composable
-private fun FeedCollection(
-    navController: NavController,
-    feedCollection: FeedWrapper,
-    onFeedClick: (TMDbItem) -> Unit,
-    index: Int,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.padding(top = TMDb_32_dp)) {
-        Header(titleId = feedCollection.sortTypeResourceId) {
-            when (feedCollection.feeds.first()) {
-                is Movie -> {
-                    when (feedCollection.sortType) {
-                        SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
-                        SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
-                        SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
-                        SortType.HIGHEST_RATED ->
-                            navController.navigate(
-                                MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE,
-                            )
-
-                        SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
-                        else -> throw RuntimeException("Movie feed item Sort type is not valid")
-                    }
-                }
-
-                is TVShow -> {
-                    when (feedCollection.sortType) {
-                        SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
-                        SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
-                        SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
-                        SortType.HIGHEST_RATED ->
-                            navController.navigate(
-                                MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE,
-                            )
-
-                        SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
-                        else -> throw RuntimeException("TV show feed item Sort type is not valid")
-                    }
-                }
-            }
-        }
-        Feeds(feedCollection.feeds, onFeedClick, index)
-    }
-}
-
-@Composable
-fun Header(@StringRes titleId: Int, onMoreClick: () -> Unit) {
+fun Header(feed: FeedWrapper, navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
@@ -309,7 +244,7 @@ fun Header(@StringRes titleId: Int, onMoreClick: () -> Unit) {
             .padding(start = TMDb_12_dp),
     ) {
         Text(
-            text = stringResource(id = titleId),
+            text = stringResource(id = feed.sortTypeResourceId),
             maxLines = 1,
             color = MaterialTheme.colors.onSurface,
             modifier =
@@ -324,7 +259,15 @@ fun Header(@StringRes titleId: Int, onMoreClick: () -> Unit) {
             Modifier
                 .align(Alignment.CenterVertically)
                 .padding(TMDb_12_dp)
-                .clickable(onClick = onMoreClick),
+                .clickable(
+                    onClick = {
+                        moreFeedOnClick(
+                            feed.feeds.first(),
+                            feed.sortType,
+                            navController,
+                        )
+                    },
+                ),
         )
     }
 }
@@ -340,6 +283,38 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
                 TMDbCard(feed, onFeedClick, feed.backdropUrl, TMDb_220_dp)
             } else {
                 TMDbCard(feed, onFeedClick, feed.posterUrl, TMDb_120_dp)
+            }
+        }
+    }
+}
+
+private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navController: NavController) {
+    when (item) {
+        is Movie -> {
+            when (sortType) {
+                SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
+                SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
+                SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
+                SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
+                SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
+                SortType.HIGHEST_RATED ->
+                    navController.navigate(
+                        MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE,
+                    )
+            }
+        }
+
+        is TVShow -> {
+            when (sortType) {
+                SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
+                SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
+                SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
+                SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
+                SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
+                SortType.HIGHEST_RATED ->
+                    navController.navigate(
+                        MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE,
+                    )
             }
         }
     }

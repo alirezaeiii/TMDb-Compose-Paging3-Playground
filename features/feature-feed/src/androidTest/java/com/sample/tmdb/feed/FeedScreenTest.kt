@@ -80,7 +80,7 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 PagerTMDbItemContainer(
-                    item =
+                    feed =
                     FeedWrapper(
                         feeds =
                         listOf(
@@ -127,7 +127,25 @@ class FeedScreenTest {
     fun headerTest() {
         with(composeTestRule) {
             setContent {
-                Header(titleId = domainR.string.text_popular) {}
+                Header(
+                    feed = FeedWrapper(
+                        listOf(
+                            Movie(
+                                anyInt(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyDouble(),
+                                anyInt(),
+                            ),
+                        ),
+                        domainR.string.text_popular,
+                        SortType.MOST_POPULAR,
+                    ),
+                    navController = rememberNavController(),
+                )
             }
             onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
             onNodeWithText("More").assertIsDisplayed()
