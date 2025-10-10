@@ -159,28 +159,4 @@ class FeedScreenTest {
             onNodeWithText("title").assertIsDisplayed()
         }
     }
-
-    @Test
-    fun tMDBItemTest() {
-        with(composeTestRule) {
-            setContent {
-                TMDbItem(
-                    tmdbItem =
-                    Movie(
-                        anyInt(),
-                        anyString(),
-                        anyString(),
-                        anyString(),
-                        anyString(),
-                        "title",
-                        anyDouble(),
-                        anyInt(),
-                    ),
-                    onFeedClick = {},
-                    index = 0,
-                )
-            }
-            onNodeWithText("title").assertIsDisplayed()
-        }
-    }
 }

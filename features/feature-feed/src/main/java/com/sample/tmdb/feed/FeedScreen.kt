@@ -39,17 +39,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
+import com.sample.tmdb.common.ui.Dimens.TMDb_220_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
@@ -64,6 +64,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel = hiltViewModel()) {
@@ -232,7 +233,8 @@ fun TrendingItem(
                     .padding(
                         start = TMDb_12_dp,
                         bottom = TMDb_6_dp,
-                    ).align(Alignment.BottomStart),
+                    )
+                    .align(Alignment.BottomStart),
             ) {
                 Text(
                     text = title,
@@ -334,23 +336,13 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
         contentPadding = PaddingValues(start = TMDb_2_dp, end = TMDb_2_dp),
     ) {
         items(feeds) { feed ->
-            TMDbItem(feed, onFeedClick, index)
+            if (index % 3 == 0) {
+                TMDbCard(feed, onFeedClick, feed.backdropUrl, TMDb_220_dp)
+            } else {
+                TMDbCard(feed, onFeedClick, feed.posterUrl, TMDb_120_dp)
+            }
         }
     }
-}
-
-@Composable
-fun TMDbItem(tmdbItem: TMDbItem, onFeedClick: (TMDbItem) -> Unit, index: Int) {
-    val itemWidth: Dp
-    val imageUrl: String?
-    if (index % 3 == 0) {
-        itemWidth = 220.dp
-        imageUrl = tmdbItem.backdropUrl
-    } else {
-        itemWidth = 120.dp
-        imageUrl = tmdbItem.posterUrl
-    }
-    TMDbCard(tmdbItem, onFeedClick, imageUrl, itemWidth)
 }
 
 @Preview("default")
@@ -358,8 +350,8 @@ fun TMDbItem(tmdbItem: TMDbItem, onFeedClick: (TMDbItem) -> Unit, index: Int) {
 fun FeedCardPreview() {
     TmdbPagingComposeTheme {
         val movie = Movie(1, "", null, null, null, "Movie", 1.0, 2)
-        TMDbItem(
-            tmdbItem = movie,
+        Feeds(
+            feeds = listOf(movie),
             onFeedClick = {},
             0,
         )
