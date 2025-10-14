@@ -119,7 +119,7 @@ fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavControll
         }
         item {
             PagerTMDbItemContainer(
-                feed = collection.first(),
+                feedWrapper = collection.first(),
                 navController = navController,
                 onFeedClick = onFeedClick,
             )
@@ -141,15 +141,15 @@ fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavControll
 }
 
 @Composable
-fun PagerTMDbItemContainer(feed: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
-    val pagerState = rememberPagerState(pageCount = { feed.feeds.size })
+fun PagerTMDbItemContainer(feedWrapper: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
+    val pagerState = rememberPagerState(pageCount = { feedWrapper.feeds.size })
 
-    Header(feed, navController)
+    Header(feedWrapper, navController)
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp),
     ) { page ->
-        with(feed.feeds[page]) {
+        with(feedWrapper.feeds[page]) {
             TrendingItem(
                 modifier =
                 Modifier.pagerTransition(
@@ -235,7 +235,7 @@ fun TrendingItem(
 }
 
 @Composable
-fun Header(feed: FeedWrapper, navController: NavController) {
+fun Header(feedWrapper: FeedWrapper, navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
@@ -244,7 +244,7 @@ fun Header(feed: FeedWrapper, navController: NavController) {
             .padding(start = TMDb_12_dp),
     ) {
         Text(
-            text = stringResource(id = feed.sortTypeResourceId),
+            text = stringResource(id = feedWrapper.sortTypeResourceId),
             maxLines = 1,
             color = MaterialTheme.colors.onSurface,
             modifier =
@@ -262,8 +262,8 @@ fun Header(feed: FeedWrapper, navController: NavController) {
                 .clickable(
                     onClick = {
                         moreFeedOnClick(
-                            feed.feeds.first(),
-                            feed.sortType,
+                            feedWrapper.feeds.first(),
+                            feedWrapper.sortType,
                             navController,
                         )
                     },

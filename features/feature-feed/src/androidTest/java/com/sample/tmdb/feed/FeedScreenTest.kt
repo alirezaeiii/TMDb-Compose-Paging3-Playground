@@ -80,7 +80,7 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 PagerTMDbItemContainer(
-                    feed =
+                    feedWrapper =
                     FeedWrapper(
                         feeds =
                         listOf(
@@ -128,7 +128,7 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 Header(
-                    feed = FeedWrapper(
+                    feedWrapper = FeedWrapper(
                         listOf(
                             Movie(
                                 anyInt(),
