@@ -79,37 +79,27 @@ private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
 fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel = hiltViewModel()) {
-    Content(viewModel = viewModel) {
-        PersonScreen(it, upPress)
-    }
-}
-
-@Composable
-fun PersonScreen(person: Person, upPress: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
-    Box(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        val scroll = rememberScrollState(0)
-        Header()
-        Body(person.biography, titleHeight, scroll)
-        Title(person, titleHeight) { scroll.value }
-        person.profilePath?.let {
-            Image(it) { scroll.value }
+    Content(viewModel = viewModel) { person ->
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            val scroll = rememberScrollState(0)
+            Spacer(
+                modifier =
+                Modifier
+                    .height(280.dp)
+                    .fillMaxWidth()
+                    .background(Brush.horizontalGradient(Tornado)),
+            )
+            Body(person.biography, titleHeight, scroll)
+            Title(person, titleHeight) { scroll.value }
+            person.profilePath?.let {
+                Image(it) { scroll.value }
+            }
+            Up(upPress)
         }
-        Up(upPress)
     }
-}
-
-@Composable
-private fun Header() {
-    Spacer(
-        modifier =
-        Modifier
-            .height(280.dp)
-            .fillMaxWidth()
-            .background(Brush.horizontalGradient(Tornado)),
-    )
 }
 
 @Composable
