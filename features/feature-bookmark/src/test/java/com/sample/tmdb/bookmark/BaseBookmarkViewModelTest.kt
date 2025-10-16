@@ -8,6 +8,7 @@ import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,7 +20,12 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     lateinit var viewModel: BaseViewModel<List<T>>
 
-    abstract fun initViewModel()
+    protected abstract fun initViewModel()
+
+    @Before
+    fun setup() {
+        initViewModel()
+    }
 
     @Test
     fun `load bookmarks`() {

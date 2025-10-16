@@ -58,6 +58,7 @@ dependencies {
     testImplementation(Deps.mockito)
     testImplementation(Deps.coroutineTest)
     testImplementation(Deps.turbine)
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
 }
 
 fun getProperty(filename: String, propName: String): String? {
