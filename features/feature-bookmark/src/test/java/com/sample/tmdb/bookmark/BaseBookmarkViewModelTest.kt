@@ -18,13 +18,13 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     protected val repository = mockk<BaseRepository<List<T>>>()
 
-    lateinit var viewModel: BaseViewModel<List<T>>
+    private lateinit var viewModel: BaseViewModel<List<T>>
 
-    protected abstract fun initViewModel()
+    protected abstract fun initViewModel(): BaseViewModel<List<T>>
 
     @Before
     fun setup() {
-        initViewModel()
+        viewModel = initViewModel()
     }
 
     @Test

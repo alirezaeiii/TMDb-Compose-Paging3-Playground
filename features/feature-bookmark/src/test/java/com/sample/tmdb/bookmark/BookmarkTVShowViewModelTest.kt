@@ -4,7 +4,5 @@ import com.sample.tmdb.domain.model.TVShow
 
 class BookmarkTVShowViewModelTest : BaseBookmarkViewModelTest<TVShow>() {
 
-    override fun initViewModel() {
-        viewModel = BookmarkTVShowViewModel(repository)
-    }
+    override fun initViewModel() = BookmarkTVShowViewModel(repository)
 }
