@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class TopRatedMoviesPagingSourceTest: BaseMoviePagingSourceTest() {
+class TopRatedMoviesPagingSourceTest : BaseMoviePagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.topRatedMovies(1)
 
