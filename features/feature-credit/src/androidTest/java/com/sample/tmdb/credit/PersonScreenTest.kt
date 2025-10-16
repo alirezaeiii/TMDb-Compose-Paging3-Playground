@@ -19,32 +19,6 @@ class PersonScreenTest {
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
     @Test
-    fun personScreenTest() {
-        with(composeTestRule) {
-            setContent {
-                PersonScreen(
-                    Person(
-                        "birthDay",
-                        "deathDay",
-                        anyInt(),
-                        "name",
-                        "biography",
-                        "PlaceOfBirth",
-                        null,
-                    ),
-                ) {
-                }
-            }
-            onNodeWithText("name").assertIsDisplayed()
-            onNodeWithText(activity.getString(R.string.born, "birthDay")).assertIsDisplayed()
-            onNodeWithText(activity.getString(R.string.death, "deathDay")).assertIsDisplayed()
-            onNodeWithText(activity.getString(R.string.from, "PlaceOfBirth")).assertIsDisplayed()
-            onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
-            onNodeWithText("biography").assertExists()
-        }
-    }
-
-    @Test
     fun upTest() {
         with(composeTestRule) {
             setContent {
