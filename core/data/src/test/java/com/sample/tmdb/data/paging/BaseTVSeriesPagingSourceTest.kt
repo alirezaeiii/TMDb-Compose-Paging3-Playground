@@ -2,23 +2,23 @@ package com.sample.tmdb.data.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingSource.LoadResult.Page
-import com.sample.tmdb.data.network.MovieService
-import com.sample.tmdb.data.response.MovieResponse
+import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.response.NetworkTMDbWrapper
-import com.sample.tmdb.data.response.asMovieDomainModel
-import com.sample.tmdb.domain.model.Movie
+import com.sample.tmdb.data.response.TVShowResponse
+import com.sample.tmdb.data.response.asTVShowDomainModel
+import com.sample.tmdb.domain.model.TVShow
 import kotlin.test.assertEquals
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
-abstract class BaseMoviePagingSourceTest : BasePagingPagingSourceTest<Movie, MovieResponse>() {
+abstract class BaseTVSeriesPagingSourceTest : BasePagingPagingSourceTest<TVShow, TVShowResponse>() {
 
     @Mock
-    protected lateinit var api: MovieService
+    protected lateinit var api: TVShowService
 
-    private val movie1 = MovieResponse(
+    private val tvShow1 = TVShowResponse(
         1,
         "overview1",
         null,
@@ -28,7 +28,7 @@ abstract class BaseMoviePagingSourceTest : BasePagingPagingSourceTest<Movie, Mov
         1.1,
         1,
     )
-    private val movie2 = MovieResponse(
+    private val tvShow2 = TVShowResponse(
         2,
         "overview2",
         null,
@@ -40,7 +40,7 @@ abstract class BaseMoviePagingSourceTest : BasePagingPagingSourceTest<Movie, Mov
     )
 
     override fun mockApiResponse() = runTest {
-        `when`(getApiCall()).thenReturn(NetworkTMDbWrapper(listOf(movie1, movie2)))
+        `when`(getApiCall()).thenReturn(NetworkTMDbWrapper(listOf(tvShow1, tvShow2)))
     }
 
     @Test
@@ -48,7 +48,7 @@ abstract class BaseMoviePagingSourceTest : BasePagingPagingSourceTest<Movie, Mov
         mockApiResponse()
         assertEquals(
             expected = Page(
-                data = listOf(movie1, movie2).asMovieDomainModel(),
+                data = listOf(tvShow1, tvShow2).asTVShowDomainModel(),
                 prevKey = null,
                 nextKey = 2,
             ),
