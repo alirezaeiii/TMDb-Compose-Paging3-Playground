@@ -49,6 +49,5 @@ dependencies {
     implementation(Deps.iconExtended)
     implementation(Deps.coil)
     androidTestImplementation(Deps.composeUiTest)
-    androidTestImplementation(Deps.mockito)
     debugImplementation(Deps.composeManifest)
 }
