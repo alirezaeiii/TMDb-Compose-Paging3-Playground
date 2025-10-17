@@ -13,5 +13,5 @@ class SimilarTVSeriesPagingSourceTest : BaseTVSeriesPagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<TVShowResponse> = api.fetchSimilarTVSeries(1, 1)
 
-    override fun initPagingSource(): BasePagingSource<TVShow> = SimilarTVSeriesPagingSource(context, api, 1)
+    override fun getPagingDataSource(): BasePagingSource<TVShow> = SimilarTVSeriesPagingSource(context, api, 1)
 }

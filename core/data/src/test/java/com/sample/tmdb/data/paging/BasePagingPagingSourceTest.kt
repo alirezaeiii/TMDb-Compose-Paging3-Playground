@@ -15,7 +15,7 @@ abstract class BasePagingPagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
 
     protected lateinit var pagingSource: BasePagingSource<T>
 
-    protected abstract fun initPagingSource(): BasePagingSource<T>
+    protected abstract fun getPagingDataSource(): BasePagingSource<T>
 
     protected abstract fun mockApiResponse()
 
@@ -23,6 +23,6 @@ abstract class BasePagingPagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
 
     @Before
     fun setup() {
-        pagingSource = initPagingSource()
+        pagingSource = getPagingDataSource()
     }
 }

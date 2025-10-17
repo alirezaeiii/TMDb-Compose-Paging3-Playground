@@ -13,5 +13,5 @@ class OnTheAirTVSeriesPagingSourceTest : BaseTVSeriesPagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<TVShowResponse> = api.onTheAirTVSeries(1)
 
-    override fun initPagingSource(): BasePagingSource<TVShow> = OnTheAirTVSeriesPagingSource(context, api)
+    override fun getPagingDataSource(): BasePagingSource<TVShow> = OnTheAirTVSeriesPagingSource(context, api)
 }

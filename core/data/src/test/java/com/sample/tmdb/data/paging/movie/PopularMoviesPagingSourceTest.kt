@@ -13,5 +13,5 @@ class PopularMoviesPagingSourceTest : BaseMoviePagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.popularMovies(1)
 
-    override fun initPagingSource(): BasePagingSource<Movie> = PopularMoviesPagingSource(context, api)
+    override fun getPagingDataSource(): BasePagingSource<Movie> = PopularMoviesPagingSource(context, api)
 }

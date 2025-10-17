@@ -20,11 +20,11 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     private lateinit var viewModel: BaseViewModel<List<T>>
 
-    protected abstract fun initViewModel(): BaseViewModel<List<T>>
+    protected abstract fun getViewModel(): BaseViewModel<List<T>>
 
     @Before
     fun setup() {
-        viewModel = initViewModel()
+        viewModel = getViewModel()
     }
 
     @Test

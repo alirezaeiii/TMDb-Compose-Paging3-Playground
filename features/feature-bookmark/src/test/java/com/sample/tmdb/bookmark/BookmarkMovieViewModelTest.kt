@@ -4,5 +4,5 @@ import com.sample.tmdb.domain.model.Movie
 
 class BookmarkMovieViewModelTest : BaseBookmarkViewModelTest<Movie>() {
 
-    override fun initViewModel() = BookmarkMovieViewModel(repository)
+    override fun getViewModel() = BookmarkMovieViewModel(repository)
 }

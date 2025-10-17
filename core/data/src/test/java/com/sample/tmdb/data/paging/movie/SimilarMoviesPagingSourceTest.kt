@@ -13,5 +13,5 @@ class SimilarMoviesPagingSourceTest : BaseMoviePagingSourceTest() {
 
     override suspend fun getApiCall(): NetworkTMDbWrapper<MovieResponse> = api.fetchSimilarMovies(1, 1)
 
-    override fun initPagingSource(): BasePagingSource<Movie> = SimilarMoviesPagingSource(context, api, 1)
+    override fun getPagingDataSource(): BasePagingSource<Movie> = SimilarMoviesPagingSource(context, api, 1)
 }
