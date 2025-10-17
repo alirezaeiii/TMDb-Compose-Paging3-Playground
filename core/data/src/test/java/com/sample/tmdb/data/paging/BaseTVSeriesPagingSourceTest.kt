@@ -13,7 +13,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
-abstract class BaseTVSeriesPagingSourceTest : BasePagingPagingSourceTest<TVShow, TVShowResponse>() {
+abstract class BaseTVSeriesPagingSourceTest : BasePagingSourceTest<TVShow, TVShowResponse>() {
 
     @Mock
     protected lateinit var api: TVShowService

@@ -8,7 +8,7 @@ import com.sample.tmdb.domain.paging.BasePagingSource
 import org.junit.Before
 import org.mockito.Mock
 
-abstract class BasePagingPagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
+abstract class BasePagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
 
     @Mock
     protected lateinit var context: Context

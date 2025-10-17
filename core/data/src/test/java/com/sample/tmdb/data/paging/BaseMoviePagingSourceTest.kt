@@ -13,7 +13,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 
-abstract class BaseMoviePagingSourceTest : BasePagingPagingSourceTest<Movie, MovieResponse>() {
+abstract class BaseMoviePagingSourceTest : BasePagingSourceTest<Movie, MovieResponse>() {
 
     @Mock
     protected lateinit var api: MovieService
