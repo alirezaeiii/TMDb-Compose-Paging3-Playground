@@ -132,4 +132,6 @@ object Deps {
     const val junit4 = "junit:junit:${Versions.junit}"
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
     const val turbine = "app.cash.turbine:turbine:${Versions.turbine}"
+
+    const val kotlinTest = "org.jetbrains.kotlin:kotlin-test"
 }
