@@ -381,40 +381,61 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         },
                     )
 
-                    Text(
-                        text = it.details.tagline,
-                        color = localVibrantColor.current.value,
-                        style =
-                        MaterialTheme.typography.body1.copy(
-                            letterSpacing = 2.sp,
-                            lineHeight = 24.sp,
-                            fontFamily = FontFamily.Serif,
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        modifier =
-                        Modifier
-                            .padding(horizontal = TMDb_16_dp)
-                            .constrainAs(tagline) {
-                                top.linkTo(rateStars.bottom, 32.dp)
-                            },
-                    )
-
-                    Text(
-                        text = it.details.overview,
-                        style =
-                        MaterialTheme.typography.body2.copy(
-                            letterSpacing = 2.sp,
-                            lineHeight = 30.sp,
-                            fontFamily = FontFamily.SansSerif,
-                        ),
-                        modifier =
-                        Modifier
-                            .padding(horizontal = TMDb_16_dp)
-                            .constrainAs(overview) {
-                                top.linkTo(tagline.bottom, 8.dp)
+                    if (it.details.tagline.isNotEmpty()) {
+                        Text(
+                            text = it.details.tagline,
+                            color = localVibrantColor.current.value,
+                            style =
+                            MaterialTheme.typography.body1.copy(
+                                letterSpacing = 2.sp,
+                                lineHeight = 24.sp,
+                                fontFamily = FontFamily.Serif,
+                                fontWeight = FontWeight.Bold,
+                            ),
+                            modifier =
+                            Modifier
+                                .padding(horizontal = TMDb_16_dp)
+                                .constrainAs(tagline) {
+                                    top.linkTo(rateStars.bottom, 32.dp)
+                                },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(tagline) {
+                                top.linkTo(rateStars.bottom)
                                 linkTo(startGuideline, endGuideline)
                             },
-                    )
+                        )
+                    }
+
+                    if (it.details.overview.isNotEmpty()) {
+                        Text(
+                            text = it.details.overview,
+                            style =
+                            MaterialTheme.typography.body2.copy(
+                                letterSpacing = 2.sp,
+                                lineHeight = 30.sp,
+                                fontFamily = FontFamily.SansSerif,
+                            ),
+                            modifier =
+                            Modifier
+                                .padding(horizontal = TMDb_16_dp)
+                                .constrainAs(overview) {
+                                    top.linkTo(tagline.bottom, 8.dp)
+                                    linkTo(startGuideline, endGuideline)
+                                },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(overview) {
+                                top.linkTo(tagline.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
+
                     TMDbDetailItemSection(
                         items = it.cast,
                         headerResId = R.string.cast,
