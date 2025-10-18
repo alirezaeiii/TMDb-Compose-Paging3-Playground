@@ -24,5 +24,6 @@ abstract class BasePagingSourceTest<T : TMDbItem, R : TMDbItemResponse> {
     @Before
     fun setup() {
         pagingSource = getPagingDataSource()
+        mockApiResponse()
     }
 }

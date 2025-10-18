@@ -45,7 +45,6 @@ abstract class BaseMoviePagingSourceTest : BasePagingSourceTest<Movie, MovieResp
 
     @Test
     fun pageKeyedShowPagingSource() = runTest {
-        mockApiResponse()
         assertEquals(
             expected = Page(
                 data = listOf(movie1, movie2).asMovieDomainModel(),

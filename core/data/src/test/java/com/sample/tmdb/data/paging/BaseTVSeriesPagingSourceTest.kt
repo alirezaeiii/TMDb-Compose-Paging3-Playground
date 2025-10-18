@@ -45,7 +45,6 @@ abstract class BaseTVSeriesPagingSourceTest : BasePagingSourceTest<TVShow, TVSho
 
     @Test
     fun pageKeyedShowPagingSource() = runTest {
-        mockApiResponse()
         assertEquals(
             expected = Page(
                 data = listOf(tvShow1, tvShow2).asTVShowDomainModel(),
