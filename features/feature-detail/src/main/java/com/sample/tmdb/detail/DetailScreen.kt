@@ -436,88 +436,128 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         )
                     }
 
-                    TMDbDetailItemSection(
-                        items = it.cast,
-                        headerResId = R.string.cast,
-                        itemContent = { item, _ ->
-                            PersonCard(
-                                item,
-                                navigateToPerson,
-                                Modifier.width(140.dp),
-                            )
-                        },
-                        onSeeAllClicked = { cast ->
-                            navController.navigate(
-                                "${MainDestinations.TMDB_CAST_ROUTE}/${
-                                    Uri.encode(
-                                        gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type),
-                                    )
-                                }",
-                            )
-                        },
-                        modifier =
-                        Modifier.constrainAs(castSection) {
-                            top.linkTo(overview.bottom, 16.dp)
-                            linkTo(startGuideline, endGuideline)
-                        },
-                    )
+                    if (it.cast.isNotEmpty()) {
+                        TMDbDetailItemSection(
+                            items = it.cast,
+                            headerResId = R.string.cast,
+                            itemContent = { item, _ ->
+                                PersonCard(
+                                    item,
+                                    navigateToPerson,
+                                    Modifier.width(140.dp),
+                                )
+                            },
+                            onSeeAllClicked = { cast ->
+                                navController.navigate(
+                                    "${MainDestinations.TMDB_CAST_ROUTE}/${
+                                        Uri.encode(
+                                            gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type),
+                                        )
+                                    }",
+                                )
+                            },
+                            modifier =
+                            Modifier.constrainAs(castSection) {
+                                top.linkTo(overview.bottom, 16.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(castSection) {
+                                top.linkTo(overview.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
 
-                    TMDbDetailItemSection(
-                        items = it.crew,
-                        headerResId = R.string.crew,
-                        itemContent = { item, _ ->
-                            PersonCard(
-                                item,
-                                navigateToPerson,
-                                Modifier.width(140.dp),
-                            )
-                        },
-                        onSeeAllClicked = { crew ->
-                            navController.navigate(
-                                "${MainDestinations.TMDB_CREW_ROUTE}/${
-                                    Uri.encode(
-                                        gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type),
-                                    )
-                                }",
-                            )
-                        },
-                        modifier =
-                        Modifier.constrainAs(crewSection) {
-                            top.linkTo(castSection.bottom, 16.dp)
-                            linkTo(startGuideline, endGuideline)
-                        },
-                    )
+                    if (it.crew.isNotEmpty()) {
+                        TMDbDetailItemSection(
+                            items = it.crew,
+                            headerResId = R.string.crew,
+                            itemContent = { item, _ ->
+                                PersonCard(
+                                    item,
+                                    navigateToPerson,
+                                    Modifier.width(140.dp),
+                                )
+                            },
+                            onSeeAllClicked = { crew ->
+                                navController.navigate(
+                                    "${MainDestinations.TMDB_CREW_ROUTE}/${
+                                        Uri.encode(
+                                            gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type),
+                                        )
+                                    }",
+                                )
+                            },
+                            modifier =
+                            Modifier.constrainAs(crewSection) {
+                                top.linkTo(castSection.bottom, 16.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(crewSection) {
+                                top.linkTo(castSection.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
 
-                    TMDbDetailItemSection(
-                        items = it.images,
-                        headerResId = R.string.images,
-                        onSeeAllClicked = { images -> onImagesSelected.invoke(images, 0) },
-                        itemContent = { item, index ->
-                            ImageSection(
-                                item,
-                            ) { onImagesSelected.invoke(it.images, index) }
-                        },
-                        modifier =
-                        Modifier.constrainAs(imagesSection) {
-                            top.linkTo(crewSection.bottom, 16.dp)
-                            linkTo(startGuideline, endGuideline)
-                        },
-                    )
+                    if (it.images.isNotEmpty()) {
+                        TMDbDetailItemSection(
+                            items = it.images,
+                            headerResId = R.string.images,
+                            onSeeAllClicked = { images -> onImagesSelected.invoke(images, 0) },
+                            itemContent = { item, index ->
+                                ImageSection(
+                                    item,
+                                ) { onImagesSelected.invoke(it.images, index) }
+                            },
+                            modifier =
+                            Modifier.constrainAs(imagesSection) {
+                                top.linkTo(crewSection.bottom, 16.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(imagesSection) {
+                                top.linkTo(crewSection.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
 
-                    TMDbDetailItemSection(
-                        items = it.similarItems,
-                        headerResId = R.string.similar,
-                        onSeeAllClicked = { _ -> onAllSimilarSelected.invoke(it.details.id) },
-                        itemContent = { item, _ ->
-                            TMDbCard(item, onTMDbItemSelected)
-                        },
-                        headerText = stringResource(R.string.see_all_items),
-                        modifier =
-                        Modifier.constrainAs(similarSection) {
-                            top.linkTo(imagesSection.bottom, 16.dp)
-                            linkTo(startGuideline, endGuideline)
-                        },
-                    )
+                    if (it.similarItems.isNotEmpty()) {
+                        TMDbDetailItemSection(
+                            items = it.similarItems,
+                            headerResId = R.string.similar,
+                            onSeeAllClicked = { _ -> onAllSimilarSelected.invoke(it.details.id) },
+                            itemContent = { item, _ ->
+                                TMDbCard(item, onTMDbItemSelected)
+                            },
+                            headerText = stringResource(R.string.see_all_items),
+                            modifier =
+                            Modifier.constrainAs(similarSection) {
+                                top.linkTo(imagesSection.bottom, 16.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(similarSection) {
+                                top.linkTo(imagesSection.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
 
                     Spacer(
                         modifier =
