@@ -274,12 +274,6 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     val startGuideline = createGuidelineFromStart(TMDb_16_dp)
                     val endGuideline = createGuidelineFromEnd(TMDb_16_dp)
 
-                    it.details.posterPath?.let { posterPath ->
-                        GetVibrantColorFromPoster(
-                            posterPath,
-                            localVibrantColor.current,
-                        )
-                    }
                     it.details.backdropPath?.let { backdropPath ->
                         Backdrop(
                             backdropUrl = backdropPath,
@@ -288,7 +282,15 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                 top.linkTo(parent.top)
                             },
                         )
+                    } ?: run {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(backdrop) {
+                                top.linkTo(parent.top, 32.dp)
+                            },
+                        )
                     }
+
                     val posterWidth = 160.dp
                     AppBar(
                         homepage = it.details.homepage,
@@ -299,18 +301,38 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             .constrainAs(appbar) { centerTo(poster) }
                             .offset(y = TMDb_24_dp),
                     )
-                    Poster(
-                        it.details.posterPath,
-                        it.details.title,
-                        Modifier
-                            .zIndex(17f)
-                            .width(posterWidth)
-                            .height(240.dp)
-                            .constrainAs(poster) {
-                                centerAround(backdrop.bottom)
+
+                    it.details.posterPath?.let { posterPath ->
+                        GetVibrantColorFromPoster(
+                            posterPath,
+                            localVibrantColor.current,
+                        )
+                        Poster(
+                            it.details.posterPath,
+                            it.details.title,
+                            Modifier
+                                .zIndex(17f)
+                                .width(posterWidth)
+                                .height(240.dp)
+                                .constrainAs(poster) {
+                                    it.details.backdropPath?.let {
+                                        centerAround(backdrop.bottom)
+                                    } ?: run {
+                                        top.linkTo(backdrop.bottom)
+                                    }
+                                    linkTo(startGuideline, endGuideline)
+                                },
+                        )
+                    } ?: run {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(poster) {
+                                top.linkTo(backdrop.bottom)
                                 linkTo(startGuideline, endGuideline)
                             },
-                    )
+                        )
+                    }
+
                     Text(
                         text = it.details.title,
                         style =
@@ -354,14 +376,24 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                         )
                     }
 
-                    GenreChips(
-                        it.details.genres.take(4),
-                        modifier =
-                        Modifier.constrainAs(genres) {
-                            top.linkTo(originalTitle.bottom, 16.dp)
-                            linkTo(startGuideline, endGuideline)
-                        },
-                    )
+                    if (it.details.genres.isNotEmpty()) {
+                        GenreChips(
+                            it.details.genres.take(4),
+                            modifier =
+                            Modifier.constrainAs(genres) {
+                                top.linkTo(originalTitle.bottom, 16.dp)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    } else {
+                        Spacer(
+                            modifier =
+                            Modifier.constrainAs(genres) {
+                                top.linkTo(originalTitle.bottom)
+                                linkTo(startGuideline, endGuideline)
+                            },
+                        )
+                    }
 
                     TMDbItemFields(
                         it.details,
@@ -396,7 +428,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             Modifier
                                 .padding(horizontal = TMDb_16_dp)
                                 .constrainAs(tagline) {
-                                    top.linkTo(rateStars.bottom, 32.dp)
+                                    top.linkTo(rateStars.bottom, 12.dp)
                                 },
                         )
                     } else {
