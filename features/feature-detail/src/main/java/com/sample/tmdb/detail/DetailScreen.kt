@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyRow
@@ -83,6 +84,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
@@ -123,6 +125,7 @@ import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.imageTint
 import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.navigationBarPadding
+import com.sample.tmdb.common.utils.toDp
 import com.sample.tmdb.detail.utils.openInChromeCustomTab
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
@@ -283,10 +286,12 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                             },
                         )
                     } ?: run {
+                        val density = LocalDensity.current
+                        val insets = WindowInsets.statusBars.getTop(density).toDp()
                         Spacer(
                             modifier =
                             Modifier.constrainAs(backdrop) {
-                                top.linkTo(parent.top, 32.dp)
+                                top.linkTo(parent.top, insets.dp)
                             },
                         )
                     }
