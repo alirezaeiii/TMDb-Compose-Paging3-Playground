@@ -150,10 +150,20 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
         startDestination = HomeSections.MOVIE_SECTION.route,
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) {
-            MovieFeedScreen(navController = navController, viewModel = hiltViewModel())
+            MovieFeedScreen(
+                hiltViewModel(),
+                { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
+                { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
+                { navController.navigate(it) },
+            )
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) {
-            TVShowFeedScreen(navController = navController, viewModel = hiltViewModel())
+            TVShowFeedScreen(
+                hiltViewModel(),
+                { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
+                { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+                { navController.navigate(it) },
+            )
         }
         composable(route = HomeSections.BOOKMARK_SECTION.route) {
             BookmarkScreen(

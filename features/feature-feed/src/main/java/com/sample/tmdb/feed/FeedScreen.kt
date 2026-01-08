@@ -40,7 +40,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
@@ -66,23 +65,33 @@ import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
 
 @Composable
-fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel) {
+fun MovieFeedScreen(
+    viewModel: MovieFeedViewModel,
+    onSearchClicked: () -> Unit,
+    onClick: (TMDbItem) -> Unit,
+    navigate: (String) -> Unit,
+) {
     FeedScreen(
         viewModel = viewModel,
-        navController = navController,
-        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
-        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
+        navigate = navigate,
+        onSearchClicked = onSearchClicked,
+        onClick = onClick,
         commonR.string.movies,
     )
 }
 
 @Composable
-fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewModel) {
+fun TVShowFeedScreen(
+    viewModel: TVShowFeedViewModel,
+    onSearchClicked: () -> Unit,
+    onClick: (TMDbItem) -> Unit,
+    navigate: (String) -> Unit,
+) {
     FeedScreen(
         viewModel = viewModel,
-        navController = navController,
-        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
-        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+        navigate = navigate,
+        onSearchClicked = onSearchClicked,
+        onClick = onClick,
         commonR.string.tv_series,
     )
 }
@@ -90,14 +99,14 @@ fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewMode
 @Composable
 private fun <T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
-    navController: NavController,
+    navigate: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     @StringRes resourceId: Int,
 ) {
     Content(viewModel = viewModel) { feeds ->
         Box {
-            FeedCollectionList(feeds, navController, onClick)
+            FeedCollectionList(feeds, navigate, onClick)
             DestinationBar(
                 title =
                 stringResource(
@@ -111,7 +120,7 @@ private fun <T : TMDbItem> FeedScreen(
 }
 
 @Composable
-fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
+fun FeedCollectionList(collection: List<FeedWrapper>, navigate: (String) -> Unit, onFeedClick: (TMDbItem) -> Unit) {
     LazyColumn {
         item {
             TMDbSpacer()
@@ -119,13 +128,13 @@ fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavControll
         item {
             PagerTMDbItemContainer(
                 feedWrapper = collection.first(),
-                navController = navController,
+                navigate = navigate,
                 onFeedClick = onFeedClick,
             )
         }
         itemsIndexed(collection.drop(1)) { index, feedCollection ->
             Column(modifier = Modifier.padding(top = TMDb_32_dp)) {
-                Header(feedCollection, navController)
+                Header(feedCollection, navigate)
                 Feeds(feedCollection.feeds, onFeedClick, index)
             }
         }
@@ -140,10 +149,10 @@ fun FeedCollectionList(collection: List<FeedWrapper>, navController: NavControll
 }
 
 @Composable
-fun PagerTMDbItemContainer(feedWrapper: FeedWrapper, navController: NavController, onFeedClick: (TMDbItem) -> Unit) {
+fun PagerTMDbItemContainer(feedWrapper: FeedWrapper, navigate: (String) -> Unit, onFeedClick: (TMDbItem) -> Unit) {
     val pagerState = rememberPagerState(pageCount = { feedWrapper.feeds.size })
 
-    Header(feedWrapper, navController)
+    Header(feedWrapper, navigate)
     HorizontalPager(
         state = pagerState,
         contentPadding = PaddingValues(horizontal = Dimens.TMDb_16_dp),
@@ -234,7 +243,7 @@ fun TrendingItem(
 }
 
 @Composable
-fun Header(feedWrapper: FeedWrapper, navController: NavController) {
+fun Header(feedWrapper: FeedWrapper, navigate: (String) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier =
@@ -263,7 +272,7 @@ fun Header(feedWrapper: FeedWrapper, navController: NavController) {
                         moreFeedOnClick(
                             feedWrapper.feeds.first(),
                             feedWrapper.sortType,
-                            navController,
+                            navigate,
                         )
                     },
                 ),
@@ -287,17 +296,17 @@ fun Feeds(feeds: List<TMDbItem>, onFeedClick: (TMDbItem) -> Unit, index: Int, mo
     }
 }
 
-private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navController: NavController) {
+private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (String) -> Unit) {
     when (item) {
         is Movie -> {
             when (sortType) {
-                SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
-                SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
-                SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
-                SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
-                SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
+                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_MOVIES_ROUTE)
+                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_MOVIES_ROUTE)
+                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
+                SortType.UPCOMING -> navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
+                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
                 SortType.HIGHEST_RATED ->
-                    navController.navigate(
+                    navigate(
                         MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE,
                     )
             }
@@ -305,13 +314,13 @@ private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navController: N
 
         is TVShow -> {
             when (sortType) {
-                SortType.TRENDING -> navController.navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
-                SortType.MOST_POPULAR -> navController.navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
-                SortType.NOW_PLAYING -> navController.navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
-                SortType.UPCOMING -> navController.navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
-                SortType.DISCOVER -> navController.navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
+                SortType.TRENDING -> navigate(MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE)
+                SortType.MOST_POPULAR -> navigate(MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE)
+                SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
+                SortType.UPCOMING -> navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
+                SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
                 SortType.HIGHEST_RATED ->
-                    navController.navigate(
+                    navigate(
                         MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE,
                     )
             }

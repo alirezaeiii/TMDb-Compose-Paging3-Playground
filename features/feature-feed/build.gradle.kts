@@ -51,7 +51,6 @@ dependencies {
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
-    implementation(Deps.navigationCompose)
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)
     testImplementation(project(BuildModules.COMMON_TEST))
