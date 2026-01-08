@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -63,7 +64,6 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
 import kotlin.math.max
 import kotlin.math.min
-import com.sample.tmdb.common.R as commonR
 
 private val BottomBarHeight = 36.dp
 private val GradientScroll = 180.dp

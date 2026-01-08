@@ -64,9 +64,9 @@ fun BookmarkScreen(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding(),
+        Modifier
+            .fillMaxSize()
+            .statusBarsPadding(),
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
@@ -141,16 +141,16 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
-            PaddingValues(
-                start = TMDb_8_dp,
-                end = TMDb_8_dp,
-                bottom = navigationBarPadding().plus(TMDb_56_dp),
-            ),
+        PaddingValues(
+            start = TMDb_8_dp,
+            end = TMDb_8_dp,
+            bottom = navigationBarPadding().plus(TMDb_56_dp),
+        ),
         horizontalArrangement =
-            Arrangement.spacedBy(
-                TMDb_8_dp,
-                Alignment.CenterHorizontally,
-            ),
+        Arrangement.spacedBy(
+            TMDb_8_dp,
+            Alignment.CenterHorizontally,
+        ),
         content = {
             items(items.size) { index ->
                 TMDbContent(
@@ -169,9 +169,9 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
 fun EmptyView(@StringRes textResourceId: Int) {
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(bottom = 64.dp),
+        Modifier
+            .fillMaxSize()
+            .padding(bottom = 64.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -184,10 +184,10 @@ fun EmptyView(@StringRes textResourceId: Int) {
         }
         Text(
             text =
-                stringResource(
-                    id = R.string.empty_list,
-                    stringResource(id = textResourceId),
-                ),
+            stringResource(
+                id = R.string.empty_list,
+                stringResource(id = textResourceId),
+            ),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             textAlign = TextAlign.Center,
         )
