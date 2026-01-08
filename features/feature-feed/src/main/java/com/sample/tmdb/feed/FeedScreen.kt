@@ -40,11 +40,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -65,9 +63,10 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.common.R as commonR
 
 @Composable
-fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel = hiltViewModel()) {
+fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,
@@ -78,7 +77,7 @@ fun MovieFeedScreen(navController: NavController, viewModel: MovieFeedViewModel 
 }
 
 @Composable
-fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewModel = hiltViewModel()) {
+fun TVShowFeedScreen(navController: NavController, viewModel: TVShowFeedViewModel) {
     FeedScreen(
         viewModel = viewModel,
         navController = navController,

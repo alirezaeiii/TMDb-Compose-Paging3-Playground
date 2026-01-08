@@ -30,7 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
@@ -48,19 +47,26 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun BookmarkScreen(navController: NavController, coroutineScope: CoroutineScope = rememberCoroutineScope()) {
+fun BookmarkScreen(
+    navController: NavController,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    movieViewModel: BookmarkMovieViewModel,
+    tvShowViewModel: BookmarkTVShowViewModel,
+) {
     val tabs = remember { MediaTab.entries.toTypedArray() }
     val pagerState =
-        rememberPagerState(pageCount = {
-            tabs.size
-        })
+        rememberPagerState(
+            pageCount = {
+                tabs.size
+            },
+        )
     val selectedTabIndex = pagerState.currentPage
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .statusBarsPadding(),
+            Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
     ) {
         TabRow(
             selectedTabIndex = selectedTabIndex,
@@ -89,15 +95,15 @@ fun BookmarkScreen(navController: NavController, coroutineScope: CoroutineScope 
             verticalAlignment = Alignment.Top,
         ) { page ->
             when (page) {
-                MediaTab.Movies.ordinal -> MoviesTabContent(navController)
-                MediaTab.TVShows.ordinal -> TVShowsTabContent(navController)
+                MediaTab.Movies.ordinal -> MoviesTabContent(navController, movieViewModel)
+                MediaTab.TVShows.ordinal -> TVShowsTabContent(navController, tvShowViewModel)
             }
         }
     }
 }
 
 @Composable
-private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMovieViewModel = hiltViewModel()) {
+private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMovieViewModel) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
@@ -106,7 +112,7 @@ private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMo
 }
 
 @Composable
-private fun TVShowsTabContent(navController: NavController, viewModel: BookmarkTVShowViewModel = hiltViewModel()) {
+private fun TVShowsTabContent(navController: NavController, viewModel: BookmarkTVShowViewModel) {
     TabContent(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
@@ -135,16 +141,16 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
-        PaddingValues(
-            start = TMDb_8_dp,
-            end = TMDb_8_dp,
-            bottom = navigationBarPadding().plus(TMDb_56_dp),
-        ),
+            PaddingValues(
+                start = TMDb_8_dp,
+                end = TMDb_8_dp,
+                bottom = navigationBarPadding().plus(TMDb_56_dp),
+            ),
         horizontalArrangement =
-        Arrangement.spacedBy(
-            TMDb_8_dp,
-            Alignment.CenterHorizontally,
-        ),
+            Arrangement.spacedBy(
+                TMDb_8_dp,
+                Alignment.CenterHorizontally,
+            ),
         content = {
             items(items.size) { index ->
                 TMDbContent(
@@ -163,9 +169,9 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
 fun EmptyView(@StringRes textResourceId: Int) {
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(bottom = 64.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(bottom = 64.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -178,10 +184,10 @@ fun EmptyView(@StringRes textResourceId: Int) {
         }
         Text(
             text =
-            stringResource(
-                id = R.string.empty_list,
-                stringResource(id = textResourceId),
-            ),
+                stringResource(
+                    id = R.string.empty_list,
+                    stringResource(id = textResourceId),
+                ),
             style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.SemiBold),
             textAlign = TextAlign.Center,
         )

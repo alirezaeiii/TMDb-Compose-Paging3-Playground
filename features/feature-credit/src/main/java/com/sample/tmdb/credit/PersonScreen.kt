@@ -47,10 +47,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -65,6 +63,7 @@ import com.sample.tmdb.common.utils.CircleTopCropTransformation
 import com.sample.tmdb.domain.model.Person
 import kotlin.math.max
 import kotlin.math.min
+import com.sample.tmdb.common.R as commonR
 
 private val BottomBarHeight = 36.dp
 private val GradientScroll = 180.dp
@@ -78,7 +77,7 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel = hiltViewModel()) {
+fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Content(viewModel = viewModel) { person ->
         Box(
@@ -95,7 +94,7 @@ fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel = hiltViewModel
             Body(person.biography, titleHeight, scroll)
             Title(person, titleHeight) { scroll.value }
             person.profilePath?.let {
-                Image(it) { scroll.value }
+                PersonImage(it) { scroll.value }
             }
             Up(upPress)
         }
@@ -240,7 +239,7 @@ fun Title(person: Person, titleHeight: MutableState<Dp>, scrollProvider: () -> I
 }
 
 @Composable
-private fun Image(imageUrl: String, scrollProvider: () -> Int) {
+private fun PersonImage(imageUrl: String, scrollProvider: () -> Int) {
     val collapseRange = with(LocalDensity.current) { (MaxTitleOffset - MinTitleOffset).toPx() }
     val collapseFractionProvider = {
         (scrollProvider() / collapseRange).coerceIn(0f, 1f)

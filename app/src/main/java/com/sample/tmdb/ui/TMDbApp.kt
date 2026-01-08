@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -149,13 +150,17 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
         startDestination = HomeSections.MOVIE_SECTION.route,
     ) {
         composable(route = HomeSections.MOVIE_SECTION.route) {
-            MovieFeedScreen(navController = navController)
+            MovieFeedScreen(navController = navController, viewModel = hiltViewModel())
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) {
-            TVShowFeedScreen(navController = navController)
+            TVShowFeedScreen(navController = navController, viewModel = hiltViewModel())
         }
         composable(route = HomeSections.BOOKMARK_SECTION.route) {
-            BookmarkScreen(navController)
+            BookmarkScreen(
+                navController = navController,
+                movieViewModel = hiltViewModel(),
+                tvShowViewModel = hiltViewModel(),
+            )
         }
         composable(route = HomeSections.SETTING_SECTION.route) {
             SettingsScreen()
@@ -167,89 +172,89 @@ private fun NavGraphBuilder.detailScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+            ),
     ) {
-        MovieDetailScreen(navController)
+        MovieDetailScreen(navController, hiltViewModel())
     }
     composable(
         route = "${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/{${MainDestinations.TMDB_ID_KEY}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_ID_KEY) { type = NavType.IntType },
+            ),
     ) {
-        TVShowDetailScreen(navController)
+        TVShowDetailScreen(navController, hiltViewModel())
     }
 }
 
 private fun NavGraphBuilder.moviePagingScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_TRENDING_MOVIES_ROUTE) {
-        TrendingMovieScreen(navController = navController)
+        TrendingMovieScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_POPULAR_MOVIES_ROUTE) {
-        PopularMovieScreen(navController = navController)
+        PopularMovieScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE) {
-        NowPlayingMovieScreen(navController = navController)
+        NowPlayingMovieScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE) {
-        UpcomingMovieScreen(navController = navController)
+        UpcomingMovieScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE) {
-        TopRatedMovieScreen(navController = navController)
+        TopRatedMovieScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE) {
-        DiscoverMovieScreen(navController = navController)
+        DiscoverMovieScreen(navController = navController, hiltViewModel())
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+            ),
     ) {
-        SimilarMovieScreen(navController = navController)
+        SimilarMovieScreen(navController = navController, hiltViewModel())
     }
 }
 
 private fun NavGraphBuilder.tvShowPagingScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_TRENDING_TV_SHOW_ROUTE) {
-        TrendingTVShowScreen(navController = navController)
+        TrendingTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_POPULAR_TV_SHOW_ROUTE) {
-        PopularTVShowScreen(navController = navController)
+        PopularTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE) {
-        AiringTodayTVShowScreen(navController = navController)
+        AiringTodayTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE) {
-        OnTheAirTVShowScreen(navController = navController)
+        OnTheAirTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE) {
-        TopRatedTVShowScreen(navController = navController)
+        TopRatedTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE) {
-        DiscoverTVShowScreen(navController = navController)
+        DiscoverTVShowScreen(navController = navController, hiltViewModel())
     }
     composable(
         route = "${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/{${MainDestinations.TMDB_SIMILAR_ID}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_SIMILAR_ID) { type = NavType.IntType },
+            ),
     ) {
-        SimilarTVShowScreen(navController = navController)
+        SimilarTVShowScreen(navController = navController, hiltViewModel())
     }
 }
 
 private fun NavGraphBuilder.searchScreens(navController: NavController) {
     composable(route = MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) {
-        SearchMoviesScreen(navController = navController)
+        SearchMoviesScreen(navController = navController, hiltViewModel())
     }
     composable(route = MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) {
-        SearchTVSeriesScreen(navController = navController)
+        SearchTVSeriesScreen(navController = navController, hiltViewModel())
     }
 }
 
@@ -259,9 +264,9 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CAST_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+            ),
     ) { from ->
         CreditScreen(
             R.string.cast,
@@ -276,9 +281,9 @@ private fun NavGraphBuilder.creditScreens(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_CREW_ROUTE}/{${MainDestinations.TMDB_CREDIT_KEY}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_CREDIT_KEY) { type = NavType.StringType },
+            ),
     ) { from ->
         CreditScreen(
             R.string.crew,
@@ -296,30 +301,30 @@ private fun NavGraphBuilder.personScreen(navController: NavController) {
     composable(
         route = "${MainDestinations.TMDB_PERSON_ROUTE}/{${MainDestinations.TMDB_PERSON_KEY}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_PERSON_KEY) { type = NavType.StringType },
+            ),
     ) {
-        PersonScreen({ navController.navigateUp() })
+        PersonScreen({ navController.navigateUp() }, hiltViewModel())
     }
 }
 
 private fun NavGraphBuilder.imagesScreen() {
     composable(
         route = "${MainDestinations.TMDB_IMAGES_ROUTE}/{${MainDestinations.TMDB_IMAGES_KEY}}" +
-            "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
+                "/{${MainDestinations.TMDB_IMAGE_PAGE}}",
         arguments =
-        listOf(
-            navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
-            navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType },
-        ),
+            listOf(
+                navArgument(MainDestinations.TMDB_IMAGES_KEY) { type = NavType.StringType },
+                navArgument(MainDestinations.TMDB_IMAGE_PAGE) { type = NavType.IntType },
+            ),
     ) { from ->
         ImagesScreen(
             images =
-            gson.fromJson(
-                from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
-                object : TypeToken<List<TMDbImage>>() {}.type,
-            ),
+                gson.fromJson(
+                    from.arguments?.getString(MainDestinations.TMDB_IMAGES_KEY),
+                    object : TypeToken<List<TMDbImage>>() {}.type,
+                ),
             initialPage = from.arguments?.getInt(MainDestinations.TMDB_IMAGE_PAGE)!!,
         )
     }

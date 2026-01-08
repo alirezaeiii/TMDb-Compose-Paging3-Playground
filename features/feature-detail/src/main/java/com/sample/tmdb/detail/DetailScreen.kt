@@ -98,7 +98,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import coil.ImageLoader
@@ -110,7 +109,6 @@ import coil.request.SuccessResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -134,9 +132,10 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
+import com.sample.tmdb.common.R as commonR
 
 @Composable
-fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewModel = hiltViewModel()) {
+fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewModel) {
     DetailScreen(
         viewModel = viewModel,
         navController = navController,
@@ -157,7 +156,7 @@ fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewMo
 }
 
 @Composable
-fun TVShowDetailScreen(navController: NavController, viewModel: TVShowDetailViewModel = hiltViewModel()) {
+fun TVShowDetailScreen(navController: NavController, viewModel: TVShowDetailViewModel) {
     DetailScreen(
         viewModel = viewModel,
         navController = navController,

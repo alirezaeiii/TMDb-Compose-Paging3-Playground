@@ -3,7 +3,6 @@ package com.sample.tmdb.paging.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
@@ -29,7 +28,7 @@ import com.sample.tmdb.paging.main.tvshow.TopRatedTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.TrendingTvSeriesViewModel
 
 @Composable
-fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesViewModel = hiltViewModel()) {
+fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -42,7 +41,7 @@ fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesV
 }
 
 @Composable
-fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesViewModel = hiltViewModel()) {
+fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -55,7 +54,7 @@ fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesVie
 }
 
 @Composable
-fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMoviesViewModel = hiltViewModel()) {
+fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -68,7 +67,7 @@ fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMov
 }
 
 @Composable
-fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesViewModel = hiltViewModel()) {
+fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -81,7 +80,7 @@ fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesV
 }
 
 @Composable
-fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesViewModel = hiltViewModel()) {
+fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -94,7 +93,7 @@ fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesV
 }
 
 @Composable
-fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesViewModel = hiltViewModel()) {
+fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -107,7 +106,7 @@ fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesV
 }
 
 @Composable
-fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesViewModel = hiltViewModel()) {
+fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesViewModel) {
     MoviePagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -120,7 +119,7 @@ fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesVie
 }
 
 @Composable
-fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeriesViewModel = hiltViewModel()) {
+fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -133,7 +132,7 @@ fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeri
 }
 
 @Composable
-fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeriesViewModel = hiltViewModel()) {
+fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -146,7 +145,7 @@ fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeries
 }
 
 @Composable
-fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringTodayTvSeriesViewModel = hiltViewModel()) {
+fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringTodayTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -159,7 +158,7 @@ fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringToday
 }
 
 @Composable
-fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeriesViewModel = hiltViewModel()) {
+fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -172,7 +171,7 @@ fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeri
 }
 
 @Composable
-fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeriesViewModel = hiltViewModel()) {
+fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -185,7 +184,7 @@ fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeri
 }
 
 @Composable
-fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeriesViewModel = hiltViewModel()) {
+fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,
@@ -198,7 +197,7 @@ fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeri
 }
 
 @Composable
-fun SimilarTVShowScreen(navController: NavController, viewModel: SimilarTvSeriesViewModel = hiltViewModel()) {
+fun SimilarTVShowScreen(navController: NavController, viewModel: SimilarTvSeriesViewModel) {
     TVShowPagingScreen(
         viewModel = viewModel,
         navController = navController,

@@ -47,10 +47,10 @@ dependencies {
 
     implementation(Deps.hilt)
     ksp(Deps.hilt_compiler)
-    implementation(Deps.hilt_compose)
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
+    implementation(Deps.navigationCompose)
     testImplementation(project(BuildModules.COMMON_TEST))
     testImplementation(Deps.junit4)
     testImplementation(Deps.mockk)

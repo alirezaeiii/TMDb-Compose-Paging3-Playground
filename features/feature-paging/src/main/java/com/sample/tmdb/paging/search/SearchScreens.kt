@@ -40,10 +40,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
@@ -54,9 +52,10 @@ import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
+import com.sample.tmdb.common.R as commonR
 
 @Composable
-fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesViewModel = hiltViewModel()) {
+fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesViewModel) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
@@ -66,7 +65,7 @@ fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesView
 }
 
 @Composable
-fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeriesViewModel = hiltViewModel()) {
+fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeriesViewModel) {
     Search(
         viewModel = viewModel,
         onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },

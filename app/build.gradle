@@ -84,6 +84,7 @@ dependencies {
     implementation Deps.composeActivity
     implementation Deps.composePaging
     implementation Deps.hilt
+    implementation Deps.hilt_compose
     ksp Deps.hilt_compiler
     implementation Deps.gson
 }
