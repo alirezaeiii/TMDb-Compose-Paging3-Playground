@@ -40,8 +40,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
@@ -55,21 +53,21 @@ import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
 
 @Composable
-fun SearchMoviesScreen(navController: NavController, viewModel: SearchMoviesViewModel) {
+fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onClick: (TMDbItem) -> Unit, navigateUp: () -> Unit) {
     Search(
         viewModel = viewModel,
-        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        upPress = { navController.navigateUp() },
+        onClick = onClick,
+        navigateUp = navigateUp,
         resourceId = commonR.string.movies,
     )
 }
 
 @Composable
-fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeriesViewModel) {
+fun SearchTVSeriesScreen(viewModel: SearchTVSeriesViewModel, onClick: (TMDbItem) -> Unit, navigateUp: () -> Unit) {
     Search(
         viewModel = viewModel,
-        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        upPress = { navController.navigateUp() },
+        onClick = onClick,
+        navigateUp = navigateUp,
         resourceId = commonR.string.tv_series,
     )
 }
@@ -78,7 +76,7 @@ fun SearchTVSeriesScreen(navController: NavController, viewModel: SearchTVSeries
 fun <T : TMDbItem> Search(
     viewModel: BaseSearchPagingViewModel<T>,
     onClick: (TMDbItem) -> Unit,
-    upPress: () -> Unit,
+    navigateUp: () -> Unit,
     @StringRes resourceId: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -126,13 +124,14 @@ fun <T : TMDbItem> Search(
                         .sizeIn(
                             maxWidth = TMDb_32_dp,
                             maxHeight = TMDb_32_dp,
-                        ).border(1.dp, MaterialTheme.colors.primary, CircleShape)
+                        )
+                        .border(1.dp, MaterialTheme.colors.primary, CircleShape)
                         .background(
                             color = MaterialTheme.colors.background,
                             shape = CircleShape,
                         )
                 IconButton(
-                    onClick = upPress,
+                    onClick = navigateUp,
                     modifier =
                     Modifier
                         .padding(start = TMDb_12_dp)

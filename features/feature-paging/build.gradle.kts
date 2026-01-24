@@ -50,7 +50,6 @@ dependencies {
     implementation(Deps.composeMaterial)
     implementation(Deps.iconExtended)
     implementation(Deps.composePaging)
-    implementation(Deps.navigationCompose)
     implementation(Deps.hilt)
     ksp(Deps.hilt_compiler)
     implementation(Deps.lottieCompose)

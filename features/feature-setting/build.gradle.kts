@@ -50,7 +50,6 @@ dependencies {
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
-    implementation(Deps.navigationCompose)
     implementation(Deps.appcompat)
     androidTestImplementation(Deps.composeUiTest)
     androidTestImplementation(Deps.mockito)

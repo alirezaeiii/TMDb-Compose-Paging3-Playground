@@ -45,7 +45,6 @@ dependencies {
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
-    implementation(Deps.navigationCompose)
     debugImplementation(Deps.composeUiTooling)
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)

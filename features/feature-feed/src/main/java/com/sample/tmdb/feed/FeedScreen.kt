@@ -305,10 +305,7 @@ private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (Strin
                 SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_NOW_PLAYING_MOVIES_ROUTE)
                 SortType.UPCOMING -> navigate(MainDestinations.TMDB_UPCOMING_MOVIES_ROUTE)
                 SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_MOVIES_ROUTE)
-                SortType.HIGHEST_RATED ->
-                    navigate(
-                        MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE,
-                    )
+                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_MOVIES_ROUTE)
             }
         }
 
@@ -319,10 +316,7 @@ private fun moreFeedOnClick(item: TMDbItem, sortType: SortType, navigate: (Strin
                 SortType.NOW_PLAYING -> navigate(MainDestinations.TMDB_AIRING_TODAY_TV_SHOW_ROUTE)
                 SortType.UPCOMING -> navigate(MainDestinations.TMDB_ON_THE_AIR_TV_SHOW_ROUTE)
                 SortType.DISCOVER -> navigate(MainDestinations.TMDB_DISCOVER_TV_SHOW_ROUTE)
-                SortType.HIGHEST_RATED ->
-                    navigate(
-                        MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE,
-                    )
+                SortType.HIGHEST_RATED -> navigate(MainDestinations.TMDB_TOP_RATED_TV_SHOW_ROUTE)
             }
         }
     }

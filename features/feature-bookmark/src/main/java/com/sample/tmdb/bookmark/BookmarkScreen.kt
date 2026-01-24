@@ -30,8 +30,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
@@ -48,11 +46,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BookmarkScreen(
-    navController: NavController,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     movieViewModel: BookmarkMovieViewModel,
     tvShowViewModel: BookmarkTVShowViewModel,
+    onMovieClicked: (TMDbItem) -> Unit,
+    onTVShowClicked: (TMDbItem) -> Unit,
 ) {
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val tabs = remember { MediaTab.entries.toTypedArray() }
     val pagerState =
         rememberPagerState(
@@ -95,27 +94,27 @@ fun BookmarkScreen(
             verticalAlignment = Alignment.Top,
         ) { page ->
             when (page) {
-                MediaTab.Movies.ordinal -> MoviesTabContent(navController, movieViewModel)
-                MediaTab.TVShows.ordinal -> TVShowsTabContent(navController, tvShowViewModel)
+                MediaTab.Movies.ordinal -> MoviesTabContent(movieViewModel, onMovieClicked)
+                MediaTab.TVShows.ordinal -> TVShowsTabContent(tvShowViewModel, onTVShowClicked)
             }
         }
     }
 }
 
 @Composable
-private fun MoviesTabContent(navController: NavController, viewModel: BookmarkMovieViewModel) {
+private fun MoviesTabContent(viewModel: BookmarkMovieViewModel, onClick: (TMDbItem) -> Unit) {
     TabContent(
         viewModel = viewModel,
-        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
+        onClick = onClick,
         textResourceId = commonR.string.movies,
     )
 }
 
 @Composable
-private fun TVShowsTabContent(navController: NavController, viewModel: BookmarkTVShowViewModel) {
+private fun TVShowsTabContent(viewModel: BookmarkTVShowViewModel, onClick: (TMDbItem) -> Unit) {
     TabContent(
         viewModel = viewModel,
-        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+        onClick = onClick,
         textResourceId = commonR.string.tv_series,
     )
 }

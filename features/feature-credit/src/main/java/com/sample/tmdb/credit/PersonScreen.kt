@@ -77,7 +77,7 @@ private val CollapsedImageSize = 150.dp
 private val HzPadding = Modifier.padding(horizontal = 24.dp)
 
 @Composable
-fun PersonScreen(upPress: () -> Unit, viewModel: PersonViewModel) {
+fun PersonScreen(viewModel: PersonViewModel, upPress: () -> Unit) {
     val titleHeight = remember { mutableStateOf(0.dp) }
     Content(viewModel = viewModel) { person ->
         Box(

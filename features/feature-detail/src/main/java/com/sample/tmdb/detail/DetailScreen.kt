@@ -1,6 +1,5 @@
 package com.sample.tmdb.detail
 
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
@@ -98,7 +97,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.drawable.toBitmap
-import androidx.navigation.NavController
 import androidx.palette.graphics.Palette
 import coil.ImageLoader
 import coil.compose.AsyncImage
@@ -106,9 +104,6 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.request.SuccessResult
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
@@ -126,8 +121,6 @@ import com.sample.tmdb.common.utils.dpToPx
 import com.sample.tmdb.common.utils.navigationBarPadding
 import com.sample.tmdb.common.utils.toDp
 import com.sample.tmdb.detail.utils.openInChromeCustomTab
-import com.sample.tmdb.domain.model.Cast
-import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.Genre
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.TMDbImage
@@ -135,12 +128,25 @@ import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.model.TVShow
 
 @Composable
-fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewModel) {
+fun MovieDetailScreen(
+    viewModel: MovieDetailViewModel,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
+    navigateToPerson: (Credit) -> Unit,
+    onImageSelected: (List<TMDbImage>, Int) -> Unit,
+    onSeeAllCastClicked: (List<Credit>) -> Unit,
+    onSeeAllCrewClicked: (List<Credit>) -> Unit,
+    navigateUp: () -> Unit,
+) {
     DetailScreen(
         viewModel = viewModel,
-        navController = navController,
-        onTMDbItemSelected = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        onAllSimilarSelected = { navController.navigate("${MainDestinations.TMDB_SIMILAR_MOVIES_ROUTE}/$it") },
+        onTMDbItemSelected = onTMDbItemSelected,
+        onAllSimilarSelected = onAllSimilarSelected,
+        navigateToPerson = navigateToPerson,
+        onImageSelected = onImageSelected,
+        onSeeAllCastClicked = onSeeAllCastClicked,
+        onSeeAllCrewClicked = onSeeAllCrewClicked,
+        navigateUp = navigateUp,
     ) { details ->
         Movie(
             id = details.id,
@@ -156,12 +162,25 @@ fun MovieDetailScreen(navController: NavController, viewModel: MovieDetailViewMo
 }
 
 @Composable
-fun TVShowDetailScreen(navController: NavController, viewModel: TVShowDetailViewModel) {
+fun TVShowDetailScreen(
+    viewModel: TVShowDetailViewModel,
+    onTMDbItemSelected: (TMDbItem) -> Unit,
+    onAllSimilarSelected: (Int) -> Unit,
+    navigateToPerson: (Credit) -> Unit,
+    onImageSelected: (List<TMDbImage>, Int) -> Unit,
+    onSeeAllCastClicked: (List<Credit>) -> Unit,
+    onSeeAllCrewClicked: (List<Credit>) -> Unit,
+    navigateUp: () -> Unit,
+) {
     DetailScreen(
         viewModel = viewModel,
-        navController = navController,
-        onTMDbItemSelected = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        onAllSimilarSelected = { navController.navigate("${MainDestinations.TMDB_SIMILAR_TV_SHOW_ROUTE}/$it") },
+        onTMDbItemSelected = onTMDbItemSelected,
+        onAllSimilarSelected = onAllSimilarSelected,
+        navigateToPerson = navigateToPerson,
+        onImageSelected = onImageSelected,
+        onSeeAllCastClicked = onSeeAllCastClicked,
+        onSeeAllCrewClicked = onSeeAllCrewClicked,
+        navigateUp = navigateUp,
     ) { details ->
         TVShow(
             id = details.id,
@@ -179,26 +198,24 @@ fun TVShowDetailScreen(navController: NavController, viewModel: TVShowDetailView
 @Composable
 private fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
-    navController: NavController,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
+    onImageSelected: (List<TMDbImage>, Int) -> Unit,
+    navigateToPerson: (Credit) -> Unit,
+    onSeeAllCastClicked: (List<Credit>) -> Unit,
+    onSeeAllCrewClicked: (List<Credit>) -> Unit,
+    navigateUp: () -> Unit,
     getBookmarkedItem: (TMDbItemDetails) -> E,
 ) {
     DetailScreen(
         viewModel = viewModel,
-        navController = navController,
-        onImagesSelected = { images, index ->
-            navController.navigate(
-                "${MainDestinations.TMDB_IMAGES_ROUTE}/${
-                    Uri.encode(
-                        gson.toJson(images, object : TypeToken<List<TMDbImage>>() {}.type),
-                    )
-                }/$index",
-            )
-        },
         onTMDbItemSelected = onTMDbItemSelected,
         onAllSimilarSelected = onAllSimilarSelected,
-        navigateToPerson = { person -> navController.navigate("${MainDestinations.TMDB_PERSON_ROUTE}/${person.id}") },
+        onImagesSelected = onImageSelected,
+        navigateToPerson = navigateToPerson,
+        onSeeAllCastClicked = onSeeAllCastClicked,
+        onSeeAllCrewClicked = onSeeAllCrewClicked,
+        navigateUp = navigateUp,
         fab = { isFabVisible, isBookmark, details ->
             ToggleBookmarkFab(isBookmark = isBookmark, isVisible = isFabVisible) {
                 if (isBookmark) {
@@ -217,11 +234,13 @@ private val localVibrantColor =
 @Composable
 fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
     viewModel: BaseDetailViewModel<T, E>,
-    navController: NavController,
     onImagesSelected: (List<TMDbImage>, Int) -> Unit,
     onTMDbItemSelected: (TMDbItem) -> Unit,
     onAllSimilarSelected: (Int) -> Unit,
     navigateToPerson: (person: Credit) -> Unit,
+    onSeeAllCastClicked: (List<Credit>) -> Unit,
+    onSeeAllCrewClicked: (List<Credit>) -> Unit,
+    navigateUp: () -> Unit,
     fab: @Composable (MutableState<Boolean>, Boolean, TMDbItemDetails) -> Unit,
 ) {
     // Visibility for FAB
@@ -298,7 +317,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                     val posterWidth = 160.dp
                     AppBar(
                         homepage = it.details.homepage,
-                        upPress = navController::navigateUp,
+                        upPress = navigateUp,
                         modifier =
                         Modifier
                             .requiredWidth(posterWidth * 2.2f)
@@ -483,15 +502,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                     Modifier.width(140.dp),
                                 )
                             },
-                            onSeeAllClicked = { cast ->
-                                navController.navigate(
-                                    "${MainDestinations.TMDB_CAST_ROUTE}/${
-                                        Uri.encode(
-                                            gson.toJson(cast, object : TypeToken<List<Cast>>() {}.type),
-                                        )
-                                    }",
-                                )
-                            },
+                            onSeeAllClicked = onSeeAllCastClicked,
                             modifier =
                             Modifier.constrainAs(castSection) {
                                 top.linkTo(overview.bottom, 16.dp)
@@ -519,15 +530,7 @@ fun <T : TMDbItemDetails, E : TMDbItem> DetailScreen(
                                     Modifier.width(140.dp),
                                 )
                             },
-                            onSeeAllClicked = { crew ->
-                                navController.navigate(
-                                    "${MainDestinations.TMDB_CREW_ROUTE}/${
-                                        Uri.encode(
-                                            gson.toJson(crew, object : TypeToken<List<Crew>>() {}.type),
-                                        )
-                                    }",
-                                )
-                            },
+                            onSeeAllClicked = onSeeAllCrewClicked,
                             modifier =
                             Modifier.constrainAs(crewSection) {
                                 top.linkTo(castSection.bottom, 16.dp)
@@ -682,17 +685,16 @@ private fun AppBar(modifier: Modifier, homepage: String?, upPress: () -> Unit) {
     }
 }
 
-private val springAnimation =
-    spring(
-        dampingRatio = Spring.DampingRatioMediumBouncy,
-        stiffness = Spring.StiffnessLow,
-        visibilityThreshold = 0.001f,
-    )
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Poster(posterUrl: String?, tmdbItemName: String, modifier: Modifier = Modifier) {
     val isScaled = remember { mutableStateOf(false) }
+    val springAnimation =
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow,
+            visibilityThreshold = 0.001f,
+        )
     val scale =
         animateFloatAsState(
             targetValue = if (isScaled.value) 2.2f else 1f,
@@ -966,5 +968,3 @@ class BottomArcShape(private val arcHeight: Float) : Shape {
         return Outline.Generic(path)
     }
 }
-
-private val gson = Gson()

@@ -3,12 +3,8 @@ package com.sample.tmdb.paging.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.component.DestinationBar
-import com.sample.tmdb.domain.model.Movie
-import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.paging.BasePagingViewModel
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
@@ -28,10 +24,17 @@ import com.sample.tmdb.paging.main.tvshow.TopRatedTvSeriesViewModel
 import com.sample.tmdb.paging.main.tvshow.TrendingTvSeriesViewModel
 
 @Composable
-fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesViewModel) {
-    MoviePagingScreen(
+fun TrendingMovieScreen(
+    viewModel: TrendingMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.trending,
@@ -41,11 +44,17 @@ fun TrendingMovieScreen(navController: NavController, viewModel: TrendingMoviesV
 }
 
 @Composable
-fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesViewModel) {
-    MoviePagingScreen(
+fun PopularMovieScreen(
+    viewModel: PopularMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
-        title =
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         stringResource(
             R.string.popular,
             stringResource(com.sample.tmdb.common.R.string.movies),
@@ -54,10 +63,17 @@ fun PopularMovieScreen(navController: NavController, viewModel: PopularMoviesVie
 }
 
 @Composable
-fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMoviesViewModel) {
-    MoviePagingScreen(
+fun NowPlayingMovieScreen(
+    viewModel: NowPlayingMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.now_playing,
@@ -67,10 +83,17 @@ fun NowPlayingMovieScreen(navController: NavController, viewModel: NowPlayingMov
 }
 
 @Composable
-fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesViewModel) {
-    MoviePagingScreen(
+fun UpcomingMovieScreen(
+    viewModel: UpcomingMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.upcoming,
@@ -80,10 +103,17 @@ fun UpcomingMovieScreen(navController: NavController, viewModel: UpcomingMoviesV
 }
 
 @Composable
-fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesViewModel) {
-    MoviePagingScreen(
+fun TopRatedMovieScreen(
+    viewModel: TopRatedMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.highest_rate,
@@ -93,10 +123,17 @@ fun TopRatedMovieScreen(navController: NavController, viewModel: TopRatedMoviesV
 }
 
 @Composable
-fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesViewModel) {
-    MoviePagingScreen(
+fun DiscoverMovieScreen(
+    viewModel: DiscoverMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.discover,
@@ -106,10 +143,17 @@ fun DiscoverMovieScreen(navController: NavController, viewModel: DiscoverMoviesV
 }
 
 @Composable
-fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesViewModel) {
-    MoviePagingScreen(
+fun SimilarMovieScreen(
+    viewModel: SimilarMoviesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.similar_items,
@@ -119,10 +163,17 @@ fun SimilarMovieScreen(navController: NavController, viewModel: SimilarMoviesVie
 }
 
 @Composable
-fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun TrendingTVShowScreen(
+    viewModel: TrendingTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.trending,
@@ -132,10 +183,17 @@ fun TrendingTVShowScreen(navController: NavController, viewModel: TrendingTvSeri
 }
 
 @Composable
-fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun PopularTVShowScreen(
+    viewModel: PopularTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.popular,
@@ -145,10 +203,17 @@ fun PopularTVShowScreen(navController: NavController, viewModel: PopularTvSeries
 }
 
 @Composable
-fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringTodayTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun AiringTodayTVShowScreen(
+    viewModel: AiringTodayTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.airing_today,
@@ -158,10 +223,17 @@ fun AiringTodayTVShowScreen(navController: NavController, viewModel: AiringToday
 }
 
 @Composable
-fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun OnTheAirTVShowScreen(
+    viewModel: OnTheAirTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.on_the_air,
@@ -171,10 +243,17 @@ fun OnTheAirTVShowScreen(navController: NavController, viewModel: OnTheAirTvSeri
 }
 
 @Composable
-fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun TopRatedTVShowScreen(
+    viewModel: TopRatedTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.highest_rate,
@@ -184,10 +263,17 @@ fun TopRatedTVShowScreen(navController: NavController, viewModel: TopRatedTvSeri
 }
 
 @Composable
-fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun DiscoverTVShowScreen(
+    viewModel: DiscoverTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.discover,
@@ -197,10 +283,17 @@ fun DiscoverTVShowScreen(navController: NavController, viewModel: DiscoverTvSeri
 }
 
 @Composable
-fun SimilarTVShowScreen(navController: NavController, viewModel: SimilarTvSeriesViewModel) {
-    TVShowPagingScreen(
+fun SimilarTVShowScreen(
+    viewModel: SimilarTvSeriesViewModel,
+    onClick: (TMDbItem) -> Unit,
+    onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
+) {
+    PagingScreen(
         viewModel = viewModel,
-        navController = navController,
+        onClick = onClick,
+        onSearchClicked = onSearchClicked,
+        navigateUp = navigateUp,
         title =
         stringResource(
             R.string.similar_items,
@@ -210,40 +303,18 @@ fun SimilarTVShowScreen(navController: NavController, viewModel: SimilarTvSeries
 }
 
 @Composable
-private fun MoviePagingScreen(viewModel: BasePagingViewModel<Movie>, navController: NavController, title: String) {
-    PagingScreen(
-        viewModel = viewModel,
-        navController = navController,
-        onClick = { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
-        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
-        title = title,
-    )
-}
-
-@Composable
-private fun TVShowPagingScreen(viewModel: BasePagingViewModel<TVShow>, navController: NavController, title: String) {
-    PagingScreen(
-        viewModel = viewModel,
-        navController = navController,
-        onClick = { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
-        onSearchClicked = { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
-        title = title,
-    )
-}
-
-@Composable
 private fun <T : TMDbItem> PagingScreen(
     viewModel: BasePagingViewModel<T>,
-    navController: NavController,
     onClick: (TMDbItem) -> Unit,
     onSearchClicked: () -> Unit,
+    navigateUp: () -> Unit,
     title: String,
 ) {
     Box {
         PagingScreen(viewModel, onClick)
         DestinationBar(
             title = title,
-            upPress = { navController.navigateUp() },
+            upPress = navigateUp,
             onSearchClicked = onSearchClicked,
         )
     }
