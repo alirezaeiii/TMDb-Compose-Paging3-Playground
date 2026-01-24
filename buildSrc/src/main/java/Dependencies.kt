@@ -51,6 +51,7 @@ object BuildModules {
     const val FEATURE_PAGING = ":features:feature-paging"
     const val FEATURE_DETAIL = ":features:feature-detail"
     const val FEATURE_CREDIT = ":features:feature-credit"
+    const val FEATURE_PERSON = ":features:feature-person"
     const val FEATURE_IMAGE = ":features:feature-image"
 }
 

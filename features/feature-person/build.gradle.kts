@@ -6,8 +6,10 @@ plugins {
 }
 
 android {
-    namespace = "com.sample.tmdb.credit"
-    compileSdk = AppMetaData.compileSdkVersion
+    namespace = "com.sample.tmdb.preson"
+    compileSdk {
+        version = release(AppMetaData.compileSdkVersion)
+    }
 
     defaultConfig {
         minSdk = AppMetaData.minSdkVersion
@@ -44,8 +46,16 @@ android {
 dependencies {
     implementation(project(mapOf("path" to BuildModules.DOMAIN)))
 
+    implementation(Deps.hilt)
+    ksp(Deps.hilt_compiler)
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
+    implementation(Deps.composeMaterial)
+    implementation(Deps.iconExtended)
+    implementation(Deps.coil)
+    testImplementation(project(BuildModules.COMMON_TEST))
+    testImplementation(Deps.junit4)
+    testImplementation(Deps.mockk)
     androidTestImplementation(Deps.composeUiTest)
     androidTestImplementation(Deps.mockito)
     debugImplementation(Deps.composeManifest)

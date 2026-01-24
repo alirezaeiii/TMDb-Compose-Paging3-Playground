@@ -1,4 +1,4 @@
-package com.sample.tmdb.credit
+package com.sample.tmdb.preson
 
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.rememberScrollState

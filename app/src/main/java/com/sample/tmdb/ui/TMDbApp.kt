@@ -48,7 +48,6 @@ import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
-import com.sample.tmdb.credit.PersonScreen
 import com.sample.tmdb.detail.MovieDetailScreen
 import com.sample.tmdb.detail.TVShowDetailScreen
 import com.sample.tmdb.domain.model.Cast
@@ -73,6 +72,7 @@ import com.sample.tmdb.paging.main.TrendingTVShowScreen
 import com.sample.tmdb.paging.main.UpcomingMovieScreen
 import com.sample.tmdb.paging.search.SearchMoviesScreen
 import com.sample.tmdb.paging.search.SearchTVSeriesScreen
+import com.sample.tmdb.preson.PersonScreen
 import com.sample.tmdb.setting.SettingsScreen
 
 @Composable

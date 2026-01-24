@@ -1,4 +1,4 @@
-package com.sample.tmdb.credit
+package com.sample.tmdb.preson
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
