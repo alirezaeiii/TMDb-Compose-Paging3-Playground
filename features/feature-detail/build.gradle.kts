@@ -58,7 +58,6 @@ dependencies {
     implementation(Deps.palette)
     implementation(Deps.composeConstraintLayout)
     implementation(Deps.browser)
-    implementation(Deps.gson)
     testImplementation(project(BuildModules.COMMON_TEST))
     testImplementation(Deps.junit4)
     testImplementation(Deps.mockk)
