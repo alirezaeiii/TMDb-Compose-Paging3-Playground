@@ -1,4 +1,4 @@
-package com.sample.tmdb.image
+package com.sample.tmdb.gallery
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed

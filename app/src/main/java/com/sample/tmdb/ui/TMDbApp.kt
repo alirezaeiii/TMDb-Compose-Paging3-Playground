@@ -55,7 +55,7 @@ import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.feed.MovieFeedScreen
 import com.sample.tmdb.feed.TVShowFeedScreen
-import com.sample.tmdb.image.ImagesScreen
+import com.sample.tmdb.gallery.ImagesScreen
 import com.sample.tmdb.paging.main.AiringTodayTVShowScreen
 import com.sample.tmdb.paging.main.DiscoverMovieScreen
 import com.sample.tmdb.paging.main.DiscoverTVShowScreen

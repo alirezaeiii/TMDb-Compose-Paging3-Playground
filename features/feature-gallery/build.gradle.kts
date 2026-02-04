@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sample.tmdb.image"
+    namespace = "com.sample.tmdb.gallery"
     compileSdk = AppMetaData.compileSdkVersion
 
     defaultConfig {

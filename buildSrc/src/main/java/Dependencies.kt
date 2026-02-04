@@ -52,7 +52,7 @@ object BuildModules {
     const val FEATURE_DETAIL = ":features:feature-detail"
     const val FEATURE_CREDIT = ":features:feature-credit"
     const val FEATURE_PERSON = ":features:feature-person"
-    const val FEATURE_IMAGE = ":features:feature-image"
+    const val FEATURE_GALLERY = ":features:feature-gallery"
 }
 
 object Deps {

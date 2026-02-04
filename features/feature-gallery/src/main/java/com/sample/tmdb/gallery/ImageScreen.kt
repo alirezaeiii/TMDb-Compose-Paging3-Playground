@@ -1,4 +1,4 @@
-package com.sample.tmdb.image
+package com.sample.tmdb.gallery
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
