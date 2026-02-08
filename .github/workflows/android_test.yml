@@ -30,9 +30,13 @@ jobs:
         with:
           api-level: 26
           target: default
-          arch: x86_64
-          profile: Nexus 4
-          script: ./gradlew connectedAndroidTest --continue
+          arch: arm64-v8a
+          profile: pixel_4
+          emulator-options: -no-window -no-boot-anim -no-audio -no-snapshot
+          disable-animations: true
+          script: |
+              adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+              ./gradlew connectedAndroidTest --continue
 
       - name: Upload Test Reports
         if: failure()

@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(Deps.androidXCore)
     implementation(Deps.lifecycleViewModel)
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)

@@ -25,7 +25,7 @@ android {
         versionCode generateVersionCode(appVersion)
         versionName appVersion
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
@@ -40,10 +40,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled = true
+            shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig = signingConfigs.release
         }
     }
     compileOptions {
@@ -51,19 +51,19 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildFeatures {
-        compose true
+        compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '2.1.0'
+        kotlinCompilerExtensionVersion = '2.1.0'
     }
     kotlinOptions {
         jvmTarget = '1.8'
         freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
     }
     androidResources {
-        generateLocaleConfig true
+        generateLocaleConfig = true
     }
-    namespace 'com.sample.tmdb'
+    namespace = 'com.sample.tmdb'
 }
 
 dependencies {

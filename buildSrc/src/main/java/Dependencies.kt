@@ -6,6 +6,7 @@ object Versions {
     const val nav_version = "2.9.3"
     const val appCompat = "1.6.1"
     const val material = "1.13.0-rc01"
+    const val core = "1.12.0"
     const val lifecycle = "2.7.0"
     const val hilt = "2.57"
     const val hiltCompose = "1.2.0"
@@ -82,6 +83,7 @@ object Deps {
     const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
 
     // Core
+    const val androidXCore = "androidx.core:core-ktx:${Versions.core}"
     const val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val lifecycleSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
