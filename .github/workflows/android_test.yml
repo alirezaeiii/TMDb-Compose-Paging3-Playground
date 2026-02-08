@@ -25,16 +25,14 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Run Android Tests on Emulator
-        uses: google-github-actions/setup-android-emulator@v1
+      - name: Run Android Tests
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 26
           target: default
           arch: x86_64
           profile: Nexus 4
-          emulator-options: -no-window -no-boot-anim -no-audio -no-snapshot
-          script: |
-            ./gradlew connectedAndroidTest --continue
+          script: ./gradlew connectedAndroidTest --continue
 
       - name: Upload Test Reports
         if: failure()
