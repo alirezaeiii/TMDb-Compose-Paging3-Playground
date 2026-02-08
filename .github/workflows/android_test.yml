@@ -9,10 +9,10 @@ on:
 
 jobs:
   android_test:
-     name: Running Android Tests
-     runs-on: macos-13
-     continue-on-error: true
-     steps:
+    name: Running Android Tests
+    runs-on: macos-latest
+    continue-on-error: true
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -20,25 +20,20 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'adopt'
+          distribution: 'temurin'
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Start Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2
+      - name: Run Android Tests on Emulator
+        uses: google-github-actions/setup-android-emulator@v1
         with:
-           api-level: 26
-           target: default
-           arch: x86_64
-           profile: Nexus 4
-           emulator-options: -no-window -no-boot-anim -no-audio -no-snapshot-load
-           script: |
-            adb wait-for-device
-            adb shell input keyevent 82
+          api-level: 26
+          target: default
+          arch: x86_64
+          profile: Nexus 4
+          emulator-options: -no-window -no-boot-anim -no-audio -no-snapshot
+          script: |
             ./gradlew connectedAndroidTest --continue
 
       - name: Upload Test Reports
