@@ -37,7 +37,6 @@ jobs:
           script: |
               adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
               ./gradlew connectedAndroidTest --continue
-          timeout-minutes: 30
 
       - name: Upload Test Reports
         if: failure()
