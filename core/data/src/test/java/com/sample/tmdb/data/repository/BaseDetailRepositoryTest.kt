@@ -2,7 +2,7 @@ package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
 import com.sample.tmdb.domain.model.Genre
@@ -27,8 +27,8 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
     fun `load details success`() {
         mockApiResponse()
         runTest {
-            assertThat(repository.getResult(anyInt()).first(), `is`(Resource.Loading))
-            val result = (repository.getResult(anyInt()).last() as Resource.Success).data
+            assertThat(repository.getResult(id = anyInt()).first(), `is`(Async.Loading()))
+            val result = (repository.getResult(id = anyInt()).last() as Async.Success).data
             assertEquals(ID, result.details.id)
             assertEquals(emptyList<Genre>(), result.details.genres)
             assertEquals(STATUS, result.details.status)
@@ -57,9 +57,9 @@ abstract class BaseDetailRepositoryTest<T : TMDbItemDetails> : BaseRepositoryTes
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         runTest {
-            repository.getResult(anyInt()).test {
-                assertEquals(Resource.Loading, awaitItem())
-                assertEquals(Resource.Error(errorMsg), awaitItem())
+            repository.getResult(id = anyInt()).test {
+                assertEquals(Async.Loading(), awaitItem())
+                assertEquals(Async.Error(errorMsg), awaitItem())
                 awaitComplete()
             }
         }

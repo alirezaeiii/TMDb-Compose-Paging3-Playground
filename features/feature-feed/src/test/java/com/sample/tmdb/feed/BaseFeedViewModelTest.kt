@@ -2,7 +2,8 @@ package com.sample.tmdb.feed
 
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import io.mockk.every
@@ -24,22 +25,22 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     @Test
     fun `load feeds`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Loading)
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         initViewModel()
-        assertEquals(Resource.Loading, viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load feeds success`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Success(emptyList()))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Success(emptyList()))
         initViewModel()
-        assertEquals(Resource.Success(emptyList<FeedWrapper>()), viewModel.stateFlow.value)
+        assertEquals(ViewState(emptyList<FeedWrapper>()), viewModel.state.value)
     }
 
     @Test
     fun `load feeds failed`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Error(""))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
         initViewModel()
-        assertEquals(Resource.Error(""), viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 }

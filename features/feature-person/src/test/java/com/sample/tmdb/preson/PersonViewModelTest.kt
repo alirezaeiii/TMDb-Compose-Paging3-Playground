@@ -3,11 +3,12 @@ package com.sample.tmdb.preson
 import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.Person
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.TestCase
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Rule
 import org.junit.Test
@@ -26,22 +27,22 @@ class PersonViewModelTest {
 
     @Test
     fun `load person`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Loading)
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         viewModel = PersonViewModel(repository, savedStateHandle)
-        TestCase.assertEquals(Resource.Loading, viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load person success`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Success(person))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Success(person))
         viewModel = PersonViewModel(repository, savedStateHandle)
-        TestCase.assertEquals(Resource.Success(person), viewModel.stateFlow.value)
+        assertEquals(ViewState(person), viewModel.state.value)
     }
 
     @Test
     fun `load person failed`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Error(""))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
         viewModel = PersonViewModel(repository, savedStateHandle)
-        TestCase.assertEquals(Resource.Error(""), viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 }

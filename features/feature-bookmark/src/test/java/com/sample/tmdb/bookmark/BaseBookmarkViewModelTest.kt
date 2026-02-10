@@ -3,7 +3,8 @@ package com.sample.tmdb.bookmark
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.common.utils.ViewState
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -29,22 +30,22 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     @Test
     fun `load bookmarks`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Loading)
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         viewModel.refresh()
-        assertEquals(Resource.Loading, viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks success`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Success(emptyList()))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Success(emptyList()))
         viewModel.refresh()
-        assertEquals(Resource.Success(emptyList<T>()), viewModel.stateFlow.value)
+        assertEquals(ViewState(emptyList<T>()), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks failed`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Error(""))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
         viewModel.refresh()
-        assertEquals(Resource.Error(""), viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 }

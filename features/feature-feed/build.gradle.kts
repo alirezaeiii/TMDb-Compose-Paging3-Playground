@@ -53,6 +53,7 @@ dependencies {
     implementation(Deps.composeMaterial)
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)
+    implementation(Deps.swiperefresh)
     testImplementation(project(BuildModules.COMMON_TEST))
     testImplementation(Deps.junit4)
     testImplementation(Deps.mockk)

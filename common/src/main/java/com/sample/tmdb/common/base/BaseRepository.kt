@@ -2,7 +2,7 @@ package com.sample.tmdb.common.base
 
 import android.content.Context
 import com.sample.tmdb.common.R
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.flowOn
 abstract class BaseRepository<T>(private val context: Context, private val ioDispatcher: CoroutineDispatcher) {
     protected abstract suspend fun getSuccessResult(id: Any?): T
 
-    fun getResult(id: Any?): Flow<Resource<T>> = flow {
-        emit(Resource.Loading)
+    fun getResult(isRefreshing: Boolean = false, id: Any?): Flow<Async<T>> = flow {
+        emit(Async.Loading(isRefreshing))
         try {
-            emit(Resource.Success(getSuccessResult(id)))
-        } catch (t: Throwable) {
-            emit(Resource.Error(context.getString(R.string.failed_loading_msg)))
+            emit(Async.Success(getSuccessResult(id)))
+        } catch (_: Throwable) {
+            emit(Async.Error(context.getString(R.string.failed_loading_msg)))
         }
     }.flowOn(ioDispatcher)
 }

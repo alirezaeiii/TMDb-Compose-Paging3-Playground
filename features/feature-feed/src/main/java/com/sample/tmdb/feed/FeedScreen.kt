@@ -40,7 +40,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
@@ -106,7 +110,20 @@ private fun <T : TMDbItem> FeedScreen(
 ) {
     Content(viewModel = viewModel) { feeds ->
         Box {
-            FeedCollectionList(feeds, navigate, onClick)
+            SwipeRefresh(
+                state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
+                onRefresh = { viewModel.refresh(true) },
+                indicator = { state, trigger ->
+                    SwipeRefreshIndicator(
+                        state,
+                        trigger,
+                    )
+                },
+                modifier = Modifier.fillMaxSize(),
+                indicatorPadding = PaddingValues(top = 112.dp),
+            ) {
+                FeedCollectionList(feeds, navigate, onClick)
+            }
             DestinationBar(
                 title =
                 stringResource(

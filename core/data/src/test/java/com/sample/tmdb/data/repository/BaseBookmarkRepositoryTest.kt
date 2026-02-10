@@ -3,7 +3,7 @@ package com.sample.tmdb.data.repository
 import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.model.TMDbItem
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
@@ -21,8 +21,8 @@ abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     fun `load bookmark success`() {
         mockApiResponse()
         runTest {
-            assertThat(repository.getResult(null).first(), `is`(Resource.Loading))
-            val result = (repository.getResult(null).last() as Resource.Success).data
+            assertThat(repository.getResult(id = null).first(), `is`(Async.Loading()))
+            val result = (repository.getResult(id = null).last() as Async.Success).data
             assertEquals(emptyList<T>(), result)
         }
     }
@@ -31,9 +31,9 @@ abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     fun `load bookmark failed`() = runTest {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
-        repository.getResult(null).test {
-            assertEquals(Resource.Loading, awaitItem())
-            assertEquals(Resource.Error(errorMsg), awaitItem())
+        repository.getResult(id = null).test {
+            assertEquals(Async.Loading(), awaitItem())
+            assertEquals(Async.Error(errorMsg), awaitItem())
             awaitComplete()
         }
     }

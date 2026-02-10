@@ -2,7 +2,7 @@ package com.sample.tmdb.data.repository
 
 import app.cash.turbine.test
 import com.sample.tmdb.common.base.BaseRepository
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.data.network.PersonService
 import com.sample.tmdb.data.response.PersonDTO
 import com.sample.tmdb.data.response.asDomainModel
@@ -48,10 +48,10 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     fun `load person success`() {
         mockApiResponse()
         runTest {
-            repository.getResult(anyString()).test {
-                assertEquals(Resource.Loading, awaitItem())
+            repository.getResult(id = anyString()).test {
+                assertEquals(Async.Loading(), awaitItem())
                 awaitItem()
-                val person = Resource.Success(personDto.asDomainModel()).data
+                val person = Async.Success(personDto.asDomainModel()).data
                 assertEquals("birth", person.birthDay)
                 assertEquals("death", person.deathDay)
                 assertEquals(1, person.id)
@@ -70,9 +70,9 @@ class PersonRepositoryTest : BaseRepositoryTest() {
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         runTest {
             `when`(api.getPerson(anyString())).thenThrow(RuntimeException())
-            repository.getResult(anyString()).test {
-                assertEquals(Resource.Loading, awaitItem())
-                assertEquals(Resource.Error(errorMsg), awaitItem())
+            repository.getResult(id = anyString()).test {
+                assertEquals(Async.Loading(), awaitItem())
+                assertEquals(Async.Error(errorMsg), awaitItem())
                 awaitComplete()
             }
         }

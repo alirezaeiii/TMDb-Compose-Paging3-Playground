@@ -28,6 +28,7 @@ object Versions {
     const val mockk = "1.13.12"
     const val turbine = "1.1.0"
     const val spotless = "7.2.1"
+    const val accompanist = "0.36.0"
 }
 
 object AppMetaData {
@@ -81,6 +82,7 @@ object Deps {
     const val palette = "androidx.palette:palette-ktx:${Versions.palette}"
     const val browser = "androidx.browser:browser:${Versions.browser}"
     const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
+    const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanist}"
 
     // Core
     const val androidXCore = "androidx.core:core-ktx:${Versions.core}"

@@ -3,7 +3,8 @@ package com.sample.tmdb.detail
 import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.test.TestCoroutineRule
-import com.sample.tmdb.common.utils.Resource
+import com.sample.tmdb.common.utils.Async
+import com.sample.tmdb.common.utils.ViewState
 import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import com.sample.tmdb.domain.repository.BaseDetailRepository
@@ -38,27 +39,28 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     @Test
     fun `load details`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Loading)
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         initViewModel()
-        assertEquals(Resource.Loading, viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load details success`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Success(detailWrapper))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Success(detailWrapper))
         initViewModel()
-        assertEquals(Resource.Success(detailWrapper), viewModel.stateFlow.value)
+        assertEquals(ViewState(items = detailWrapper), viewModel.state.value)
     }
 
     @Test
     fun `load details failed`() {
-        every { repository.getResult(any()) } returns flowOf(Resource.Error(""))
+        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
         initViewModel()
-        assertEquals(Resource.Error(""), viewModel.stateFlow.value)
+        assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
 
     @Test
     fun `add bookmark`() {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         coJustRun { bookmarkRepository.addBookmark(tmdbItem) }
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
@@ -69,6 +71,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     @Test
     fun `remove bookmark`() {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         coJustRun { bookmarkRepository.deleteBookmark(TMDB_ITEM_ID) }
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
         initViewModel()
@@ -79,6 +82,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     @Test
     fun `is bookmarked`() {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns true
         initViewModel()
         viewModel.isBookmarked(TMDB_ITEM_ID)
@@ -87,6 +91,7 @@ abstract class BaseDetailViewModelTest<T : TMDbItemDetails, R : TMDbItem> {
 
     @Test
     fun `is not bookmarked`() {
+        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
         coEvery { bookmarkRepository.isBookmarked(TMDB_ITEM_ID) } returns false
         initViewModel()
         viewModel.isBookmarked(TMDB_ITEM_ID)
