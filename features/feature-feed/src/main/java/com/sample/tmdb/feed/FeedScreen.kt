@@ -50,6 +50,7 @@ import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
+import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_220_dp
@@ -120,7 +121,7 @@ private fun <T : TMDbItem> FeedScreen(
                     )
                 },
                 modifier = Modifier.fillMaxSize(),
-                indicatorPadding = PaddingValues(top = 112.dp),
+                indicatorPadding = PaddingValues(top = TMDb_104_dp),
             ) {
                 FeedCollectionList(feeds, navigate, onClick)
             }
