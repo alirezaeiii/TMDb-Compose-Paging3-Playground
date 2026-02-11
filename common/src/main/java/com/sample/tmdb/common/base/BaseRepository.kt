@@ -16,7 +16,14 @@ abstract class BaseRepository<T>(private val context: Context, private val ioDis
         try {
             emit(Async.Success(getSuccessResult(id)))
         } catch (_: Throwable) {
-            emit(Async.Error(context.getString(R.string.failed_loading_msg)))
+            emit(
+                Async.Error(
+                    context.getString(
+                        if (isRefreshing) R.string.failed_refresh_msg else R.string.failed_loading_msg,
+                    ),
+                    isRefreshing,
+                ),
+            )
         }
     }.flowOn(ioDispatcher)
 }

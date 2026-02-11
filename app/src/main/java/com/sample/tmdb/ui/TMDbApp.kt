@@ -14,6 +14,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Tv
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -78,7 +80,9 @@ import com.sample.tmdb.setting.SettingsScreen
 @Composable
 fun TMDbApp() {
     val appState = rememberTMDbAppState()
+    val scaffoldState = rememberScaffoldState()
     Scaffold(
+        scaffoldState = scaffoldState,
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 TMDbBottomBar(
@@ -101,7 +105,7 @@ fun TMDbApp() {
             startDestination = MainDestinations.HOME_ROUTE,
             modifier = Modifier.padding(newPadding),
         ) {
-            navigationScreens(appState.navController)
+            navigationScreens(appState.navController, scaffoldState)
             detailScreens(appState.navController)
             moviePagingScreens(appState.navController)
             tvShowPagingScreens(appState.navController)
@@ -146,7 +150,7 @@ private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: String, navig
     }
 }
 
-private fun NavGraphBuilder.navigationScreens(navController: NavController) {
+private fun NavGraphBuilder.navigationScreens(navController: NavController, scaffoldState: ScaffoldState) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
         startDestination = HomeSections.MOVIE_SECTION.route,
@@ -157,6 +161,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
                 { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
                 { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate(it) },
+                scaffoldState,
             )
         }
         composable(route = HomeSections.TV_SHOW_SECTION.route) {
@@ -165,6 +170,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController) {
                 { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
                 { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate(it) },
+                scaffoldState,
             )
         }
         composable(route = HomeSections.BOOKMARK_SECTION.route) {

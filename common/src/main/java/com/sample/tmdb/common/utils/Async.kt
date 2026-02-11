@@ -5,5 +5,5 @@ sealed class Async<out R> {
 
     data class Success<out T>(val data: T) : Async<T>()
 
-    data class Error(val message: String) : Async<Nothing>()
+    data class Error(val message: String, val isWarning: Boolean = false) : Async<Nothing>()
 }

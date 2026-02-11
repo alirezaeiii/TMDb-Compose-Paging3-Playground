@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -15,13 +17,20 @@ open class BaseViewModel<T>(private val repository: BaseRepository<T>, private v
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
     val state = _state.asStateFlow()
 
+    private val _showWarningUiEvent = MutableSharedFlow<UiEvent>()
+    val showWarningUiEvent = _showWarningUiEvent.asSharedFlow()
+
+    sealed class UiEvent {
+        data class ShowWarning(val message: String) : UiEvent()
+    }
+
     fun refresh(isUserRefresh: Boolean = false) {
         repository.getResult(isRefreshing = isUserRefresh, id = id).onEach { repoResource ->
             reduce(repoResource)
         }.launchIn(viewModelScope)
     }
 
-    private fun reduce(resource: Async<T>) {
+    private suspend fun reduce(resource: Async<T>) {
         when (resource) {
             is Async.Loading -> {
                 _state.update {
@@ -43,10 +52,18 @@ open class BaseViewModel<T>(private val repository: BaseRepository<T>, private v
                         isLoading = false,
                         isRefreshing = false,
                         error = resource.message,
-                        items = null,
+                        isWarning = resource.isWarning,
+                        items = if (resource.isWarning) _state.value.items else null,
                     )
+                }
+                if (resource.isWarning) {
+                    emitWarning(resource.message)
                 }
             }
         }
+    }
+
+    private suspend fun emitWarning(message: String) {
+        _showWarningUiEvent.emit(UiEvent.ShowWarning(message))
     }
 }

@@ -5,4 +5,5 @@ data class ViewState<T>(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val error: String = "",
+    val isWarning: Boolean = false,
 )

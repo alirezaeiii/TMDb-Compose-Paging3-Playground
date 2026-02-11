@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -75,12 +76,14 @@ fun MovieFeedScreen(
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     navigate: (String) -> Unit,
+    scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
         viewModel = viewModel,
         navigate = navigate,
         onSearchClicked = onSearchClicked,
         onClick = onClick,
+        scaffoldState = scaffoldState,
         commonR.string.movies,
     )
 }
@@ -91,12 +94,14 @@ fun TVShowFeedScreen(
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     navigate: (String) -> Unit,
+    scaffoldState: ScaffoldState,
 ) {
     FeedScreen(
         viewModel = viewModel,
         navigate = navigate,
         onSearchClicked = onSearchClicked,
         onClick = onClick,
+        scaffoldState = scaffoldState,
         commonR.string.tv_series,
     )
 }
@@ -107,9 +112,10 @@ private fun <T : TMDbItem> FeedScreen(
     navigate: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
+    scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
-    Content(viewModel = viewModel) { feeds ->
+    Content(viewModel = viewModel, scaffoldState = scaffoldState) { feeds ->
         Box {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
