@@ -10,7 +10,7 @@ on:
 jobs:
   android_test:
     name: Running Android Tests
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     continue-on-error: true
     steps:
       - name: Checkout
