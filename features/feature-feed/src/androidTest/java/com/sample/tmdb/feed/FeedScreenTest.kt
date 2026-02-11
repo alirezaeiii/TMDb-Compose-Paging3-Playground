@@ -7,6 +7,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
+import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -15,7 +16,6 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
-import com.sample.tmdb.domain.R as domainR
 
 class FeedScreenTest {
     @get:Rule
@@ -27,42 +27,42 @@ class FeedScreenTest {
             setContent {
                 FeedCollectionList(
                     collection =
-                        listOf(
-                            FeedWrapper(
-                                feeds =
-                                    listOf(
-                                        Movie(
-                                            anyInt(),
-                                            anyString(),
-                                            anyString(),
-                                            anyString(),
-                                            anyString(),
-                                            "title",
-                                            anyDouble(),
-                                            anyInt(),
-                                        ),
-                                    ),
-                                domainR.string.text_trending,
-                                SortType.TRENDING,
+                    listOf(
+                        FeedWrapper(
+                            feeds =
+                            listOf(
+                                Movie(
+                                    anyInt(),
+                                    anyString(),
+                                    anyString(),
+                                    anyString(),
+                                    anyString(),
+                                    "title",
+                                    anyDouble(),
+                                    anyInt(),
+                                ),
                             ),
-                            FeedWrapper(
-                                feeds =
-                                    listOf(
-                                        Movie(
-                                            anyInt(),
-                                            anyString(),
-                                            anyString(),
-                                            anyString(),
-                                            anyString(),
-                                            "name",
-                                            anyDouble(),
-                                            anyInt(),
-                                        ),
-                                    ),
-                                domainR.string.text_popular,
-                                SortType.MOST_POPULAR,
-                            ),
+                            domainR.string.text_trending,
+                            SortType.TRENDING,
                         ),
+                        FeedWrapper(
+                            feeds =
+                            listOf(
+                                Movie(
+                                    anyInt(),
+                                    anyString(),
+                                    anyString(),
+                                    anyString(),
+                                    anyString(),
+                                    "name",
+                                    anyDouble(),
+                                    anyInt(),
+                                ),
+                            ),
+                            domainR.string.text_popular,
+                            SortType.MOST_POPULAR,
+                        ),
+                    ),
                     {},
                 ) {}
             }
@@ -80,23 +80,23 @@ class FeedScreenTest {
             setContent {
                 PagerTMDbItemContainer(
                     feedWrapper =
-                        FeedWrapper(
-                            feeds =
-                                listOf(
-                                    Movie(
-                                        anyInt(),
-                                        anyString(),
-                                        anyString(),
-                                        anyString(),
-                                        anyString(),
-                                        "title",
-                                        anyDouble(),
-                                        anyInt(),
-                                    ),
-                                ),
-                            domainR.string.text_popular,
-                            SortType.MOST_POPULAR,
+                    FeedWrapper(
+                        feeds =
+                        listOf(
+                            Movie(
+                                anyInt(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                "title",
+                                anyDouble(),
+                                anyInt(),
+                            ),
                         ),
+                        domainR.string.text_popular,
+                        SortType.MOST_POPULAR,
+                    ),
                     {},
                 ) {}
             }
@@ -156,18 +156,18 @@ class FeedScreenTest {
             setContent {
                 Feeds(
                     feeds =
-                        listOf(
-                            Movie(
-                                anyInt(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                "title",
-                                anyDouble(),
-                                anyInt(),
-                            ),
+                    listOf(
+                        Movie(
+                            anyInt(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            anyString(),
+                            "title",
+                            anyDouble(),
+                            anyInt(),
                         ),
+                    ),
                     onFeedClick = {},
                     index = 0,
                 )
