@@ -6,7 +6,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import com.sample.tmdb.common.R as commonR
+import com.sample.tmdb.common.R
 import com.sample.tmdb.common.model.Gender
 import com.sample.tmdb.common.model.placeholderIcon
 import com.sample.tmdb.domain.model.Cast
@@ -23,19 +23,19 @@ class CreditScreenTest {
             val person = Cast("role", "name", null, Gender.MALE, 1)
             setContent {
                 CreditScreen(
-                    R.string.biography,
+                    R.string.movies,
                     {},
                     {},
                     listOf(person),
                     rememberVectorPainter(person.gender.placeholderIcon),
                 )
             }
-            onNodeWithText(activity.getString(R.string.biography)).assertIsDisplayed()
+            onNodeWithText(activity.getString(R.string.movies)).assertIsDisplayed()
             onNodeWithText("name").assertIsDisplayed()
             onNodeWithText("role").assertIsDisplayed()
             onNodeWithContentDescription(
                 activity.getString(
-                    commonR.string.person_content_description,
+                    R.string.person_content_description,
                     "name",
                     "role",
                 ),

@@ -7,8 +7,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
-import com.sample.tmdb.domain.R as domainR
 import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
@@ -17,6 +15,7 @@ import org.junit.Test
 import org.mockito.ArgumentMatchers.anyDouble
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyString
+import com.sample.tmdb.domain.R as domainR
 
 class FeedScreenTest {
     @get:Rule
@@ -27,44 +26,44 @@ class FeedScreenTest {
         with(composeTestRule) {
             setContent {
                 FeedCollectionList(
-                    navController = rememberNavController(),
                     collection =
-                    listOf(
-                        FeedWrapper(
-                            feeds =
-                            listOf(
-                                Movie(
-                                    anyInt(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    "title",
-                                    anyDouble(),
-                                    anyInt(),
-                                ),
+                        listOf(
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "title",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_trending,
+                                SortType.TRENDING,
                             ),
-                            domainR.string.text_trending,
-                            SortType.TRENDING,
-                        ),
-                        FeedWrapper(
-                            feeds =
-                            listOf(
-                                Movie(
-                                    anyInt(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    anyString(),
-                                    "name",
-                                    anyDouble(),
-                                    anyInt(),
-                                ),
+                            FeedWrapper(
+                                feeds =
+                                    listOf(
+                                        Movie(
+                                            anyInt(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            anyString(),
+                                            "name",
+                                            anyDouble(),
+                                            anyInt(),
+                                        ),
+                                    ),
+                                domainR.string.text_popular,
+                                SortType.MOST_POPULAR,
                             ),
-                            domainR.string.text_popular,
-                            SortType.MOST_POPULAR,
                         ),
-                    ),
+                    {},
                 ) {}
             }
             onNodeWithText(activity.getString(domainR.string.text_trending)).assertIsDisplayed()
@@ -81,24 +80,24 @@ class FeedScreenTest {
             setContent {
                 PagerTMDbItemContainer(
                     feedWrapper =
-                    FeedWrapper(
-                        feeds =
-                        listOf(
-                            Movie(
-                                anyInt(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                anyString(),
-                                "title",
-                                anyDouble(),
-                                anyInt(),
-                            ),
+                        FeedWrapper(
+                            feeds =
+                                listOf(
+                                    Movie(
+                                        anyInt(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        anyString(),
+                                        "title",
+                                        anyDouble(),
+                                        anyInt(),
+                                    ),
+                                ),
+                            domainR.string.text_popular,
+                            SortType.MOST_POPULAR,
                         ),
-                        domainR.string.text_popular,
-                        SortType.MOST_POPULAR,
-                    ),
-                    navController = rememberNavController(),
+                    {},
                 ) {}
             }
             onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
@@ -144,8 +143,7 @@ class FeedScreenTest {
                         domainR.string.text_popular,
                         SortType.MOST_POPULAR,
                     ),
-                    navController = rememberNavController(),
-                )
+                ) {}
             }
             onNodeWithText(activity.getString(domainR.string.text_popular)).assertIsDisplayed()
             onNodeWithText("More").assertIsDisplayed()
@@ -158,18 +156,18 @@ class FeedScreenTest {
             setContent {
                 Feeds(
                     feeds =
-                    listOf(
-                        Movie(
-                            anyInt(),
-                            anyString(),
-                            anyString(),
-                            anyString(),
-                            anyString(),
-                            "title",
-                            anyDouble(),
-                            anyInt(),
+                        listOf(
+                            Movie(
+                                anyInt(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                anyString(),
+                                "title",
+                                anyDouble(),
+                                anyInt(),
+                            ),
                         ),
-                    ),
                     onFeedClick = {},
                     index = 0,
                 )
