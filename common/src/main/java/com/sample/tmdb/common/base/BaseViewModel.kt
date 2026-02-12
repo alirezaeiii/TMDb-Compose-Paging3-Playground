@@ -47,19 +47,16 @@ open class BaseViewModel<T>(private val repository: BaseRepository<T>, private v
             }
 
             is Async.Error -> {
-                var items: T? = null
-                if (resource.isWarning) {
-                    emitWarning(resource.message)
-                    items = _state.value.items
-                }
                 _state.update {
                     it.copy(
                         isLoading = false,
                         isRefreshing = false,
                         error = resource.message,
                         isWarning = resource.isWarning,
-                        items = items,
                     )
+                }
+                if (resource.isWarning) {
+                    emitWarning(resource.message)
                 }
             }
         }
