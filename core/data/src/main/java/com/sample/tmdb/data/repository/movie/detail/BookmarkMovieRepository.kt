@@ -17,5 +17,5 @@ class BookmarkMovieRepository @Inject constructor(
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
 ) : BaseRepository<List<@JvmSuppressWildcards Movie>>(context, ioDispatcher) {
-    override suspend fun getSuccessResult(id: Any?): List<Movie> = movieDao.getBookmarks().asDomainModel()
+    override suspend fun getSuccessResult(): List<Movie> = movieDao.getBookmarks().asDomainModel()
 }

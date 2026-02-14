@@ -1,7 +1,7 @@
 package com.sample.tmdb.domain.repository
 
 import android.content.Context
-import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.base.BaseRepositoryWithId
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.domain.model.Cast
 import com.sample.tmdb.domain.model.Crew
@@ -14,7 +14,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDispatcher: CoroutineDispatcher) :
-    BaseRepository<DetailWrapper>(context, ioDispatcher) {
+    BaseRepositoryWithId<DetailWrapper, Int>(context, ioDispatcher) {
     protected abstract suspend fun getDetails(id: Int): T
 
     protected abstract suspend fun getCredit(id: Int): Pair<List<Cast>, List<Crew>>
@@ -23,16 +23,16 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDis
 
     protected abstract suspend fun getSimilarItems(id: Int): List<TMDbItem>
 
-    override suspend fun getSuccessResult(id: Any?): DetailWrapper {
+    override suspend fun getSuccessResult(id: Int): DetailWrapper {
         val detailsDeferred: Deferred<T>
         val creditDeferred: Deferred<Pair<List<Cast>, List<Crew>>>
         val imageDeferred: Deferred<List<TMDbImage>>
         val similarDeferred: Deferred<List<TMDbItem>>
         coroutineScope {
-            detailsDeferred = async { getDetails(id as Int) }
-            creditDeferred = async { getCredit(id as Int) }
-            imageDeferred = async { getImages(id as Int) }
-            similarDeferred = async { getSimilarItems(id as Int) }
+            detailsDeferred = async { getDetails(id) }
+            creditDeferred = async { getCredit(id) }
+            imageDeferred = async { getImages(id) }
+            similarDeferred = async { getSimilarItems(id) }
         }
         val details = detailsDeferred.await()
         val creditWrapper = creditDeferred.await()

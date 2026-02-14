@@ -1,6 +1,7 @@
 package com.sample.tmdb.data.di
 
 import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.base.BaseRepositoryWithId
 import com.sample.tmdb.data.repository.PersonRepository
 import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
@@ -188,7 +189,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepository<Person>
+    internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepositoryWithId<Person, String>
 
     @Singleton
     @Binds

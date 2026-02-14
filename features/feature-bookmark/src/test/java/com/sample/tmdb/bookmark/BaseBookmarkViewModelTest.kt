@@ -30,21 +30,21 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     @Test
     fun `load bookmarks`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult() } returns flowOf(Async.Loading())
         viewModel.refresh()
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks success`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Success(emptyList()))
+        every { repository.getResult() } returns flowOf(Async.Success(emptyList()))
         viewModel.refresh()
         assertEquals(ViewState(emptyList<T>()), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks failed`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
+        every { repository.getResult() } returns flowOf(Async.Error("error"))
         viewModel.refresh()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
