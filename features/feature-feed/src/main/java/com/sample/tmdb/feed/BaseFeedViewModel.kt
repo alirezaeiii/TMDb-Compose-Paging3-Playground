@@ -6,4 +6,4 @@ import com.sample.tmdb.domain.model.FeedWrapper
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 
 open class BaseFeedViewModel<T : TMDbItem>(repository: BaseFeedRepository<T>) :
-    TMDbViewModel<List<FeedWrapper>, Nothing>(repository)
+    TMDbViewModel<List<FeedWrapper>>(repository)

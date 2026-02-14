@@ -15,7 +15,7 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.`when`
 
 abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
-    protected lateinit var repository: BaseRepository<List<T>, Nothing>
+    protected lateinit var repository: BaseRepository<List<T>>
 
     @Test
     fun `load bookmark success`() {

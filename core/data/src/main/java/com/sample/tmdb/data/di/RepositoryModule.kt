@@ -1,6 +1,7 @@
 package com.sample.tmdb.data.di
 
 import com.sample.tmdb.common.base.BaseRepository
+import com.sample.tmdb.common.base.BaseRepositoryWithId
 import com.sample.tmdb.data.repository.PersonRepository
 import com.sample.tmdb.data.repository.movie.MovieFeedRepository
 import com.sample.tmdb.data.repository.movie.detail.BookmarkMovieDetailsRepositoryImpl
@@ -35,8 +36,6 @@ import com.sample.tmdb.domain.repository.BaseDetailRepository
 import com.sample.tmdb.domain.repository.BaseFeedRepository
 import com.sample.tmdb.domain.repository.BasePagingRepository
 import com.sample.tmdb.domain.repository.BookmarkDetailsRepository
-import com.sample.tmdb.domain.utils.BookmarkMovie
-import com.sample.tmdb.domain.utils.BookmarkTVShow
 import com.sample.tmdb.domain.utils.Discover
 import com.sample.tmdb.domain.utils.Latest
 import com.sample.tmdb.domain.utils.NowPlaying
@@ -190,7 +189,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepository<Person, String>
+    internal abstract fun bindPersonRepository(personRepository: PersonRepository): BaseRepositoryWithId<Person, String>
 
     @Singleton
     @Binds
@@ -206,15 +205,15 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    @BookmarkMovie
+    @JvmSuppressWildcards
     internal abstract fun bindBookmarkMovieRepository(
         bookmarkMovieRepository: BookmarkMovieRepository,
-    ): BaseRepository<List<Movie>, Nothing>
+    ): BaseRepository<List<Movie>>
 
     @Singleton
     @Binds
-    @BookmarkTVShow
+    @JvmSuppressWildcards
     internal abstract fun bindBookmarkTVShowRepository(
         bookmarkTVShowRepository: BookmarkTVShowRepository,
-    ): BaseRepository<List<TVShow>, Nothing>
+    ): BaseRepository<List<TVShow>>
 }

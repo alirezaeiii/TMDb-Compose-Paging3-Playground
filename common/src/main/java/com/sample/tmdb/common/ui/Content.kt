@@ -6,14 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.base.CoreBaseViewModel
 import com.sample.tmdb.common.ui.component.ErrorScreen
 import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun <T, S> Content(
-    viewModel: BaseViewModel<T, S>,
+fun <T> Content(
+    viewModel: CoreBaseViewModel<T>,
     scaffoldState: ScaffoldState? = null,
     successScreen: @Composable (T) -> Unit,
 ) {
@@ -40,7 +40,7 @@ fun <T, S> Content(
     LaunchedEffect(Unit) {
         viewModel.showWarningUiEvent.collectLatest { event ->
             when (event) {
-                is BaseViewModel.UiEvent.ShowWarning ->
+                is CoreBaseViewModel.UiEvent.ShowWarning ->
                     scaffoldState?.snackbarHostState?.showSnackbar(event.message)
             }
         }

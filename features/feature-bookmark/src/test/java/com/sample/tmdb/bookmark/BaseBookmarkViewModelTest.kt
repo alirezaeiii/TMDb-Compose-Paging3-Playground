@@ -17,11 +17,11 @@ abstract class BaseBookmarkViewModelTest<T> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    protected val repository = mockk<BaseRepository<List<T>, Nothing>>()
+    protected val repository = mockk<BaseRepository<List<T>>>()
 
-    private lateinit var viewModel: BaseViewModel<List<T>, Nothing>
+    private lateinit var viewModel: BaseViewModel<List<T>>
 
-    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing>
+    protected abstract fun getViewModel(): BaseViewModel<List<T>>
 
     @Before
     fun setup() {

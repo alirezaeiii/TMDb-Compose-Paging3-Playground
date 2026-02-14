@@ -121,7 +121,7 @@ private fun TVShowsTabContent(viewModel: BookmarkTVShowViewModel, onClick: (TMDb
 
 @Composable
 private fun <T : TMDbItem> TabContent(
-    viewModel: BaseViewModel<List<T>, Nothing>,
+    viewModel: BaseViewModel<List<T>>,
     onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,
 ) {

@@ -33,11 +33,3 @@ annotation class Search
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
 annotation class Similar
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class BookmarkMovie
-
-@Retention(AnnotationRetention.BINARY)
-@Qualifier
-annotation class BookmarkTVShow
