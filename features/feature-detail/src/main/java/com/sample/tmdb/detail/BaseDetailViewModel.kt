@@ -17,7 +17,7 @@ open class BaseDetailViewModel<T : TMDbItemDetails, R : TMDbItem>(
     private val bookmarkRepository: BookmarkDetailsRepository<R>,
     repository: BaseDetailRepository<T>,
     savedStateHandle: SavedStateHandle,
-) : TMDbViewModel<DetailWrapper>(
+) : TMDbViewModel<DetailWrapper, Int>(
     repository,
     savedStateHandle[MainDestinations.TMDB_ID_KEY],
 ) {

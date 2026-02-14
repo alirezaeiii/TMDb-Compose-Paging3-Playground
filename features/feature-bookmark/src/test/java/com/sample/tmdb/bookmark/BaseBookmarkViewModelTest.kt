@@ -17,11 +17,11 @@ abstract class BaseBookmarkViewModelTest<T> {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    protected val repository = mockk<BaseRepository<List<T>>>()
+    protected val repository = mockk<BaseRepository<List<T>, Nothing>>()
 
-    private lateinit var viewModel: BaseViewModel<List<T>>
+    private lateinit var viewModel: BaseViewModel<List<T>, Nothing>
 
-    protected abstract fun getViewModel(): BaseViewModel<List<T>>
+    protected abstract fun getViewModel(): BaseViewModel<List<T>, Nothing>
 
     @Before
     fun setup() {
@@ -30,21 +30,21 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     @Test
     fun `load bookmarks`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult() } returns flowOf(Async.Loading())
         viewModel.refresh()
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks success`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Success(emptyList()))
+        every { repository.getResult() } returns flowOf(Async.Success(emptyList()))
         viewModel.refresh()
         assertEquals(ViewState(emptyList<T>()), viewModel.state.value)
     }
 
     @Test
     fun `load bookmarks failed`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
+        every { repository.getResult() } returns flowOf(Async.Error("error"))
         viewModel.refresh()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }

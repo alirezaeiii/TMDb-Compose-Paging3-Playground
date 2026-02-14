@@ -16,6 +16,6 @@ class BookmarkTVShowRepository @Inject constructor(
     private val tvShowDao: TVShowDao,
     @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
-) : BaseRepository<List<@JvmSuppressWildcards TVShow>>(context, ioDispatcher) {
-    override suspend fun getSuccessResult(id: Any?): List<TVShow> = tvShowDao.getBookmarks().asDomainModel()
+) : BaseRepository<List<TVShow>, Nothing>(context, ioDispatcher) {
+    override suspend fun getSuccessResult(id: Nothing?): List<TVShow> = tvShowDao.getBookmarks().asDomainModel()
 }

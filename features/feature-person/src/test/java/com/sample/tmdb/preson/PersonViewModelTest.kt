@@ -17,7 +17,7 @@ class PersonViewModelTest {
     @get:Rule
     val testCoroutineRule = TestCoroutineRule()
 
-    private val repository = mockk<BaseRepository<Person>>()
+    private val repository = mockk<BaseRepository<Person, String>>()
 
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
 

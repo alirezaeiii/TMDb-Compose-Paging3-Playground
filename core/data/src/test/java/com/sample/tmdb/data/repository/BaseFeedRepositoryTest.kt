@@ -21,8 +21,8 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     fun `load feeds success`() {
         mockApiResponse()
         runTest {
-            assertThat(repository.getResult(id = null).first(), `is`(Async.Loading()))
-            val result = (repository.getResult(id = null).last() as Async.Success).data
+            assertThat(repository.getResult().first(), `is`(Async.Loading()))
+            val result = (repository.getResult().last() as Async.Success).data
             assertThat(result[0].feeds, `is`(emptyList()))
             assertThat(result[1].feeds, `is`(emptyList()))
             assertThat(result[2].feeds, `is`(emptyList()))
@@ -37,7 +37,7 @@ abstract class BaseFeedRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
         runTest {
-            repository.getResult(id = null).test {
+            repository.getResult().test {
                 assertEquals(Async.Loading(), awaitItem())
                 assertEquals(Async.Error(errorMsg), awaitItem())
                 awaitComplete()

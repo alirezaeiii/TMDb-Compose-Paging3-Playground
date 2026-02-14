@@ -15,14 +15,14 @@ import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mockito.`when`
 
 abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
-    protected lateinit var repository: BaseRepository<List<T>>
+    protected lateinit var repository: BaseRepository<List<T>, Nothing>
 
     @Test
     fun `load bookmark success`() {
         mockApiResponse()
         runTest {
-            assertThat(repository.getResult(id = null).first(), `is`(Async.Loading()))
-            val result = (repository.getResult(id = null).last() as Async.Success).data
+            assertThat(repository.getResult().first(), `is`(Async.Loading()))
+            val result = (repository.getResult().last() as Async.Success).data
             assertEquals(emptyList<T>(), result)
         }
     }
@@ -31,7 +31,7 @@ abstract class BaseBookmarkRepositoryTest<T : TMDbItem> : BaseRepositoryTest() {
     fun `load bookmark failed`() = runTest {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
-        repository.getResult(id = null).test {
+        repository.getResult().test {
             assertEquals(Async.Loading(), awaitItem())
             assertEquals(Async.Error(errorMsg), awaitItem())
             awaitComplete()

@@ -12,8 +12,8 @@ import com.sample.tmdb.common.ui.component.TMDbProgressBar
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
-fun <T> Content(
-    viewModel: BaseViewModel<T>,
+fun <T, S> Content(
+    viewModel: BaseViewModel<T, S>,
     scaffoldState: ScaffoldState? = null,
     successScreen: @Composable (T) -> Unit,
 ) {

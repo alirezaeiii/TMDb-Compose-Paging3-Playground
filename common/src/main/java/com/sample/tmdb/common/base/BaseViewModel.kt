@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-open class BaseViewModel<T>(private val repository: BaseRepository<T>, private val id: Any? = null) : ViewModel() {
+open class BaseViewModel<T, S>(private val repository: BaseRepository<T, S>, private val id: S? = null) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
     val state = _state.asStateFlow()

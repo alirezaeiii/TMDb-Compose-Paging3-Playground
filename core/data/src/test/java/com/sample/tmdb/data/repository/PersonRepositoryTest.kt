@@ -23,7 +23,7 @@ class PersonRepositoryTest : BaseRepositoryTest() {
     @Mock
     private lateinit var api: PersonService
 
-    private lateinit var repository: BaseRepository<Person>
+    private lateinit var repository: BaseRepository<Person, String>
 
     private val personDto =
         PersonDTO(

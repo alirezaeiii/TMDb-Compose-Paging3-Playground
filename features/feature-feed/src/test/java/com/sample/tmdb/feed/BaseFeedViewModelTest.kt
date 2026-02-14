@@ -25,21 +25,21 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     @Test
     fun `load feeds`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Loading())
+        every { repository.getResult() } returns flowOf(Async.Loading())
         initViewModel()
         assertEquals(ViewState<Nothing>(isLoading = true), viewModel.state.value)
     }
 
     @Test
     fun `load feeds success`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Success(emptyList()))
+        every { repository.getResult() } returns flowOf(Async.Success(emptyList()))
         initViewModel()
         assertEquals(ViewState(emptyList<FeedWrapper>()), viewModel.state.value)
     }
 
     @Test
     fun `load feeds failed`() {
-        every { repository.getResult(id = any()) } returns flowOf(Async.Error("error"))
+        every { repository.getResult() } returns flowOf(Async.Error("error"))
         initViewModel()
         assertEquals(ViewState<Nothing>(error = "error"), viewModel.state.value)
     }
