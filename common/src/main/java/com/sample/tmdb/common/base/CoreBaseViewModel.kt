@@ -27,7 +27,7 @@ abstract class CoreBaseViewModel<T> : ViewModel() {
 
     abstract fun refresh(isUserRefresh: Boolean = false)
 
-    fun execute(block: () -> Flow<Async<T>>) {
+    protected fun execute(block: () -> Flow<Async<T>>) {
         block.invoke().onEach { repoResource -> reduce(repoResource) }
             .launchIn(viewModelScope)
     }
