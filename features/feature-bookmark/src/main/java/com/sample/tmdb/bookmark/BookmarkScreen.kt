@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +35,7 @@ import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
+import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
@@ -61,16 +63,26 @@ fun BookmarkScreen(
         )
     val selectedTabIndex = pagerState.currentPage
 
-    Column(
-        modifier =
-        Modifier
-            .fillMaxSize()
-            .statusBarsPadding(),
+    Box(
+        modifier = Modifier.fillMaxSize(),
     ) {
+        HorizontalPager(
+            modifier = Modifier
+                .fillMaxSize(),
+            state = pagerState,
+            verticalAlignment = Alignment.Top,
+        ) { page ->
+            when (page) {
+                MediaTab.Movies.ordinal -> MoviesTabContent(movieViewModel, onMovieClicked)
+                MediaTab.TVShows.ordinal -> TVShowsTabContent(tvShowViewModel, onTVShowClicked)
+            }
+        }
         TabRow(
             selectedTabIndex = selectedTabIndex,
             backgroundColor = MaterialTheme.colors.background.copy(alpha = AlphaNearOpaque),
             divider = { TMDbDivider() },
+            modifier = Modifier
+                .statusBarsPadding(),
         ) {
             tabs.forEach { tab ->
                 val index = tab.ordinal
@@ -85,17 +97,6 @@ fun BookmarkScreen(
                         )
                     },
                 )
-            }
-        }
-
-        HorizontalPager(
-            modifier = Modifier.fillMaxSize(),
-            state = pagerState,
-            verticalAlignment = Alignment.Top,
-        ) { page ->
-            when (page) {
-                MediaTab.Movies.ordinal -> MoviesTabContent(movieViewModel, onMovieClicked)
-                MediaTab.TVShows.ordinal -> TVShowsTabContent(tvShowViewModel, onTVShowClicked)
             }
         }
     }
@@ -141,6 +142,7 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
         columns = GridCells.Adaptive(minSize = 140.dp),
         contentPadding =
         PaddingValues(
+            top = TMDb_104_dp,
             start = TMDb_8_dp,
             end = TMDb_8_dp,
             bottom = navigationBarPadding().plus(TMDb_56_dp),
