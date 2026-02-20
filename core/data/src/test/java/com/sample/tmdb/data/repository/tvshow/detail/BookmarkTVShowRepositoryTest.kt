@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.repository.tvshow.detail
 
+import com.sample.tmdb.data.network.TVShowService
 import com.sample.tmdb.data.repository.BaseBookmarkRepositoryTest
 import com.sample.tmdb.data.source.local.TVShowDao
 import com.sample.tmdb.domain.model.TVShow
@@ -15,8 +16,16 @@ class BookmarkTVShowRepositoryTest : BaseBookmarkRepositoryTest<TVShow>() {
     @Mock
     private lateinit var dao: TVShowDao
 
+    @Mock
+    private lateinit var api: TVShowService
+
     override fun initRepository() {
-        repository = BookmarkTVShowRepository(dao, context, Dispatchers.Main)
+        repository = BookmarkTVShowRepository(
+            dao,
+            api,
+            context,
+            Dispatchers.Main,
+        )
     }
 
     override fun mockApiResponse() = runTest {

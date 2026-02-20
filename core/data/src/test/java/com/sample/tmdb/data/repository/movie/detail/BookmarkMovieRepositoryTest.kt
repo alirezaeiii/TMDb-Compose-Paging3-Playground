@@ -1,5 +1,6 @@
 package com.sample.tmdb.data.repository.movie.detail
 
+import com.sample.tmdb.data.network.MovieService
 import com.sample.tmdb.data.repository.BaseBookmarkRepositoryTest
 import com.sample.tmdb.data.source.local.MovieDao
 import com.sample.tmdb.domain.model.Movie
@@ -15,8 +16,16 @@ class BookmarkMovieRepositoryTest : BaseBookmarkRepositoryTest<Movie>() {
     @Mock
     private lateinit var dao: MovieDao
 
+    @Mock
+    private lateinit var api: MovieService
+
     override fun initRepository() {
-        repository = BookmarkMovieRepository(dao, context, Dispatchers.Main)
+        repository = BookmarkMovieRepository(
+            dao,
+            api,
+            context,
+            Dispatchers.Main,
+        )
     }
 
     override fun mockApiResponse() = runTest {
