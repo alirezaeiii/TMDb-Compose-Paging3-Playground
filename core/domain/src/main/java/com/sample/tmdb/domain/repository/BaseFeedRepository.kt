@@ -29,7 +29,7 @@ abstract class BaseFeedRepository<T : TMDbItem>(context: Context, ioDispatcher: 
 
     protected abstract fun getLatestResId(): Int
 
-    override suspend fun getSuccessResult(): List<FeedWrapper> {
+    override suspend fun getSuccessResult(isRefreshing: Boolean): List<FeedWrapper> {
         val trendingDeferred: Deferred<List<T>>
         val nowPlayingDeferred: Deferred<List<T>>
         val popularDeferred: Deferred<List<T>>

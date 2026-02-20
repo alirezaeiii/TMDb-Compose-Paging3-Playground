@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
@@ -31,6 +32,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
@@ -52,6 +57,7 @@ fun BookmarkScreen(
     tvShowViewModel: BookmarkTVShowViewModel,
     onMovieClicked: (TMDbItem) -> Unit,
     onTVShowClicked: (TMDbItem) -> Unit,
+    scaffoldState: ScaffoldState,
 ) {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val tabs = remember { MediaTab.entries.toTypedArray() }
@@ -73,8 +79,17 @@ fun BookmarkScreen(
             verticalAlignment = Alignment.Top,
         ) { page ->
             when (page) {
-                MediaTab.Movies.ordinal -> MoviesTabContent(movieViewModel, onMovieClicked)
-                MediaTab.TVShows.ordinal -> TVShowsTabContent(tvShowViewModel, onTVShowClicked)
+                MediaTab.Movies.ordinal -> MoviesTabContent(
+                    movieViewModel,
+                    onMovieClicked,
+                    scaffoldState,
+                )
+
+                MediaTab.TVShows.ordinal -> TVShowsTabContent(
+                    tvShowViewModel,
+                    onTVShowClicked,
+                    scaffoldState,
+                )
             }
         }
         TabRow(
@@ -103,20 +118,30 @@ fun BookmarkScreen(
 }
 
 @Composable
-private fun MoviesTabContent(viewModel: BookmarkMovieViewModel, onClick: (TMDbItem) -> Unit) {
+private fun MoviesTabContent(
+    viewModel: BookmarkMovieViewModel,
+    onClick: (TMDbItem) -> Unit,
+    scaffoldState: ScaffoldState,
+) {
     TabContent(
         viewModel = viewModel,
         onClick = onClick,
         textResourceId = commonR.string.movies,
+        scaffoldState = scaffoldState,
     )
 }
 
 @Composable
-private fun TVShowsTabContent(viewModel: BookmarkTVShowViewModel, onClick: (TMDbItem) -> Unit) {
+private fun TVShowsTabContent(
+    viewModel: BookmarkTVShowViewModel,
+    onClick: (TMDbItem) -> Unit,
+    scaffoldState: ScaffoldState,
+) {
     TabContent(
         viewModel = viewModel,
         onClick = onClick,
         textResourceId = commonR.string.tv_series,
+        scaffoldState = scaffoldState,
     )
 }
 
@@ -125,13 +150,27 @@ private fun <T : TMDbItem> TabContent(
     viewModel: BaseViewModel<List<T>>,
     onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,
+    scaffoldState: ScaffoldState,
 ) {
     viewModel.refresh()
-    Content(viewModel = viewModel) {
-        if (it.isEmpty()) {
-            EmptyView(textResourceId = textResourceId)
-        } else {
-            TabContent(items = it, onClick = onClick)
+    Content(viewModel = viewModel, scaffoldState = scaffoldState) {
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
+            onRefresh = { viewModel.refresh(true) },
+            indicator = { state, trigger ->
+                SwipeRefreshIndicator(
+                    state,
+                    trigger,
+                )
+            },
+            modifier = Modifier.fillMaxSize(),
+            indicatorPadding = PaddingValues(top = TMDb_104_dp),
+        ) {
+            if (it.isEmpty()) {
+                EmptyView(textResourceId = textResourceId)
+            } else {
+                TabContent(items = it, onClick = onClick)
+            }
         }
     }
 }

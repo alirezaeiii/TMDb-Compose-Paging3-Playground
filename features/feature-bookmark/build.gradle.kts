@@ -50,6 +50,7 @@ dependencies {
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
+    implementation(Deps.swiperefresh)
     testImplementation(project(BuildModules.COMMON_TEST))
     testImplementation(Deps.junit4)
     testImplementation(Deps.mockk)

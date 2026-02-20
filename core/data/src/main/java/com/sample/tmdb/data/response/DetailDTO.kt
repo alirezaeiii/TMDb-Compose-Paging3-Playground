@@ -13,8 +13,10 @@ import com.sample.tmdb.common.utils.Constants.TITLE
 import com.sample.tmdb.common.utils.Constants.VOTE_AVERAGE
 import com.sample.tmdb.common.utils.Constants.VOTE_COUNT
 import com.sample.tmdb.domain.model.Genre
+import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.MovieDetails
 import com.sample.tmdb.domain.model.SpokenLanguage
+import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.domain.model.TVShowDetails
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -140,6 +142,28 @@ fun TvDetailResponse.asDomainModel(): TVShowDetails = TVShowDetails(
     title,
     voteAverage,
     voteCount,
+)
+
+fun MovieDetailResponse.asMovieDomainModel() = Movie(
+    id = id,
+    overview = overview,
+    releaseDate = releaseDate,
+    posterUrl = posterPath?.let { String.format(BASE_WIDTH_342_PATH, it) },
+    backdropUrl = backdropPath?.let { String.format(BASE_WIDTH_342_PATH, it) },
+    name = title,
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+)
+
+fun TvDetailResponse.asTVShowDomainModel() = TVShow(
+    id = id,
+    overview = overview,
+    releaseDate = releaseDate,
+    posterUrl = posterPath?.let { String.format(BASE_WIDTH_342_PATH, it) },
+    backdropUrl = backdropPath?.let { String.format(BASE_WIDTH_342_PATH, it) },
+    name = title,
+    voteAverage = voteAverage,
+    voteCount = voteCount,
 )
 
 private fun List<GenreResponse>.asGenreDomainModel(): List<Genre> = map {

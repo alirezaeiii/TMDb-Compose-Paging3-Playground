@@ -179,6 +179,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController, scaf
                 hiltViewModel(),
                 { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
+                scaffoldState,
             )
         }
         composable(route = HomeSections.SETTING_SECTION.route) {
