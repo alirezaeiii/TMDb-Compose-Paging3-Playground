@@ -1,6 +1,9 @@
 package com.sample.tmdb.common.base
 
-open class BaseViewModel<T>(private val repository: BaseRepository<T>) : CoreBaseViewModel<T>() {
+import com.sample.tmdb.common.repository.LanguageRepository
+
+open class BaseViewModel<T>(private val repository: BaseRepository<T>, languageRepository: LanguageRepository) :
+    CoreBaseViewModel<T>(languageRepository) {
 
     override fun refresh(isUserRefresh: Boolean) {
         execute {

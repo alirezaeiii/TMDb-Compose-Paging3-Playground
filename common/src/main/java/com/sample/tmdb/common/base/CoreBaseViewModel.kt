@@ -2,6 +2,7 @@ package com.sample.tmdb.common.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import kotlinx.coroutines.flow.Flow
@@ -13,7 +14,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-abstract class CoreBaseViewModel<T> : ViewModel() {
+abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
     val state = _state.asStateFlow()
@@ -27,6 +28,10 @@ abstract class CoreBaseViewModel<T> : ViewModel() {
 
     private var lastLanguage: String? = null
 
+    init {
+        lastLanguage = languageRepository.languageCode.value
+    }
+
     abstract fun refresh(isUserRefresh: Boolean = false)
 
     protected fun execute(block: () -> Flow<Async<T>>) {
@@ -36,9 +41,7 @@ abstract class CoreBaseViewModel<T> : ViewModel() {
 
     fun refreshOnLanguageChange(language: String) {
         if (language != lastLanguage) {
-            if (lastLanguage != null) {
-                refresh(true)
-            }
+            refresh(true)
             lastLanguage = language
         }
     }

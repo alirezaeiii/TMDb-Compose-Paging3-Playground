@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.base.BaseRepositoryWithId
 import com.sample.tmdb.common.base.BaseViewModelWithId
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.domain.model.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -12,7 +13,9 @@ import javax.inject.Inject
 class PersonViewModel @Inject constructor(
     repository: BaseRepositoryWithId<Person, String>,
     savedStateHandle: SavedStateHandle,
+    languageRepository: LanguageRepository,
 ) : BaseViewModelWithId<Person, String>(
     repository,
     savedStateHandle[MainDestinations.TMDB_PERSON_KEY]!!,
+    languageRepository,
 )
