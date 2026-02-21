@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,18 +36,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.os.LocaleListCompat
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.SimpleExposedDropDownMenu
 import com.sample.tmdb.common.ui.theme.Teal200
 
 @Composable
-fun SettingsScreen(modifier: Modifier = Modifier) {
+fun SettingsScreen(viewModel: LanguageViewModel, modifier: Modifier = Modifier) {
     val settings = listOf(
         Settings.SelectBox(
             iconResourceId = R.drawable.ic_language,
@@ -77,6 +76,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
             .statusBarsPadding(),
     ) {
         SettingsGroupItem(
+            viewModel = viewModel,
             settings = settings,
             modifier = modifier
                 .padding(
@@ -90,7 +90,7 @@ fun SettingsScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
+fun SettingsGroupItem(viewModel: LanguageViewModel, settings: List<Settings>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
@@ -101,7 +101,7 @@ fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
     ) {
         Column {
             settings.forEachIndexed { index, settingsItem ->
-                SettingsItem(settings = settingsItem)
+                SettingsItem(viewModel = viewModel, settings = settingsItem)
 
                 if (index < settings.lastIndex) {
                     Divider()
@@ -114,7 +114,12 @@ fun SettingsGroupItem(settings: List<Settings>, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, context: Context = LocalContext.current) {
+private fun SettingsItem(
+    viewModel: LanguageViewModel,
+    settings: Settings,
+    modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
+) {
     Row(
         modifier = modifier
             .then(
@@ -147,7 +152,7 @@ private fun SettingsItem(settings: Settings, modifier: Modifier = Modifier, cont
                 selectedIndex = settings.options.indexOf(Locale.current.language),
                 backgroundColor = Color.Transparent,
                 onChange = {
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(settings.options[it]))
+                    viewModel.setLanguage(settings.options[it])
                 },
             )
         }

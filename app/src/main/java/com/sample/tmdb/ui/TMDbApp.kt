@@ -48,6 +48,7 @@ import com.sample.tmdb.common.MainDestinations
 import com.sample.tmdb.common.model.Credit
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_0_dp
+import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.theme.AlphaNavigationBar
 import com.sample.tmdb.credit.CreditScreen
 import com.sample.tmdb.detail.MovieDetailScreen
@@ -81,6 +82,7 @@ import com.sample.tmdb.setting.SettingsScreen
 fun TMDbApp() {
     val appState = rememberTMDbAppState()
     val scaffoldState = rememberScaffoldState()
+    val languageViewModel: LanguageViewModel = hiltViewModel()
     Scaffold(
         scaffoldState = scaffoldState,
         bottomBar = {
@@ -105,7 +107,7 @@ fun TMDbApp() {
             startDestination = MainDestinations.HOME_ROUTE,
             modifier = Modifier.padding(newPadding),
         ) {
-            navigationScreens(appState.navController, scaffoldState)
+            navigationScreens(appState.navController, languageViewModel, scaffoldState)
             detailScreens(appState.navController)
             moviePagingScreens(appState.navController)
             tvShowPagingScreens(appState.navController)
@@ -120,7 +122,6 @@ fun TMDbApp() {
 @Composable
 private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: String, navigateToRoute: (String) -> Unit) {
     val currentSection = tabs.first { it.route == currentRoute }
-
     Box(
         Modifier.navigationBarsPadding(),
     ) {
@@ -150,7 +151,11 @@ private fun TMDbBottomBar(tabs: Array<HomeSections>, currentRoute: String, navig
     }
 }
 
-private fun NavGraphBuilder.navigationScreens(navController: NavController, scaffoldState: ScaffoldState) {
+private fun NavGraphBuilder.navigationScreens(
+    navController: NavController,
+    languageViewModel: LanguageViewModel,
+    scaffoldState: ScaffoldState,
+) {
     navigation(
         route = MainDestinations.HOME_ROUTE,
         startDestination = HomeSections.MOVIE_SECTION.route,
@@ -158,6 +163,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController, scaf
         composable(route = HomeSections.MOVIE_SECTION.route) {
             MovieFeedScreen(
                 hiltViewModel(),
+                languageViewModel,
                 { navController.navigate(MainDestinations.TMDB_SEARCH_MOVIE_ROUTE) },
                 { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate(it) },
@@ -167,6 +173,7 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController, scaf
         composable(route = HomeSections.TV_SHOW_SECTION.route) {
             TVShowFeedScreen(
                 hiltViewModel(),
+                languageViewModel,
                 { navController.navigate(MainDestinations.TMDB_SEARCH_TV_SHOW_ROUTE) },
                 { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate(it) },
@@ -177,13 +184,14 @@ private fun NavGraphBuilder.navigationScreens(navController: NavController, scaf
             BookmarkScreen(
                 hiltViewModel(),
                 hiltViewModel(),
+                languageViewModel,
                 { navController.navigate("${MainDestinations.TMDB_MOVIE_DETAIL_ROUTE}/${it.id}") },
                 { navController.navigate("${MainDestinations.TMDB_TV_SHOW_DETAIL_ROUTE}/${it.id}") },
                 scaffoldState,
             )
         }
         composable(route = HomeSections.SETTING_SECTION.route) {
-            SettingsScreen()
+            SettingsScreen(languageViewModel)
         }
     }
 }

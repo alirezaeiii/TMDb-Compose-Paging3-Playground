@@ -25,11 +25,22 @@ abstract class CoreBaseViewModel<T> : ViewModel() {
         data class ShowWarning(val message: String) : UiEvent()
     }
 
+    private var lastLanguage: String? = null
+
     abstract fun refresh(isUserRefresh: Boolean = false)
 
     protected fun execute(block: () -> Flow<Async<T>>) {
         block.invoke().onEach { repoResource -> reduce(repoResource) }
             .launchIn(viewModelScope)
+    }
+
+    fun refreshOnLanguageChange(language: String) {
+        if (language != lastLanguage) {
+            if (lastLanguage != null) {
+                refresh(true)
+            }
+            lastLanguage = language
+        }
     }
 
     private suspend fun reduce(resource: Async<T>) {

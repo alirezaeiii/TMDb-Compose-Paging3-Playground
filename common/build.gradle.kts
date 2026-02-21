@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
@@ -41,6 +42,8 @@ android {
 }
 
 dependencies {
+    implementation(Deps.hilt)
+    ksp(Deps.hilt_compiler)
     implementation(Deps.androidXCore)
     implementation(Deps.lifecycleViewModel)
     implementation(Deps.composeUi)
@@ -50,6 +53,7 @@ dependencies {
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)
     implementation(Deps.iconExtended)
+    implementation(Deps.appcompat)
     androidTestImplementation(Deps.composeUiTest)
     androidTestImplementation(project(BuildModules.DOMAIN))
     debugImplementation(Deps.composeManifest)

@@ -32,6 +32,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,6 +60,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_2_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_32_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
+import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
 import com.sample.tmdb.common.ui.theme.Teal200
@@ -73,6 +75,7 @@ import com.sample.tmdb.feed.utils.pagerTransition
 @Composable
 fun MovieFeedScreen(
     viewModel: MovieFeedViewModel,
+    languageViewModel: LanguageViewModel,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     navigate: (String) -> Unit,
@@ -80,6 +83,7 @@ fun MovieFeedScreen(
 ) {
     FeedScreen(
         viewModel = viewModel,
+        languageViewModel = languageViewModel,
         navigate = navigate,
         onSearchClicked = onSearchClicked,
         onClick = onClick,
@@ -91,6 +95,7 @@ fun MovieFeedScreen(
 @Composable
 fun TVShowFeedScreen(
     viewModel: TVShowFeedViewModel,
+    languageViewModel: LanguageViewModel,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     navigate: (String) -> Unit,
@@ -98,6 +103,7 @@ fun TVShowFeedScreen(
 ) {
     FeedScreen(
         viewModel = viewModel,
+        languageViewModel = languageViewModel,
         navigate = navigate,
         onSearchClicked = onSearchClicked,
         onClick = onClick,
@@ -109,13 +115,21 @@ fun TVShowFeedScreen(
 @Composable
 private fun <T : TMDbItem> FeedScreen(
     viewModel: BaseFeedViewModel<T>,
+    languageViewModel: LanguageViewModel,
     navigate: (String) -> Unit,
     onSearchClicked: () -> Unit,
     onClick: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
-    Content(viewModel = viewModel, scaffoldState = scaffoldState) { feeds ->
+    LaunchedEffect(Unit) {
+        println("LanguageViewModel instance: $languageViewModel")
+    }
+    Content(
+        viewModel = viewModel,
+        languageViewModel = languageViewModel,
+        scaffoldState = scaffoldState,
+    ) { feeds ->
         Box {
             SwipeRefresh(
                 state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),

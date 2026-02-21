@@ -14,10 +14,17 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun <T> Content(
     viewModel: CoreBaseViewModel<T>,
+    languageViewModel: LanguageViewModel? = null,
     scaffoldState: ScaffoldState? = null,
     successScreen: @Composable (T) -> Unit,
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
+
+    LaunchedEffect(Unit) {
+        languageViewModel?.languageCode?.collectLatest { newLanguageCode ->
+            viewModel.refreshOnLanguageChange(newLanguageCode)
+        }
+    }
 
     when {
         state.items != null -> {

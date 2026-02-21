@@ -44,6 +44,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_16_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_56_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
+import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
@@ -55,6 +56,7 @@ import kotlinx.coroutines.launch
 fun BookmarkScreen(
     movieViewModel: BookmarkMovieViewModel,
     tvShowViewModel: BookmarkTVShowViewModel,
+    languageViewModel: LanguageViewModel,
     onMovieClicked: (TMDbItem) -> Unit,
     onTVShowClicked: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
@@ -81,12 +83,14 @@ fun BookmarkScreen(
             when (page) {
                 MediaTab.Movies.ordinal -> MoviesTabContent(
                     movieViewModel,
+                    languageViewModel,
                     onMovieClicked,
                     scaffoldState,
                 )
 
                 MediaTab.TVShows.ordinal -> TVShowsTabContent(
                     tvShowViewModel,
+                    languageViewModel,
                     onTVShowClicked,
                     scaffoldState,
                 )
@@ -120,11 +124,13 @@ fun BookmarkScreen(
 @Composable
 private fun MoviesTabContent(
     viewModel: BookmarkMovieViewModel,
+    languageViewModel: LanguageViewModel,
     onClick: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     TabContent(
         viewModel = viewModel,
+        languageViewModel = languageViewModel,
         onClick = onClick,
         textResourceId = commonR.string.movies,
         scaffoldState = scaffoldState,
@@ -134,11 +140,13 @@ private fun MoviesTabContent(
 @Composable
 private fun TVShowsTabContent(
     viewModel: BookmarkTVShowViewModel,
+    languageViewModel: LanguageViewModel,
     onClick: (TMDbItem) -> Unit,
     scaffoldState: ScaffoldState,
 ) {
     TabContent(
         viewModel = viewModel,
+        languageViewModel = languageViewModel,
         onClick = onClick,
         textResourceId = commonR.string.tv_series,
         scaffoldState = scaffoldState,
@@ -148,12 +156,17 @@ private fun TVShowsTabContent(
 @Composable
 private fun <T : TMDbItem> TabContent(
     viewModel: BaseViewModel<List<T>>,
+    languageViewModel: LanguageViewModel,
     onClick: (TMDbItem) -> Unit,
     @StringRes textResourceId: Int,
     scaffoldState: ScaffoldState,
 ) {
     viewModel.refresh()
-    Content(viewModel = viewModel, scaffoldState = scaffoldState) {
+    Content(
+        viewModel = viewModel,
+        languageViewModel = languageViewModel,
+        scaffoldState = scaffoldState,
+    ) {
         SwipeRefresh(
             state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
             onRefresh = { viewModel.refresh(true) },
