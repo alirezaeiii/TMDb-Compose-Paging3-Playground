@@ -2,7 +2,7 @@ package com.sample.tmdb.common.base
 
 import com.sample.tmdb.common.repository.LanguageRepository
 
-open class BaseViewModelWithInit<T>(repository: BaseRepository<T>, languageRepository: LanguageRepository) :
+open class BaseViewModelWithInit<T>(repository: BaseRepository<T>, languageRepository: LanguageRepository? = null) :
     BaseViewModel<T>(repository, languageRepository) {
 
     init {

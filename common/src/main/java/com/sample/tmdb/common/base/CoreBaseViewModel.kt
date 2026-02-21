@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
-abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository) : ViewModel() {
+abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = null) : ViewModel() {
 
     private val _state = MutableStateFlow(ViewState<T>(isLoading = true))
     val state = _state.asStateFlow()
@@ -29,7 +29,7 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository) : Vi
     private var lastLanguage: String? = null
 
     init {
-        lastLanguage = languageRepository.languageCode.value
+        lastLanguage = languageRepository?.languageCode?.value
     }
 
     abstract fun refresh(isUserRefresh: Boolean = false)
