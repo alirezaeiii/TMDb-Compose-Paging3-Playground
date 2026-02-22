@@ -12,8 +12,8 @@ open class BaseViewModelWithId<T, S>(
         refresh()
     }
 
-    override fun refresh(isUserRefresh: Boolean) {
-        execute {
+    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
+        execute(languageCode) {
             repository.getResult(id, isUserRefresh)
         }
     }

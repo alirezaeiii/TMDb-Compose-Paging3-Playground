@@ -32,21 +32,20 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
         lastLanguage = languageRepository?.languageCode?.value
     }
 
-    abstract fun refresh(isUserRefresh: Boolean = false)
+    abstract fun refresh(isUserRefresh: Boolean = false, languageCode: String? = null)
 
-    protected fun execute(block: () -> Flow<Async<T>>) {
-        block.invoke().onEach { repoResource -> reduce(repoResource) }
+    protected fun execute(languageCode: String? = null, block: () -> Flow<Async<T>>) {
+        block.invoke().onEach { repoResource -> reduce(repoResource, languageCode) }
             .launchIn(viewModelScope)
     }
 
     fun refreshOnLanguageChange(language: String) {
         if (language != lastLanguage) {
-            refresh(true)
-            lastLanguage = language
+            refresh(true, language)
         }
     }
 
-    private suspend fun reduce(resource: Async<T>) {
+    private suspend fun reduce(resource: Async<T>, languageCode: String? = null) {
         when (resource) {
             is Async.Loading -> {
                 _state.update {
@@ -60,6 +59,9 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
 
             is Async.Success -> {
                 _state.value = ViewState(items = resource.data)
+                languageCode?.let {
+                    lastLanguage = it
+                }
             }
 
             is Async.Error -> {

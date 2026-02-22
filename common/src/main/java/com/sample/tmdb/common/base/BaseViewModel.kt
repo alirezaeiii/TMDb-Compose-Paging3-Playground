@@ -7,8 +7,8 @@ open class BaseViewModel<T>(
     languageRepository: LanguageRepository? = null,
 ) : CoreBaseViewModel<T>(languageRepository) {
 
-    override fun refresh(isUserRefresh: Boolean) {
-        execute {
+    override fun refresh(isUserRefresh: Boolean, languageCode: String?) {
+        execute(languageCode) {
             repository.getResult(isUserRefresh)
         }
     }
