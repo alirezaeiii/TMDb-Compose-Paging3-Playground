@@ -2,12 +2,14 @@ package com.sample.tmdb.bookmark
 
 import com.sample.tmdb.common.base.BaseRepository
 import com.sample.tmdb.common.base.BaseViewModel
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.Before
 import org.junit.Rule
@@ -19,12 +21,15 @@ abstract class BaseBookmarkViewModelTest<T> {
 
     protected val repository = mockk<BaseRepository<List<T>>>()
 
+    protected val languageRepository = mockk<LanguageRepository>()
+
     private lateinit var viewModel: BaseViewModel<List<T>>
 
     protected abstract fun getViewModel(): BaseViewModel<List<T>>
 
     @Before
     fun setup() {
+        every { languageRepository.languageCode } returns MutableStateFlow("en")
         viewModel = getViewModel()
     }
 

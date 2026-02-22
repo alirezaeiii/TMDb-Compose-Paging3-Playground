@@ -4,6 +4,6 @@ import com.sample.tmdb.domain.model.Movie
 
 class MovieFeedViewModelTest : BaseFeedViewModelTest<Movie>() {
     override fun initViewModel() {
-        super.viewModel = MovieFeedViewModel(repository)
+        super.viewModel = MovieFeedViewModel(repository, languageRepository)
     }
 }

@@ -4,6 +4,6 @@ import com.sample.tmdb.domain.model.TVShow
 
 class TVShowFeedViewModelTest : BaseFeedViewModelTest<TVShow>() {
     override fun initViewModel() {
-        super.viewModel = TVShowFeedViewModel(repository)
+        super.viewModel = TVShowFeedViewModel(repository, languageRepository)
     }
 }

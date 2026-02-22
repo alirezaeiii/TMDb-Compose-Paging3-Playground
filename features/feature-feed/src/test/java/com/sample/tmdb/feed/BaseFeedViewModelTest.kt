@@ -1,6 +1,7 @@
 package com.sample.tmdb.feed
 
 import com.sample.tmdb.common.model.TMDbItem
+import com.sample.tmdb.common.repository.LanguageRepository
 import com.sample.tmdb.common.test.TestCoroutineRule
 import com.sample.tmdb.common.utils.Async
 import com.sample.tmdb.common.utils.ViewState
@@ -9,7 +10,9 @@ import com.sample.tmdb.domain.repository.BaseFeedRepository
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -19,9 +22,16 @@ abstract class BaseFeedViewModelTest<T : TMDbItem> {
 
     protected val repository = mockk<BaseFeedRepository<T>>()
 
+    protected val languageRepository = mockk<LanguageRepository>()
+
     protected lateinit var viewModel: BaseFeedViewModel<T>
 
     protected abstract fun initViewModel()
+
+    @Before
+    fun setup() {
+        every { languageRepository.languageCode } returns MutableStateFlow("en")
+    }
 
     @Test
     fun `load feeds`() {
