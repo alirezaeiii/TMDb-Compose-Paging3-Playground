@@ -32,7 +32,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -122,9 +121,6 @@ private fun <T : TMDbItem> FeedScreen(
     scaffoldState: ScaffoldState,
     @StringRes resourceId: Int,
 ) {
-    LaunchedEffect(Unit) {
-        println("LanguageViewModel instance: $languageViewModel")
-    }
     Content(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
