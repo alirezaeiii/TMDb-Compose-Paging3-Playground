@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -206,13 +205,7 @@ fun TabContent(items: List<TMDbItem>, onClick: (TMDbItem) -> Unit) {
         ),
         content = {
             items(items.size) { index ->
-                TMDbContent(
-                    items[index],
-                    onClick,
-                    Modifier
-                        .height(320.dp)
-                        .padding(vertical = TMDb_8_dp),
-                )
+                TMDbContent(items[index], onClick)
             }
         },
     )

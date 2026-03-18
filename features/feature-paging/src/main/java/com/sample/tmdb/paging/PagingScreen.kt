@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -22,6 +22,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.component.ErrorScreen
@@ -42,11 +43,8 @@ fun <T : TMDbItem> PagingScreen(viewModel: BasePagingViewModel<T>, onClick: (TMD
         }
 
         is LoadState.Error -> {
-            val message =
-                (lazyTMDbItems.loadState.refresh as? LoadState.Error)?.error?.message ?: return
-
             ErrorScreen(
-                message = message,
+                message = getErrorMsg(lazyTMDbItems.loadState.refresh),
                 modifier = Modifier.fillMaxSize(),
                 refresh = { lazyTMDbItems.retry() },
             )
@@ -87,38 +85,22 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
             items(lazyTMDbItems.itemCount) { index ->
                 val tmdbItem = lazyTMDbItems[index]
                 tmdbItem?.let {
-                    TMDbContent(
-                        it,
-                        onClick,
-                        Modifier
-                            .height(320.dp)
-                            .padding(vertical = TMDb_8_dp),
-                    )
+                    TMDbContent(it, onClick)
                 }
             }
 
-            when (lazyTMDbItems.loadState.append) {
-                is LoadState.Loading -> {
-                    fullSpanGridItem {
-                        LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
-                    }
+            if (lazyTMDbItems.loadState.append is LoadState.Loading) {
+                fullSpanGridItem {
+                    LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                 }
-
-                is LoadState.Error -> {
-                    val message =
-                        (lazyTMDbItems.loadState.append as? LoadState.Error)?.error?.message
-                            ?: return@LazyVerticalGrid
-
-                    fullSpanGridItem {
-                        ErrorScreen(
-                            message = message,
-                            modifier = Modifier.padding(vertical = TMDb_8_dp),
-                            refresh = { lazyTMDbItems.retry() },
-                        )
-                    }
+            } else if (lazyTMDbItems.loadState.append is LoadState.Error) {
+                fullSpanGridItem {
+                    ErrorScreen(
+                        message = getErrorMsg(lazyTMDbItems.loadState.append),
+                        modifier = Modifier.padding(vertical = TMDb_8_dp),
+                        refresh = { lazyTMDbItems.retry() },
+                    )
                 }
-
-                else -> Unit
             }
         },
     )
@@ -142,3 +124,7 @@ private fun NoDataFoundAnimation(modifier: Modifier = Modifier) {
         modifier = modifier,
     )
 }
+
+@Composable
+private fun getErrorMsg(loadState: LoadState) =
+    (loadState as LoadState.Error).error.message ?: stringResource(commonR.string.failed_loading_msg)

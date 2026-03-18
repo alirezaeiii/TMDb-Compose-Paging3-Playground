@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,7 +54,11 @@ import com.sample.tmdb.common.ui.theme.rateColors
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TMDbContent(tmdbItem: TMDbItem, onClick: (TMDbItem) -> Unit, modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .height(320.dp)
+            .padding(vertical = TMDb_8_dp),
+    ) {
         TMDbItemRate(
             tmdbItem.voteAverage,
             modifier =
