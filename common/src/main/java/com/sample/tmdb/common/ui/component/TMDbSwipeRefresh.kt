@@ -14,7 +14,9 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 @Composable
 fun <T> TMDbSwipeRefresh(
     viewModel: BaseViewModel<T>,
-    content: @Composable() () -> Unit
+    content:
+    @Composable()
+    () -> Unit,
 ) {
     SwipeRefresh(
         state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),

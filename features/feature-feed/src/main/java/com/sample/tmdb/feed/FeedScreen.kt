@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.sample.tmdb.common.MainDestinations
+import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
@@ -65,7 +66,6 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
-import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieFeedScreen(
