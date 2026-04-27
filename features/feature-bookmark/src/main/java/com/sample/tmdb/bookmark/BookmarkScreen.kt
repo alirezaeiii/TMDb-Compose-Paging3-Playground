@@ -31,11 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.base.BaseViewModel
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
@@ -46,10 +41,12 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_8_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.TMDbContent
 import com.sample.tmdb.common.ui.component.TMDbDivider
+import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.common.utils.navigationBarPadding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun BookmarkScreen(
@@ -165,23 +162,12 @@ private fun <T : TMDbItem> TabContent(
         viewModel = viewModel,
         languageViewModel = languageViewModel,
         scaffoldState = scaffoldState,
-    ) {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
-            onRefresh = { viewModel.refresh(true) },
-            indicator = { state, trigger ->
-                SwipeRefreshIndicator(
-                    state,
-                    trigger,
-                )
-            },
-            modifier = Modifier.fillMaxSize(),
-            indicatorPadding = PaddingValues(top = TMDb_104_dp),
-        ) {
-            if (it.isEmpty()) {
+    ) { items ->
+        TMDbSwipeRefresh(viewModel) {
+            if (items.isEmpty()) {
                 EmptyView(textResourceId = textResourceId)
             } else {
-                TabContent(items = it, onClick = onClick)
+                TabContent(items = items, onClick = onClick)
             }
         }
     }

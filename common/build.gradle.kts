@@ -49,6 +49,7 @@ dependencies {
     implementation(Deps.composeUi)
     implementation(Deps.composeFoundation)
     implementation(Deps.composeMaterial)
+    implementation(Deps.swiperefresh)
     debugImplementation(Deps.composeUiTooling)
     implementation(Deps.composeUiToolingPreview)
     implementation(Deps.coil)

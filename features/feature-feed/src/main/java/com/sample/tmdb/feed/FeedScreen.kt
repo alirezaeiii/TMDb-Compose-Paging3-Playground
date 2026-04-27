@@ -41,17 +41,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.sample.tmdb.common.MainDestinations
-import com.sample.tmdb.common.R as commonR
 import com.sample.tmdb.common.model.TMDbItem
 import com.sample.tmdb.common.ui.Content
 import com.sample.tmdb.common.ui.Dimens
-import com.sample.tmdb.common.ui.Dimens.TMDb_104_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_120_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_12_dp
 import com.sample.tmdb.common.ui.Dimens.TMDb_220_dp
@@ -62,6 +56,7 @@ import com.sample.tmdb.common.ui.Dimens.TMDb_6_dp
 import com.sample.tmdb.common.ui.LanguageViewModel
 import com.sample.tmdb.common.ui.component.DestinationBar
 import com.sample.tmdb.common.ui.component.TMDbCard
+import com.sample.tmdb.common.ui.component.TMDbSwipeRefresh
 import com.sample.tmdb.common.ui.theme.Teal200
 import com.sample.tmdb.common.ui.theme.TmdbPagingComposeTheme
 import com.sample.tmdb.common.utils.TMDbSpacer
@@ -70,6 +65,7 @@ import com.sample.tmdb.domain.model.Movie
 import com.sample.tmdb.domain.model.SortType
 import com.sample.tmdb.domain.model.TVShow
 import com.sample.tmdb.feed.utils.pagerTransition
+import com.sample.tmdb.common.R as commonR
 
 @Composable
 fun MovieFeedScreen(
@@ -127,18 +123,7 @@ private fun <T : TMDbItem> FeedScreen(
         scaffoldState = scaffoldState,
     ) { feeds ->
         Box {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(viewModel.state.collectAsStateWithLifecycle().value.isRefreshing),
-                onRefresh = { viewModel.refresh(true) },
-                indicator = { state, trigger ->
-                    SwipeRefreshIndicator(
-                        state,
-                        trigger,
-                    )
-                },
-                modifier = Modifier.fillMaxSize(),
-                indicatorPadding = PaddingValues(top = TMDb_104_dp),
-            ) {
+            TMDbSwipeRefresh(viewModel) {
                 FeedCollectionList(feeds, navigate, onClick)
             }
             DestinationBar(
