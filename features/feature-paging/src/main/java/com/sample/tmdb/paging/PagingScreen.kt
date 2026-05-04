@@ -93,7 +93,9 @@ private fun <T : TMDbItem> LazyTMDbItemGrid(lazyTMDbItems: LazyPagingItems<T>, o
                 fullSpanGridItem {
                     LoadingRow(modifier = Modifier.padding(vertical = TMDb_8_dp))
                 }
-            } else if (lazyTMDbItems.loadState.append is LoadState.Error) {
+            }
+
+            if (lazyTMDbItems.loadState.append is LoadState.Error) {
                 fullSpanGridItem {
                     ErrorScreen(
                         message = getErrorMsg(lazyTMDbItems.loadState.append),
