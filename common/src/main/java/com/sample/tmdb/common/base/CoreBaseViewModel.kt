@@ -28,6 +28,8 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
 
     private var lastLanguage: String? = null
 
+    private var hasCriticalError = false
+
     init {
         lastLanguage = languageRepository?.languageCode?.value
     }
@@ -40,7 +42,7 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
     }
 
     fun refreshOnLanguageChange(language: String) {
-        if (language != lastLanguage) {
+        if (language != lastLanguage && !hasCriticalError) {
             refresh(true, language)
         }
     }
@@ -62,6 +64,7 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
                 languageCode?.let {
                     lastLanguage = it
                 }
+                hasCriticalError = false
             }
 
             is Async.Error -> {
@@ -75,6 +78,8 @@ abstract class CoreBaseViewModel<T>(languageRepository: LanguageRepository? = nu
                 }
                 if (resource.isWarning) {
                     emitWarning(resource.message)
+                } else {
+                    hasCriticalError = true
                 }
             }
         }
