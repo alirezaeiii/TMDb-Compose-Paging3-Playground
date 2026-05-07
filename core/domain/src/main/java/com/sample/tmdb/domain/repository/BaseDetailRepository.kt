@@ -9,7 +9,6 @@ import com.sample.tmdb.domain.model.DetailWrapper
 import com.sample.tmdb.domain.model.TMDbImage
 import com.sample.tmdb.domain.model.TMDbItemDetails
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -23,28 +22,20 @@ abstract class BaseDetailRepository<T : TMDbItemDetails>(context: Context, ioDis
 
     protected abstract suspend fun getSimilarItems(id: Int): List<TMDbItem>
 
-    override suspend fun getSuccessResult(id: Int): DetailWrapper {
-        val detailsDeferred: Deferred<T>
-        val creditDeferred: Deferred<Pair<List<Cast>, List<Crew>>>
-        val imageDeferred: Deferred<List<TMDbImage>>
-        val similarDeferred: Deferred<List<TMDbItem>>
-        coroutineScope {
-            detailsDeferred = async { getDetails(id) }
-            creditDeferred = async { getCredit(id) }
-            imageDeferred = async { getImages(id) }
-            similarDeferred = async { getSimilarItems(id) }
-        }
-        val details = detailsDeferred.await()
-        val creditWrapper = creditDeferred.await()
-        val images = imageDeferred.await()
-        val similarItems = similarDeferred.await()
+    override suspend fun getSuccessResult(id: Int): DetailWrapper = coroutineScope {
+        val detailsDeferred = async { getDetails(id) }
+        val creditDeferred = async { getCredit(id) }
+        val imageDeferred = async { getImages(id) }
+        val similarDeferred = async { getSimilarItems(id) }
 
-        return DetailWrapper(
+        val creditWrapper = creditDeferred.await()
+
+        DetailWrapper(
             creditWrapper.first,
             creditWrapper.second,
-            details,
-            images,
-            similarItems,
+            detailsDeferred.await(),
+            imageDeferred.await(),
+            similarDeferred.await(),
         )
     }
 }
