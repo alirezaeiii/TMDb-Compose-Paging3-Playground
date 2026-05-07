@@ -22,9 +22,9 @@ abstract class BasePagingSource<T : TMDbItem>(private val context: Context) : Pa
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
                 nextKey = if (response.isEmpty()) null else page + 1,
             )
-        } catch (exception: IOException) {
+        } catch (_: IOException) {
             LoadResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
-        } catch (exception: retrofit2.HttpException) {
+        } catch (_: retrofit2.HttpException) {
             LoadResult.Error(TMDbException(context.getString(R.string.failed_loading_msg)))
         }
     }
