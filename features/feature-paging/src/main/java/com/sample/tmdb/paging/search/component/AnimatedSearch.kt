@@ -1,4 +1,4 @@
-package com.sample.tmdb.paging.search
+package com.sample.tmdb.paging.search.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D

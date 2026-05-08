@@ -1,4 +1,4 @@
-package com.sample.tmdb.paging.search
+package com.sample.tmdb.paging.search.component
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 
 /**
- * Appears in [Search]
+ * Appears in [com.sample.tmdb.paging.search.Search]
  */
 @Composable
 fun InfinitelyFlowingCircles() {

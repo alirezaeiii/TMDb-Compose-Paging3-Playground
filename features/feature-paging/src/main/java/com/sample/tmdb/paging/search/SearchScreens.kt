@@ -51,6 +51,8 @@ import com.sample.tmdb.common.ui.component.TMDbDivider
 import com.sample.tmdb.common.ui.theme.AlphaNearOpaque
 import com.sample.tmdb.paging.PagingScreen
 import com.sample.tmdb.paging.R
+import com.sample.tmdb.paging.search.component.AnimatedSearch
+import com.sample.tmdb.paging.search.component.InfinitelyFlowingCircles
 
 @Composable
 fun SearchMoviesScreen(viewModel: SearchMoviesViewModel, onClick: (TMDbItem) -> Unit, navigateUp: () -> Unit) {
